@@ -1,0 +1,19 @@
+<div class="row">
+      <div class="col-lg-12">
+
+        {{ datatable ({
+          'id' : 'idEvenement',
+          'main_template' : 'GestimeRapportsBundle:RendezVous:liste.html.twig' ,
+          'js' : {
+            'iDisplayLength': 10,
+              'sAjaxSource' : path('rdvs_grille',
+                                   {'medecinId': form.medecin.vars.value|default(0) ,
+                                    'debut':  form.debut.vars.value|default('2014-01-15'),
+                                    'fin':  form.fin.vars.value|default('2014-01-15'),
+                                  })
+                }
+          }) | raw
+        }}
+
+      </div>
+</div>

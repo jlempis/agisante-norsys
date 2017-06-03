@@ -1,0 +1,175 @@
+gestime_synchro_v1:
+    resource: "@GestimeSynchroV1Bundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+gestime_doc24:
+    resource: "@GestimeDoc24Bundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+gestime_home:
+    resource: "@GestimeHomeBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+gestime_rapports:
+    resource: "@GestimeRapportsBundle/Controller/"
+    type:     annotation
+    prefix:   /rapports
+
+gestime_form:
+    resource: "@GestimeFormBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+GestimeAgendaBundle:
+    resource: "@GestimeAgendaBundle/Controller/"
+    type:     annotation
+    prefix:   /admin/consignes
+
+absences:
+    resource: "@GestimeEventBundle/Controller/AbsenceController.php"
+    type:     annotation
+    prefix:   /admin/absences
+
+agenda:
+    resource: "@GestimeEventBundle/Controller/AgendaController.php"
+    type:     annotation
+    prefix:   /agenda
+
+recherche:
+    resource: "@GestimeEventBundle/Controller/RechercheController.php"
+    type:     annotation
+    prefix:   /recherche
+
+event:
+    resource: "@GestimeEventBundle/Controller/AjaxEventController.php"
+    type:     annotation
+    prefix:   /
+
+event2:
+    resource: "@GestimeEventBundle/Controller/AjaxController.php"
+    type:     annotation
+    prefix:   /
+
+GestimeTelephonieBundle:
+    resource: "@GestimeTelephonieBundle/Controller/"
+    type:     annotation
+    prefix:   /admin/telephonie
+
+GestimeStatsBundle:
+    resource: "@GestimeStatsBundle/Controller/"
+    type:     annotation
+    prefix:   /admin/statistiques
+
+# ************************************************
+# Routes API
+#
+# ************************************************
+login_check:
+    path: /v1/login_check
+
+
+gestime_user_api_public:
+    type:     rest
+#    host:     api.agisante.fr
+    resource: Gestime\ApiBundle\Controller\Rest\UserController
+    prefix:   /v1/public/user
+
+gestime_medecin_api_public:
+    type:     rest
+#    host:     api.agisante.fr
+    resource: Gestime\ApiBundle\Controller\Rest\MedecinController
+    prefix:   /v1/public/medecins
+
+gestime_reservation_api_public:
+    type:     rest
+#    host:     api.agisante.fr
+    resource: Gestime\ApiBundle\Controller\Rest\ReservationController
+    prefix:   /v1/public/reservations
+
+gestime_compet_api_public:
+    type:     rest
+#    host:     api.agisante.fr
+    resource: Gestime\ApiBundle\Controller\Rest\CompteController
+    prefix:   /v1/public/compte
+
+gestime_medecin_api_secure:
+    type:     rest
+#    host:     api.agisante.fr
+    resource: Gestime\ApiBundle\Controller\Rest\secure\MedecinController
+    prefix:   /v1/secure/medecins
+
+gestime_V1_api_secure:
+    type:     rest
+#    host:     api.agisante.fr
+    resource: Gestime\ApiBundle\Controller\Rest\EventController
+    prefix:   /v1/public/gestime
+
+gestime_V1_api_secure_messagerie:
+    type:     rest
+#    host:     api.agisante.fr
+    resource: Gestime\ApiBundle\Controller\Rest\MessageController
+    prefix:   /v1/public/messagerie
+
+#
+# ************************************************
+# Routes API
+#
+# ************************************************
+GestimeMessageBundle:
+    resource: "@GestimeMessageBundle/Controller/"
+    type:     annotation
+    prefix:   /messages
+
+utilisateurs:
+    resource: "@GestimeUserBundle/Controller/UtilisateurController.php"
+    type:     annotation
+    prefix:   /admin/utilisateurs
+
+medecins:
+    resource: "@GestimeUserBundle/Controller/MedecinController.php"
+    type:     annotation
+    prefix:   /admin/medecins
+
+internet:
+    resource: "@GestimeDoc24Bundle/Controller/Doc24Controller.php"
+    type:     annotation
+    prefix:   /admin/internet
+
+abonnes:
+    resource: "@GestimeUserBundle/Controller/AbonneController.php"
+    type:     annotation
+    prefix:   /admin/abonnes
+
+gestime_fos_user:
+    resource: "@GestimeUserBundle/Resources/config/routing.yml"
+
+fos_js_routing:
+    resource: "@FOSJsRoutingBundle/Resources/config/routing/routing.xml"
+
+fos_user_group:
+    resource: "@FOSUserBundle/Resources/config/routing/group.xml"
+
+migration:
+    resource: "@GestimeCoreBundle/Controller/MigrationController.php"
+    type:     annotation
+    prefix:   /admin/migration
+
+fullcalendar:
+    resource: "@GestimeCoreBundle/Controller/CalendarController.php"
+    type:     annotation
+    prefix:   /
+
+gestime_accueil:
+    path:         /
+    host:         "%websubdomain%.agisante.fr"
+    requirements:
+        subdomain: "%websubdomain%"
+    defaults:  { _controller: GestimeUserBundle:Utilisateur:index }
+
+infosDoc24:
+    resource: "@GestimeUserBundle/Controller/InfosDoc24Controller.php"
+    type:     annotation
+    prefix:   /infosWeb

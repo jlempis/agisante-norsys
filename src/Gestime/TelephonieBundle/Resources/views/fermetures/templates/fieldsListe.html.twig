@@ -1,0 +1,43 @@
+<div class="form-group">
+  {{ form_label(form.datedebut, 'Début: ', {'label_attr': {'class': 'control-label col-lg-2'}}) }}
+  <div class="col-lg-4">
+      {{ form_widget(form.datedebut) }}
+      {{ form_errors(form.datedebut) }}
+  </div>
+  <div class="col-lg-1">
+      {{ form_widget(form.heuredebut) }}
+      {{ form_errors(form.heuredebut) }}
+  </div>
+</div>
+<div class="form-group">
+  {{ form_label(form.datedebut, 'Fin: ', {'label_attr': {'class': 'control-label col-lg-2'}}) }}
+  <div class="col-lg-4">
+      {{ form_widget(form.datefin) }}
+      {{ form_errors(form.datefin) }}
+  </div>
+  <div class="col-lg-1">
+      {{ form_widget(form.heurefin) }}
+      {{ form_errors(form.heurefin) }}
+  </div>
+</div>
+<div class="form-group">
+  {{ form_label(form.repondeur, 'Répondeur: ', {'label_attr': {'class': 'control-label col-lg-2'}}) }}
+  <div class="col-lg-4">
+    {{ form_widget(form.repondeur, { 'attr': { 'class':"chzn-select select2-offscreen", 'placeholder': "Répondeur" } }) }}
+      {{ form_errors(form.repondeur) }}
+  </div>
+</div>
+<div class="form-group">
+  {{ form_label(form.commentaire, 'Commentaire: ', {'label_attr': {'class': 'control-label col-lg-2'}}) }}
+  <div class="col-lg-4">
+      {{ form_widget(form.commentaire) }}
+      {{ form_errors(form.commentaire) }}
+  </div>
+</div>
+<div class="form-actions">
+  {{ form_widget(form.Enregistrer, { 'attr': { 'class': "btn btn-blue" }}) }}
+  {{ form_widget(form.Annuler, { 'attr': { 'class': "btn btn-default" }}) }}
+</div>
+<div class="form-group">
+{{ form_rest(form) }}
+</div>

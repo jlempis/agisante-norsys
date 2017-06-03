@@ -1,0 +1,16 @@
+<div class="row">
+      <div class="col-lg-12">
+
+        {{ datatable ({
+          'id' : 'medecins_list',
+          'edit_route' : 'medecins_edit',
+          'delete_route' : 'medecins_delete',
+          'main_template' : 'GestimeUserBundle:medecins:liste.html.twig' ,
+          'js' : {
+            'iDisplayLength': 10,
+            'sAjaxSource' : path('medecins_grille')
+            }
+          }) | raw
+        }}
+      </div>
+</div>

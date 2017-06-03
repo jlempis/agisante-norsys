@@ -1,0 +1,15 @@
+<div class="row">
+      <div class="col-lg-12">
+
+        {{ datatable ({
+          'id' : 'medecins_list',
+          'edit_route' : 'infosDoc24_edit',
+          'main_template' : 'GestimeUserBundle:infosDoc24:liste.html.twig' ,
+          'js' : {
+            'iDisplayLength': 10,
+            'sAjaxSource' : path('infosDoc24_grille')
+            }
+          }) | raw
+        }}
+      </div>
+</div>

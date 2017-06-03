@@ -1,0 +1,30 @@
+{% extends '::base.html.twig' %}
+
+{% block titrePage %}<i class="icon-file-alt"></i> Rapports - Rendez-Vous{% endblock %}
+{% block title %}{% endblock %}
+
+{% block stylesheets %}
+  {{ parent() }}
+{% endblock %}
+
+{% block includesjs %}
+  {{ parent() }}
+{% endblock %}
+
+{% block body %}
+
+  {% form_theme form with 'GestimeCoreBundle:Form:form_date_time_picker.html.twig' %}
+
+    <div id="idRapport" data-type="rdvs"></div>
+
+  <div class="row">
+    {% include 'GestimeRapportsBundle:templates:filterform.html.twig'  %}
+    {% include 'GestimeRapportsBundle:RendezVous:templates/datatable.html.twig'  %}
+  </div>
+
+{% endblock %}
+
+{% block javascripts %}
+  {{ parent() }}
+    <script src="{{ asset('bundles/gestimerapports/js/rapports.js') }}"></script>
+{% endblock %}

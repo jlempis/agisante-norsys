@@ -1,0 +1,18 @@
+
+<div class="row">
+      <div class="col-lg-12">
+
+        {{ datatable ({
+          'id' : 'idRepondeur',
+          'edit_route' : 'repondeurs_edit',
+          'delete_route' : 'repondeurs_delete',
+          'main_template' : 'GestimeTelephonieBundle:repondeurs:liste.html.twig' ,
+          'js' : {
+            'iDisplayLength': 10,
+            'sAjaxSource' : path('repondeurs_grille')
+            }
+          })
+        }}
+
+      </div>
+</div>

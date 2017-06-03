@@ -1,0 +1,23 @@
+appel_recus_detail_liste:
+    path:      /admin/statistiques/appel_recus/detail
+    defaults:  { _controller: GestimeStatsBundle:Statistiques:appelsRecusDetail }
+
+appel_recus_detail_grille:
+    path:      /admin/statistiques/appel_recus/detail/grille/{debut}/{fin}
+    defaults:  { _controller: GestimeStatsBundle:Statistiques:appelsRecusDetailGrille }
+
+appel_recus_groupe_liste:
+    path:      /admin/statistiques/appel_recus/groupe
+    defaults:  { _controller: GestimeStatsBundle:Statistiques:appelsRecusGroupe}
+
+appel_recus_groupe_grille:
+    path:      /admin/statistiques/appel_recus/groupe/grille/{debut}/{fin}
+    defaults:  { _controller: GestimeStatsBundle:Statistiques:appelsRecusGroupeGrille }
+
+appel_emis_liste:
+    path:      /admin/statistiques/appel_recus/groupe/grille/{debut}/{fin}
+    defaults:  { _controller: GestimeStatsBundle:Statistiques:appelsRecusGroupeGrille }
+
+statistiques:
+    path:      /admin/statistiques/appel_recus/groupe/grille/{debut}/{fin}
+    defaults:  { _controller: GestimeStatsBundle:Statistiques:appelsRecusGroupeGrille }

@@ -1,0 +1,43 @@
+
+<div class="form-group">
+{{ form_label(form.medecin, 'Medecin: ', {'label_attr': {'class': 'control-label col-lg-2'}}) }}
+    <div class="col-lg-7">
+        {{ form_widget(form.medecin, { 'attr': { 'class':"chzn-select select2-offscreen", 'placeholder': "Médecin" } }) }}
+    </div>
+</div>
+<div class="form-group">
+  {{ form_label(form.debut, 'Début : ', {'label_attr': {'class': 'control-label col-lg-2'}}) }}
+    <div class="col-lg-4">
+    {{ form_widget(form.debut) }}
+      {{ form_errors(form.debut) }}
+    </div>
+</div>
+<div class="form-group">
+  {{ form_label(form.fin, 'Fin : ', {'label_attr': {'class': 'control-label col-lg-2'}}) }}
+    <div class="col-lg-4">
+    {{ form_widget(form.fin) }}
+      {{ form_errors(form.fin) }}
+    </div>
+</div>
+<div class="form-group">
+  {{ form_label(form.commentaire, 'Commentaire : ', {'label_attr': {'class': 'control-label col-lg-2'}}) }}
+    <div class="col-lg-7">
+    {{ form_widget(form.commentaire) }}
+      {{ form_errors(form.commentaire) }}
+    </div>
+</div>
+<div class="form-group">
+  {{ form_label(form.remplacements, 'Remplacements : ', {'label_attr': {'class': 'control-label col-lg-2'}}) }}
+  <div class="col-lg-10">
+      <button class="btn btn-green">Ajouter un remplacement</button>
+     {{ form_widget(form.remplacements) }}
+     {{ form_errors(form) }}
+  </div>
+<div class="form-actions">
+  <div class="col-lg-8">
+    {{ form_widget(form.Enregistrer, { 'attr': { 'class': "btn btn-blue" }}) }}
+    {{ form_widget(form.Annuler, { 'attr': { 'class': "btn btn-default" }}) }}
+  </div>
+</div>
+  {{ form_rest(form) }}
+</div>

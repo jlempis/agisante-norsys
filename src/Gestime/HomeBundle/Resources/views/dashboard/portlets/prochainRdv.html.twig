@@ -1,0 +1,17 @@
+      <div class="portlet portlet-reminder portlet-green">
+        <h3>Prochains Rendez-Vous</h3>
+
+        <p class="reminder-time"><i class="icon ion-ios7-clock" style="font-size: 1.0em;"></i>
+        {% if infosRdv.next.memejour%}
+            {{infosRdv.last.debut|date("H:i")}}
+        {% else %}
+            {{infosRdv.next.debut|date(" d/m/y à H:i")}}
+        {% endif %}
+        </p>
+        <div class="btn-group btn-group-xs reminder-buttons"></div>
+
+        <p class="reminder-place">{{infosRdv.next.type}}</p>
+         <p class="reminder-place">{{infosRdv.next.nom}}</p>
+        <em class="reminder-notes"></em>
+        <i class="icon ion-ios7-bell portlet-bg-icon"></i>
+      </div>

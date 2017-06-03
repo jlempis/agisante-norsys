@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, maximum-scale=1, initial-scale=1, user-scalable=0">
+        <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+
+        <title>{% block title %}Agisanté - Rapports{% endblock %}</title>
+
+        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+        {% include 'GestimeRapportsBundle:css:cssPdf.html.twig' %}
+    </head>
+    <body>
+        <div class="row">
+            <div id="entete">
+                {{entete.nom}}: {{entete.raisonSociale}}
+                <br />
+                Tél: {{entete.telephone}} Fax: {{entete.fax}}
+                <br />
+                Le {{ "now"|date("d/m/Y") }}
+                <br />
+                <b>{{docteur.nom}}</b>
+            </div>
+        </div>
+        <div class="row">
+            <div id="titre" style="text-align:center;">
+                <span><h3>Liste des mouvements du {{debut|date("d/m/Y")}} au {{fin|date("d/m/Y")}}</h3></span>
+            </div>
+        </div>
+
+        <div class="row">
+          <div class="table-responsive" style="overflow: hidden; width: 100%; height: auto;">
+            <table id="liste">
+                <colgroup>
+                   <col span="1" style="width: 5%;">
+                   <col span="1" style="width: 20%;">
+                   <col span="1" style="width: 20%;">
+                   <col span="1" style="width: 25%;">
+                   <col span="1" style="width: 30%;">
+
+
+                </colgroup>
+                <tbody>
+                    <tr>
+                        <th></td>
+                        <th>Début</td>
+                        <th>Fin</td>
+                        <th>Patient/Labo</td>
+                        <th>Objet</td>
+                    </tr>
+
+                    {% for ligne in liste %}
+
+                        <tr class="{{ cycle(['even','odd'],loop.index) }}">
+                            <td style="text-align:center;">{{ligne.Relation_type}} {% if ligne.gPrecName ends with 'SITE' %}*{% endif %}</td>
+                            <td>{{ligne.EvenementPrecedent_debutRdv|date("d/m/Y H:i")}}</td>
+                            <td>{{ligne.EvenementPrecedent_finRdv|date("d/m/Y H:i")}}</td>
+                            <td>{{ligne.ContactPrecedent}}</td>
+                            <td>{{ligne.EvenementPrecedent_objet}}</td>
+                        </tr>
+                        {% if ligne.Relation_type == 'M' %}
+                            <tr class="{{ cycle(['even','odd'],loop.index) }}">
+                                <td style="text-align:center;">{{ligne.Relation_type}} {% if ligne.gSuivName ends with 'SITE' %}*{% endif %}</td>
+                                <td>{{ligne.EvenementSuivant_debutRdv|date("d/m/Y H:i")}}</td>
+                                <td>{{ligne.EvenementSuivant_finRdv|date("d/m/Y H:i")}}</td>
+                                <td>{{ligne.ContactSuivant}}</td>
+                                <td>{{ligne.EvenementSuivant_objet}}</td>
+                            </tr>
+                        {% endif %}
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </body>
+</html>

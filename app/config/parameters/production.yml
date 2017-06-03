@@ -1,0 +1,44 @@
+# This file is auto-generated during the composer install
+parameters:
+    database_driver: pdo_mysql
+    database_host: 127.0.0.1
+    database_port: null
+    database_name: gestime_dev
+    database_user: gestimeDEV
+    database_password: 'MDP2dev*'
+    mailer_transport: smtp
+    mailer_host: 127.0.0.1
+    mailer_user: null
+    mailer_password: null
+    locale: fr
+    secret: Xp2DYWUkf2fnHXeYrHc!
+    ftp_host: ftp.smf-59.com
+    ftp_user: gestime
+    ftp_password: MDP2gestime
+    ftp_dir: /telephonie
+    rabbit_host: localhost
+    rabbit_user: gestime
+    rabbit_password: AnU66irQ
+    upload_dir: ../web/repondeurs
+    fileConfigRepondeurs: config_repondeurs.csv
+    sass.bin: /usr/local/bin/sass
+    compass.bin: /usr/local/bin/compass
+    ruby.bin: /usr/bin/ruby
+    assetic.filter.compass.images_dir: '%kernel.root_dir%/../web/images'
+    assetic.filter.compass.http_path: null
+    maxitemspage: 15
+    userSMS: sophiesylvie
+    pwdSMS: up74u37f51
+    urlSMS: 'https://api.msinnovations.com/http/sendSms_v8.php'
+    urlInfosSMS: 'https://api.msinnovations.com/http/getInfo_v8.php'
+    pdo.options: {  }
+    pdo.db_options:
+        db_table: Session
+        db_id_col: id_session
+        db_data_col: value
+        db_time_col: time
+        db_lifetime_col: lifetime
+        default_locale: '%locale%'
+        lifetime: 3600
+        auto_start: true
+    datatable.class: Gestime\CoreBundle\Datatable\Datatable

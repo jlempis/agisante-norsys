@@ -1,0 +1,11 @@
+/* line 1, ../../compass/sass/justgage.scss */
+.justgage {
+  width: 200px;
+  height: 160px;
+  display: inline-block;
+}
+/* line 6, ../../compass/sass/justgage.scss */
+.justgage.small {
+  width: 90px;
+  height: 70px;
+}

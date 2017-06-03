@@ -1,0 +1,52 @@
+ body{
+  font-family:'Open Sans', HelveticaNeue, Helvetica, Arial;
+}
+#loader {
+  display:inline;
+}
+.logo {
+  margin: 0;
+  text-align: center;
+  width: 100%;
+}
+
+.logo > img{
+  width: 110px;
+}
+.primary-sidebar .nav {
+  margin-top: 10px;
+}
+@media screen and (max-width: 1199px){
+  .logo{
+    width: auto;
+    text-align: left;
+    margin-left: 20px;
+  }
+}
+.primary-sidebar .nav {
+  margin-top: 0;
+}
+
+.main-content > .container:first-child{
+  margin-top: 15px;
+}
+
+.navbar-left > h2{
+  color: #fff;
+  line-height: 50px;
+  margin: 0 0 0 20px;
+  font-size: 20px;
+  font-weight: normal;
+}
+
+.navbar-left > h2 > i{
+  font-size: 20px;
+  vertical-align: baseline;
+  margin-right: 6px;
+}
+
+@media (min-width: 1199px) {
+  .logo > img{
+      margin-left: -45px;
+  }
+}

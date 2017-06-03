@@ -1,0 +1,27 @@
+
+{% block main %}
+
+<div class="box">
+    <div class="box-header">
+        <ul class="nav nav-tabs nav-tabs-left">
+            <li class="active"><a href="#Repondeurs" data-toggle="tab"><i class="icon-cog"></i> <span>Répondeurs</span></a></li>
+        </ul>
+
+        <div class="title"></div>
+    </div>
+
+    <div class="box-content padded">
+        <div class="tab-content">
+            <div class="tab-pane active" id="Repondeurs">
+                {% include 'GestimeTelephonieBundle:repondeurs:templates/tplListe.html.twig' %}
+            </div>
+        </div>
+    </div>
+</div>
+<form>
+    <input id="btn-ajouter" type="button" onclick="location.replace('{{ path('repondeurs_ajouter') }}');" class="btn btn-lg btn-blue" value="Ajouter un répondeur" />
+
+</form>
+
+
+{% endblock  %}

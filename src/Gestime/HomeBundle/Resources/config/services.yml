@@ -1,0 +1,8 @@
+services:
+    # ************************************************
+    # Home : Manager
+    #
+    # ************************************************
+    gestime.home.manager:
+        arguments: ['@service_container', '@doctrine.orm.entity_manager']
+        class: Gestime\HomeBundle\Business\HomeManager

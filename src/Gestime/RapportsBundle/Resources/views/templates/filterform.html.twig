@@ -1,0 +1,29 @@
+  <form action="#" method="post" {{ form_enctype(form) }} class="form-horizontal fill-up validatable" novalidate>
+    <div class="form-group">
+
+      <div class="col-lg-2 ">
+        <label>Médecin: </label>
+        {{ form_widget(form.medecin, { 'attr': { 'class':"chzn-select select2-offscreen", 'placeholder': "Médecin" } }) }}
+        {{ form_errors(form.medecin) }}
+      </div>
+      <div class="col-lg-2">
+        <label>Du: </label>
+        {{ form_widget(form.debut) }}
+        {{ form_errors(form.debut) }}
+      </div>
+      <div class="col-lg-2">
+        <label>Au: </label>
+        {{ form_widget(form.fin) }}
+        {{ form_errors(form.fin) }}
+      </div>
+      <div class="col-lg-4">
+        <label>&nbsp;</label><br />
+        <button type="submit" class="btn btn-blue">Filtrer et afficher</button>
+      </div>
+      <div id="btn-impression" class="col-lg-1">
+        <label>&nbsp;</label><br />
+        <a href="" class="btn btn-blue"><i class="icon-print"></i> Imprimer</a>
+      </div>
+    </div>
+      {{ form_rest(form) }}
+   </form>

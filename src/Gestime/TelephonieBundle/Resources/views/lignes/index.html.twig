@@ -1,0 +1,13 @@
+{% extends '::base.html.twig' %}
+
+{% block titrePage %}
+  <i class="icon-phone"></i> Lignes
+{% endblock %}
+
+{% block title %}Liste des lignes{% endblock %}
+
+{% block body %}
+
+{% include 'GestimeTelephonieBundle:lignes:templates/datatable.html.twig'  %}
+
+{% endblock %}

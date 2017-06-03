@@ -1,0 +1,13 @@
+  <div class="row">
+        <div class="col-lg-12">
+          {{ datatable ({
+            'id' : 'id',
+            'main_template' : 'GestimeStatsBundle:appels_recus_groupe:liste.html.twig' ,
+            'js' : {
+              'iDisplayLength': 10,
+              'sAjaxSource' : path('appel_recus_grille', {'debut': form.datedebut.vars.value|default('2014-01-15') ,'fin':  form.datefin.vars.value|default('2014-01-15') })
+              }
+            })
+          }}
+        </div>
+  </div>

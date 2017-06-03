@@ -1,0 +1,10 @@
+
+
+eventV1:
+    type:           rest
+    resource:       Gestime\ApiBundle\Controller\Rest\EventController
+
+messageV1:
+    type:           rest
+    resource:       Gestime\ApiBundle\Controller\Rest\MessageController
+

@@ -1,0 +1,70 @@
+<script type="text/javascript">
+  $(document).ready(function() {
+
+    var $idCollectionParent  = 'absence';
+    var $idCollectionChild = 'remplacements';
+    var $elements=[ 'debut', 'fin', 'medecinRemplacant'];
+
+    var $idCollection = $idCollectionParent + '_' + $idCollectionChild;
+    var $container = $('div#' + $idCollection);
+    var index = $container.find(':input').length;
+
+    index=index / ($elements.length + 2); //Ajout de 2 pour les inputs des datepicker ..
+    if (index != 0) {
+        $container.children('div.rowRemplacement').each(function() {
+        ajouterLienSuppression($(this));
+      });
+    }
+
+    applyStyle();
+
+   $( ".btn-green" ).click(function(e) {
+      ajouterRemplacement($container);
+      applyStyle();
+      e.preventDefault();
+
+      return false;
+    });
+
+    function applyStyle() {
+      $(".sel2").select2();
+      $(".sel2").removeClass( "sel2")
+      /GestimeDatePicker.initDatePicker();
+    }
+
+   function ajouterRemplacement($container) {
+      var $prototype = $($container.attr('data-prototype').replace(/__name__/g, index));
+      ajouterLienSuppression($prototype);
+      $container.append($prototype);
+      reorder($idCollectionParent, $idCollectionChild, $elements);
+      index++;
+    }
+
+    function reorder($idCollectionParent, $idCollectionChild, $elements) {
+      jQuery.each($elements, function(index, value) {
+        _reorder($idCollection, value, $idCollectionParent + '[' + $idCollectionChild + '][', '][' + value + ']');
+      });
+    }
+
+    function _reorder($debselector, $endselector, $debname, $endname) {
+      var i=0;
+      $('*[id^=' + $debselector + '][id$=' + $endselector + ']').each(function() {
+        $(this).attr('name', $debname + i +  $endname  );
+        i++;
+      });
+    }
+
+    function ajouterLienSuppression($prototype) {
+      $lienSuppression = $('<a href="#" class="btn btn-danger">Supprimer</a><div class="clear">');
+      $($prototype).children('div.btnSupp').append($lienSuppression);
+      $lienSuppression.click(function(e) {
+        $prototype.remove();
+        reorder($idCollectionParent, $idCollectionChild, $elements);
+        e.preventDefault();
+
+        return false;
+      });
+    }
+
+  });
+</script>

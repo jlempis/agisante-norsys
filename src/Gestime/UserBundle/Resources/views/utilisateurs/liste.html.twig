@@ -1,0 +1,26 @@
+
+{% block main %}
+
+<div class="box">
+<!--     <div class="box-header">
+        <ul class="nav nav-tabs nav-tabs-left">
+            <li class="active"><a href="#Utilisateurs" data-toggle="tab"><i class="icon-cog"></i> <span>Utilisateurs</span></a></li>
+        </ul>
+
+        <div class="title"></div>
+    </div> -->
+
+    <div class="box-content padded">
+        <div class="tab-content">
+            <div class="tab-pane active" id="Utilisateurs">
+                {% include 'GestimeUserBundle:utilisateurs:templates/tplListe.html.twig' %}
+            </div>
+        </div>
+    </div>
+</div>
+<form action="{{ path('utilisateurs_ajouter') }}">
+    <button id="btn-ajouter" type="submit" class="btn btn-blue">Ajouter un utilisateur</button>
+</form>
+
+
+{% endblock  %}

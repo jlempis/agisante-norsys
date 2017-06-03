@@ -1,0 +1,41 @@
+    <div class="col-md-2 col-sm-12" id="compose-wrapper">
+        <div class="panel">
+            <aside class="panel-body">
+                <a href="{{ path('message_compose') }}" class="btn btn-primary btn-block">Nouveau</a>
+                {% if filtre is not defined %}{% set filtre=''%}{% endif %}
+                <ul class="nav nav-pills nav-stacked compose-nav">
+                    <li {% if filtre ==  "Reception" %} class="active"{% endif %}>
+                        <a href="{{ path('messages_liste', { 'filtre': 'Reception' }) }}"> <i class="icon-inbox"></i> Reçus
+                            <span id="cptNonLusInbox" class=" label label-danger pull-right inbox-notification" style="display:none;"> {{compteurs.nonlus}}
+                            </span>
+                        </a>
+                    </li>
+                    <li {% if filtre ==  "Favoris" %}class="active"{% endif %}>
+                        <a href="{{ path('messages_liste', { 'filtre': 'Favoris' }) }}"> <i class="icon-star"></i> Favoris
+                            <span id="cptNonLusFavoris" class="label label-warning pull-right inbox-notification"  style="display:none;"> {{compteurs.nonluFavoris}}</span>
+                        </a>
+                    </li>
+                    <li {% if filtre ==  "Envoyes" %}class="active"{% endif %}>
+                        <a href="{{ path('messages_liste', { 'filtre': 'Envoyes' }) }}"> <i class="icon-envelope"></i> Envoyés</a>
+                    </li>
+                    <li {% if filtre ==  "Supprimes" %}class="active"{% endif %}>
+                        <a href="{{ path('messages_liste', { 'filtre': 'Supprimes' }) }}"> <i class="icon-trash"></i> Supprimés</a>
+                    </li>
+                </ul>
+            </aside>
+        </div>
+        <div class="panel">
+            <aside class="panel-body">
+                <button class="btn btn-default btn-block">Catégories</button>
+                <ul class="nav nav-pills nav-stacked compose-nav">
+                    {% for categorie in categories %}
+                        <li  {% if filtre ==  categorie.nom %}class="active"{% endif %}>
+                           <a href="{{ path('messages_liste', { 'filtre' :categorie.nom   }) }}"> <i class="icon-bookmark text-{{categorie.style}}" style="margin-top: 4px;"></i>{{ categorie.nom|e }}
+                           </a>
+                       </li>
+                    {% endfor %}
+
+                </ul>
+            </aside>
+        </div>
+    </div>

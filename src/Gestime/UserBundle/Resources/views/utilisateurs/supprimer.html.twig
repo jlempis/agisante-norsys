@@ -1,0 +1,35 @@
+{% extends '::base.html.twig' %}
+
+{% block titrePage %}<i class="icon-user"></i> Utilisateurs{% endblock %}
+
+{% block title %}Supprimer un utilisateur{% endblock %}
+
+{% block body %}
+
+
+<div class="row">
+  <div class="col-lg-12">
+    <div class="box">
+      <div class="box-header">
+        <span class="title"><i class="icon-user"></i> Supprimer un utilisateur</span>
+      </div>
+      <div class="box-content">
+        <form action="#" method="post" {{ form_enctype(form) }} class="form-horizontal fill-up validatable">
+          <div class="padded">
+            {% include 'GestimeUserBundle:utilisateurs:templates/fieldsListe.html.twig'  %}
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% include 'GestimeUserBundle:utilisateurs:templates/datatable.html.twig'  %}
+<script>
+  jQuery(document).ready(function () {
+      $('.icheck').iCheck({
+        checkboxClass: 'icheckbox_flat-aero',
+        radioClass: 'iradio_flat-aero'
+      });
+  });
+</script>
+{% endblock %}

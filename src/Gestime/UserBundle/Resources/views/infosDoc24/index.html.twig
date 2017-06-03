@@ -1,0 +1,11 @@
+{% extends '::base.html.twig' %}
+
+{% block titrePage %}<i class="icon-plus-sign-alt"></i> Informations Doc24{% endblock %}
+
+{% block title %}Liste des informations{% endblock %}
+
+{% block body %}
+
+{% include 'GestimeUserBundle:infosDoc24:templates/datatable.html.twig'  %}
+
+{% endblock %}

@@ -1,0 +1,243 @@
+<form name="bookingForm" id="popinBooking" class="form-horizontal">
+    <div class="modal-header active">
+        <a class="close" aria-label="Close"×</a>
+        <h3>
+            <span>Rendez-vous avec </span>
+            <span>VIVSYANYY</span>
+            <span></span>
+            <span>Oleh</span>
+        </h3>
+    </div>
+    <div class="modal-body">
+        <div class="form-horizontal" id="popinBooking">
+            <div class="form-group bordered">
+                <label class="control-label col-sm-3" for="appointment_agenda_id">
+                    <span>
+                        <i class="icon-appt-place"></i>
+                        <span>Agenda</span>
+                    </span>
+                </label>
+                <div class="col-sm-9">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <select id="appointment_agenda_id" disabled="" class="form-control">
+                                <option selected="" value="9760">Dr LESAGE (Armentières)</option>
+                                <option value="10092">Dr VANDEVILLE (Armentières)</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group bordered">
+                <label class="control-label col-sm-3">
+                    <span>
+                        <i class="icon-appt-date"></i>
+                        <span>Horaire</span>
+                    </span>
+                </label>
+                <div class="col-sm-9">
+                    <div style="display:inline-block;margin-right:5px;vertical-align:bottom;">
+                        <div class="input-group date">
+                            <input class="form-control form-control" name="datepicker-input" type="text" value="Mardi 15 Mars" maxlength="255" autocorrect="off" autocomplete="off" autocapitalize="off">
+                                <span class="input-group-addon">
+                                    <i class="fa fa-calendar"></i>
+                                </span>
+                        </div>
+                    </div>
+                    <input type="text" name="start_date_timepicker" class="timepicker form-control ui-timepicker-input" data-step="5" autocomplete="off">
+                </div>
+            </div>
+            <div class="form-group bordered">
+                <label class="control-label col-sm-3">
+                            <span>
+                                <i class="icon-appt-visit_motive"></i>
+                                <span>Motif</span>
+                            </span>
+                </label>
+                <div class="col-sm-9">
+                    <div class="row">
+                        <div class="motive_field col-sm-7">
+                            <div class="select2-container form-control motive-select" id="s2id_autogen41" style="border-left-color:#3ce9a9;">
+                                <div class="alert alert-info">
+                                    <span>Uniquement le mercredi et le jeudi matin</span>
+                                    <span></span>
+                                    <span></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group-container patient-info">
+                            <div class="form-group">
+                                <label class="control-label col-sm-3">
+                                        <span>
+                                            <i class="icon-appt-patient"></i>
+                                            <span>Patient</span>
+                                        </span>
+                                </label>
+                                <div class="col-sm-9">
+                                    <div class="row">
+                                        <div class="civility-names col-sm-8">
+                                            <div class="col-sm-5">
+                                                <span>
+                                                    <label class="radio-inline">
+                                                        <input type="radio" value="1">
+                                                        <span>Mme</span>
+                                                    </label>
+                                                    <label class="radio-inline">
+                                                        <input type="radio" value="0">
+                                                        <span>M.</span>
+                                                    </label>
+                                                </span>
+                                            </div>
+                                            <div class="col-sm-7">
+                                                <input disabled="" placeholder="Nom de famille" name="patient_last_name" value="VIVSYANYY" type="text" maxlength="255" autocorrect="off" autocomplete="off" autocapitalize="off" class="form-control">
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <input disabled="" placeholder="Prénom" name="patient_first_name" value="Oleh" type="text" maxlength="255" autocorrect="off" autocomplete="off" autocapitalize="off" class="form-control">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-sm-3"></label>
+                                    <div class="col-sm-9">
+                                        <div class="row">
+                                            <div class="civility-names col-sm-8">
+                                                <div class="col-sm-7 col-sm-offset-5">
+                                                    <input name="maiden_name" value="" placeholder="Nom de jeune fille" type="text" maxlength="255" autocorrect="off" autocomplete="off" autocapitalize="off" class="form-control">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-sm-3"></label>
+                                    <div class="col-sm-9">
+                                        <div class="row">
+                                            <div class="col-sm-5">
+                                                <input disabled="" placeholder="Téléphone portable" name="patient_phone_number" value="0000" type="text" maxlength="255" autocorrect="off" autocomplete="off" autocapitalize="off" class="form-control">
+                                            </div>
+                                            <div class="col-sm-7">
+                                                <span class="patient-email">
+                                                    <div class="input-group">
+                                                        <input type="email" name="patient_email" value="" placeholder="Email du patient" maxlength="255" autocorrect="off" autocomplete="off" autocapitalize="off" class="form-control">
+                                                        <div class="input-group-addon">
+                                                            <a style="pointer-events:none;" href="mailto:undefined" target="_blank">
+                                                                <i class="icon icon-pro-mail"></i>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-sm-3"></label>
+                                    <div class="col-sm-9">
+                                        <div class="row">
+                                            <div class="col-sm-5">
+                                                <input name="secondary_phone_number" value="" placeholder="Téléphone fixe" type="text" maxlength="255" autocorrect="off" autocomplete="off" autocapitalize="off" class="form-control">
+                                            </div>
+                                            <div class="col-sm-7">
+                                                <span class="">
+                                                    <div class="birthdate-input">
+                                                        <div class="birthdate-inputs">
+                                                            <span class="">
+                                                                <input type="text" class="form-control day" maxlength="2" pattern="^[0-3]?[0-9]?$" placeholder="Jour" value="" name="birthdate" autocomplete="off">
+                                                                <span>&nbsp;</span>
+                                                                <input type="text" class="form-control month" maxlength="2" pattern="^[01]?[0-9]?$" placeholder="Mois" value="" name="birthdate" autocomplete="off">
+                                                                <span>&nbsp;</span>
+                                                                <input type="text" class="form-control year" maxlength="4" pattern="^(19|20)?[0-9]{2}$" placeholder="Année" value="" name="birthdate" autocomplete="off">
+                                                                <span class="dc-patient-age"></span>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-sm-3"></label>
+                                    <div class="col-sm-9">
+                                        <input value="" name="patient_address" placeholder="Adresse" type="text" maxlength="255" autocorrect="off" autocomplete="off" autocapitalize="off" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-sm-3"></label>
+                                    <div class="col-sm-9">
+                                        <div class="row">
+                                            <div class="col-sm-4">
+                                                <span class="twitter-typeahead" style="position: relative; display: inline-block;"></span>
+                                            </div>
+                                            <div class="col-sm-8">
+                                                <input value="" name="patient_city" placeholder="Ville" type="text" maxlength="255" autocorrect="off" autocomplete="off" autocapitalize="off" class="form-control">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-sm-3"></label>
+                                <div class="col-sm-9">
+                                    <div class="row">
+                                        <div class="col-sm-3">
+                                        </div>
+                                        <div class="patient-links col-sm-9">
+                                            <div>
+                                                <a>Voir la fiche patient</a>
+                                                <a class="btn btn-danger btn-xs new-patient">
+                                                    <i class="fa"></i>
+                                                    <span> Nouveau patient</span>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group-container"></div>
+                    <div class="form-group bordered">
+                        <label class="control-label col-sm-3" for="referrer">
+                            <span>
+                                <i class="icon-appt-referrer"></i>
+                                <span>Provenance</span>
+                            </span>
+                        </label>
+                        <div class="col-sm-9">
+                            <input value="" id="referrer" name="referrer" placeholder="Ex : généraliste, dentiste, pharmacien, patient..." type="text" maxlength="255" autocorrect="off" autocomplete="off" autocapitalize="off" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group bordered">
+                        <label class="control-label col-sm-3">
+                            <span>
+                                <i class="icon-appt-notes"></i>
+                                <span>Notes</span>
+                            </span>
+                        </label>
+                        <div class="col-sm-9">
+                            <textarea rows="3" placeholder="Notes" type="text" maxlength="255" autocorrect="off" autocomplete="off" autocapitalize="off" class="form-control"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <em class="creation-infos">Créé par DIERICK Corinne le mer. 20 janv. 2016 à 11:05.</em>
+                <span>
+                    <span>&nbsp;</span>
+                    <a href="#">
+                        <i class="fa fa-folder-open-o"></i>
+                        <span>&nbsp; Historique</span>
+                    </a>
+                    <div class="history"></div>
+                </span>
+            </div>
+            <div class="modal-footer">
+                <div>
+                    <a class="btn btn-link">Annuler</a>
+                    <button type="submit" class="btn btn-info">Modifier le rendez-vous</button>
+                </div>
+            </div>
+</form>

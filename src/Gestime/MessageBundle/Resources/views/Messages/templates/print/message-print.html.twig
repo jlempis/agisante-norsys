@@ -1,0 +1,92 @@
+<div class="print">
+    <h1>AGISANTÉ</h1>
+    Le {{ "now" | localizeddate('full', 'short') }}
+    <hr>
+
+    {% if message_mirroir is null %}
+        {% set message_haut = message %}
+    {% else %}
+        {% if message.isResponse %}
+            {% set message_haut = message %}
+            {% set message_bas = message_mirroir %}
+        {% else %}
+            {% set message_haut = message_mirroir %}
+            {% set message_bas = message %}
+        {% endif %}
+    {% endif %}
+
+    <h2>{{ message_haut.sujet}}<h2>
+    <table class="table" style="width:100%">
+        <tbody>
+
+            <tr>
+            <td class="message" style="width:60%">
+                <strong>
+                    <span class="emetteur">
+                        {% if message_haut.sens == 1 %} A: {% else %} De: {% endif %}
+                        {{ message_haut.medecins[0].nom|upper}}
+                        {% if message_haut.medecins.count > 1 %}
+                            et {{ message_haut.medecins.count -1 }} de plus
+                        {% endif %}
+                    </span>
+                </strong>
+                <br>
+                <span class="categories">
+                    {% for categorie in message_haut.categories %}
+                        <span><i class="icon-check"></i>{{categorie.nom}}</span>
+                    {% endfor %}
+                </span>
+                {% if message_haut.sms == 1 %}
+                    <span><i class="icon-check"></i>SMS</span>
+                {% endif %}
+                <br><br>
+                    {{ message_haut.objet}}
+                </a>
+            </td>
+            <td valign="top" class="text-right emetteur">
+                {{ message_haut.dateEnvoi|localizeddate('full', 'short')  }}
+            </td>
+        </tr>
+
+        </tbody>
+    </table>
+    {% if not message_mirroir is null %}
+        <hr>
+        <h2>{{ message_bas.sujet}}<h2>
+        <table class="table" style="width:100%">
+            <tbody>
+                <tr>
+                <td class="message" style="width:60%">
+                    <strong>
+                        <span class="emetteur">
+                            <h3>
+                                {% if message_bas.sens == 1 %} A: {% else %} De: {% endif %}
+                                {{ message_bas.medecins[0].nom|upper}}
+                                {% if message_bas.medecins.count > 1 %}
+                                    et {{ message_bas.medecins.count -1 }} de plus
+                                {% endif %}
+                            </h3>
+                        </span>
+                    </strong>
+                    <br>
+                    <span>
+                        {% for categorie in message_bas.categories %}
+                            <span><i class="icon-check"></i>{{categorie.nom}}</span>
+                        {% endfor %}
+                    </span>
+                    {% if message_bas.sms == 1 %}
+                        <span><i class="icon-check"></i>SMS</span>
+                    {% endif %}
+                    <br><br>
+                        {{ message_bas.objet}}
+                    </a>
+                </td>
+                <td valign="top" class="text-right"  style="width:40%">{{ message_bas.dateEnvoi|localizeddate('full', 'short') }}
+
+                </td>
+            </tr>
+
+            </tbody>
+        </table>
+    {% endif %}
+</div>

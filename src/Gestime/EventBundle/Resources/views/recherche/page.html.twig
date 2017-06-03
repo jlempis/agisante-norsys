@@ -1,0 +1,59 @@
+{% extends '::base.html.twig' %}
+
+{% block titrePage %}<i class="icon-search"></i> Recherche{% endblock %}
+
+{% block title %}{% endblock %}
+
+{% block stylesheets %}
+
+  {{ parent() }}
+
+{% endblock %}
+
+{% block includesjs %}
+
+  {{ parent() }}
+
+{% endblock %}
+
+{% block body %}
+
+<div class="row">
+  <form action="#" method="post" {{ form_enctype(form) }} class="form-horizontal fill-up validatable" novalidate>
+    <div class="form-group">
+
+      <div class="col-lg-2">
+        <label>Médecin: </label>
+        {{ form_widget(form.medecin, { 'attr': { 'class':"chzn-select select2-offscreen", 'placeholder': "Médecin" } }) }}
+        {{ form_errors(form.medecin) }}
+      </div>
+      <div class="col-lg-2">
+        <label>Nom: </label>
+        {{ form_widget(form.nom) }}
+        {{ form_errors(form.nom) }}
+      </div>
+      <div class="col-lg-2">
+        <label>Prénom: </label>
+        {{ form_widget(form.prenom) }}
+        {{ form_errors(form.prenom) }}
+      </div>
+      <div class="col-lg-2">
+        <label>Téléphone: </label>
+        {{ form_widget(form.telephone) }}
+        {{ form_errors(form.telephone) }}
+      </div>
+      <div class="col-lg-1">
+        <label>&nbsp;</label><br />
+        <button type="submit" class="btn btn-blue">Filtrer et afficher</button>
+      </div>
+    </div>
+      {{ form_rest(form) }}
+   </form>
+
+{% include 'GestimeEventBundle:recherche:templates/datatable.html.twig'  %}
+
+</div>
+<script>
+      $(".sel2").select2();
+</script>
+{% endblock %}

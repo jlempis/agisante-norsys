@@ -1,0 +1,30 @@
+{% block main %}
+
+<div class="box">
+    <div class="box-header">
+        <ul class="nav nav-tabs nav-tabs-left">
+            <li class="active"><a href="#Absences" data-toggle="tab"><i class="icon-cog"></i> <span>Absences</span></a></li>
+        </ul>
+
+        <div class="title"></div>
+    </div>
+
+    <div class="box-content padded">
+        <div class="tab-content">
+            <div class="tab-pane active" id="Absences">
+
+
+
+                {% include 'GestimeEventBundle:absences:templates/tplListe.html.twig' %}
+                              
+            </div>
+        </div>
+    </div>
+</div>
+<form>
+    <input type="button" onclick="location.replace('{{ path('absence_ajouter') }}');" class="btn btn-lg btn-blue" value="Ajouter une absence" />
+
+</form>
+
+
+{% endblock  %}

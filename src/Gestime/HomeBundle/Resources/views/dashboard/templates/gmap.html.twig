@@ -1,0 +1,39 @@
+<script>
+  function initialize() {
+    var mapCanvas = document.getElementById('map-canvas');
+
+    var mapOptions = {
+      mapTypeId: google.maps.MapTypeId.ROADMAP
+    }
+
+    var myPoints = [];
+    {% for visite in visites %}
+      myPoints.push({
+        'latlng' : new google.maps.LatLng({{visite.coordonnees.lat}}, {{visite.coordonnees.lng}}),
+        'titre' : "{{visite.nom}}"
+      });
+    {% endfor %}
+
+    var bounds = new google.maps.LatLngBounds();
+    var map = new google.maps.Map(mapCanvas, mapOptions);
+
+    $.each(myPoints, function(key, val) {
+      bounds.extend(val.latlng);
+      var thisMarker = addThisMarker(val.latlng, val.titre);
+      thisMarker.setMap(map);
+    });
+
+    if (myPoints.length > 1) {
+      map.fitBounds(bounds);
+    } else {
+     map.setCenter(new google.maps.LatLng({{adresse_cabinet.lat}}, {{adresse_cabinet.lng}}));
+     map.setZoom(11);
+    }
+  }
+
+  function addThisMarker(point, titre){
+      var marker = new google.maps.Marker({position: point, title:titre});
+      return marker;
+  }
+  google.maps.event.addDomListener(window, 'load', initialize);
+</script>

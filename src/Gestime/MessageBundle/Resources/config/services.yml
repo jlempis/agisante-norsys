@@ -1,0 +1,14 @@
+services:
+    gestime.sms_listener:
+        class: Gestime\MessageBundle\Event\MessageListener
+        arguments: [@gestime.sms]
+        tags:
+            - { name: kernel.event_listener, event: gestime.messages.post_message, method: onMessagePost }
+
+    gestime.sms:
+        class: Gestime\MessageBundle\Sms\SMSService
+        arguments: ['@doctrine.orm.entity_manager']
+
+    gestime.message.manager:
+        arguments: ['@service_container', '@doctrine.orm.entity_manager']
+        class: Gestime\MessageBundle\Business\MessageManager

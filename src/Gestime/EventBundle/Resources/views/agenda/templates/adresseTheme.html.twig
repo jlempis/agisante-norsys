@@ -1,0 +1,30 @@
+{% block _evenement_patient_adresses_entry_widget %}
+    {% spaceless %}
+        <div class="rowAdresses form-group" style="margin-left: -5px; margin-right: -5px; ">
+            <div class="form-group">
+                {{ form_label(form.voie, 'Voie: ', {'label_attr': {'class': 'control-label col-lg-2 col-md-2 col-sm-2 '}}) }}
+            <div class="col-lg-3 col-md-3 col-sm-3">
+                {{ form_widget(form.voie) }}
+                <div id="error_0" class="invisible" data-element="evenement_patient_adresses_1_voie"></div>
+            </div>
+                {{ form_label(form.complement, 'Complément: ', {'label_attr': {'class': 'control-label col-lg-2 col-md-2 col-sm-2 '}}) }}
+            <div class="col-lg-3 col-md-3 col-sm-3">
+                {{ form_widget(form.complement) }}
+            </div>
+        </div>
+
+        <div class="form-group">
+            {{ form_label(form.codePostal, 'Code postal: ', {'label_attr': {'class': 'control-label col-lg-2 col-md-2 col-sm-2 '}}) }}
+            <div class="col-lg-2 col-md-2 col-sm-2">
+                {{ form_widget(form.codePostal) }}
+                <div id="error_1" class="invisible" data-element="evenement_patient_adresses_1_codePostal"></div>
+            </div>
+
+            {{ form_label(form.ville, 'Ville: ', {'label_attr': {'class': 'control-label col-lg-1 col-md-2 col-sm-2 '}}) }}
+            <div class="col-lg-6 col-md-6 col-sm-5">
+                {{ form_widget(form.ville, { 'attr': { 'class':"sel2 chzn-select select2-offscreen", 'placeholder': "Choisissez une ville" } }) }}
+                <div id="error_2" class="invisible" data-element="evenement_patient_adresses_1_ville"></div>
+            </div>
+        </div>
+    {% endspaceless %}
+{% endblock %}

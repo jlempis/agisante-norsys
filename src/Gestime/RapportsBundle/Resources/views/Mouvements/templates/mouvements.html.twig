@@ -1,0 +1,30 @@
+    {% if data.type == 'typemvt' %}
+        {{ data.avant }}
+    {% endif %}
+    {% if data.type == 'objet' %}
+        {{ data.avant }}<br>{{ data.apres }}
+    {% endif %}
+    {% if data.type == 'createur' %}
+        {{ data.avant }}
+        <br>{{ data.apres }}
+    {% endif %}
+    {% if data.type == 'datedebut' %}
+        {{ data.avant|date("d/m/Y H:i") }}
+        {% if data.apres|length > 0 %}
+            <br>{{ data.apres|date("d/m/Y H:i") }}
+        {% endif %}
+    {% endif %}
+    {% if data.type == 'datefin' %}
+        {{ data.avant|date("d/m/Y H:i") }}
+        {% if data.apres|length > 0 %}
+            <br>{{ data.apres|date("d/m/Y H:i") }}
+        {% endif %}
+    {% endif %}
+    {% if data.type == 'patient' %}
+        {{ data.avant }}
+        {% if data.apres|length > 0 %}
+            <br>{{ data.apres }}
+        {% endif %}
+
+    {% endif %}
+

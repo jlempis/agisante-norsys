@@ -1,0 +1,95 @@
+services:
+    # ***************************************************
+    # Pour permettre aux dates de s'afficher en français
+    #
+    # ***************************************************
+    twig.extension.intl:
+        class: Twig_Extensions_Extension_Intl
+        tags:
+            - { name: twig.extension }
+    # ***************************************************
+    # Sauvegarde des sessions en base
+    #
+    # ***************************************************
+    session.handler.pdo:
+        class:    Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler
+        arguments: [@pdo, %pdo.db_options%]
+
+    pdo:
+        class:    PDO
+        arguments:
+            dsn:      "mysql:dbname=%database_name%"
+            user:     %database_user%
+            password: %database_password%
+        calls:
+            - [setAttribute, [3, 2]] # \PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION
+
+    # ************************************************
+    # gestime_core.utilities
+    # Helpers communs au projet
+    # ************************************************
+    gestime_core.utilities:
+        arguments: ['@service_container','@doctrine.orm.entity_manager']
+        class: Gestime\CoreBundle\Business\Utilities
+
+    # ************************************************
+    # composants de formulaires
+    # date et time
+    # ************************************************
+    form.type.datePicker:
+        class: Gestime\CoreBundle\Form\Type\DatePickerType
+        tags:
+            - { name: form.type, alias: datePicker }
+
+    form.type.timePicker:
+        class: Gestime\CoreBundle\Form\Type\TimePickerType
+        tags:
+            - { name: form.type, alias: timePicker }
+
+    # ************************************************
+    # Valideurs spécifiques
+    # Periode Unique (Affectations)
+    # ************************************************
+    unique_periode_validator:
+        class: Gestime\CoreBundle\Validator\UniquePeriodeValidator
+        arguments: ['@gestime_core.utilities','@doctrine.orm.entity_manager']
+        tags:
+            - { name: validator.constraint_validator, alias: unique_periode }
+
+    # ************************************************
+    # Calendar : Evenements spécifiques
+    #
+    # ************************************************
+    gestime_core.calendar_listener:
+        class: Gestime\EventBundle\EventListener\CalendarEventListener
+        arguments: ['@doctrine.orm.entity_manager', '@router', '@gestime_core.utilities']
+        tags:
+            - { name: kernel.event_listener, event: calendar.load_events, method: loadEvents }
+
+    # ************************************************
+    # Gestion de RabbitMQ
+    # Definition des queues
+    # ************************************************
+    #consumer
+    upload_repondeur_service:
+        class: Gestime\CoreBundle\QueueManager\UploadRepondeurConsumer
+        arguments: ['@service_container', '@doctrine.orm.entity_manager']
+    #producer
+    traite_repondeur:
+        class: Gestime\CoreBundle\QueueManager\TraiteRepondeur
+        arguments: ['@old_sound_rabbit_mq.traite_repondeur_producer']
+
+    # ************************************************
+    # Gestion de l'authentification pour les tests
+    #
+    # ************************************************
+    gestime.test.manager:
+        arguments: ['@service_container']
+        class: Gestime\CoreBundle\Business\TestManager
+
+    # ************************************************
+    # Serialization des erreurs
+    # dans les formulaires Ajax
+    # ************************************************
+    form_serializer:
+        class: Gestime\CoreBundle\ErrorSerializer\FormErrorsSerializer

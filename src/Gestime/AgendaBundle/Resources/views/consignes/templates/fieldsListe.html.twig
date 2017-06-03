@@ -1,0 +1,64 @@
+<div class="form-group">
+  {{ form_label(form.description, 'Description: ', {'label_attr': {'class': 'control-label col-lg-2'}}) }}
+  <div class="col-lg-8">
+      {{ form_widget(form.description, { 'attr': { 'placeholder': "Description" } }) }}
+      {{ form_errors(form.description) }}
+  </div>
+</div>
+
+<div class="form-group ">
+{{ form_label(form.debut, 'Début: ', {'label_attr': {'class': 'control-label col-lg-2'}}) }}
+      <div class="col-lg-3">
+        {{ form_widget(form.debut) }}
+        {{ form_errors(form.debut) }}
+      </div>
+</div>
+
+<div class="form-group">
+      {{ form_label(form.fin, 'Fin: ', {'label_attr': {'class': 'control-label col-lg-2'}}) }}
+      <div class="col-lg-3">
+        {{ form_widget(form.fin) }}
+        {{ form_errors(form.fin) }}
+      </div>
+  </div>
+
+<div class="form-group">
+  {{ form_label(form.medecin, 'Medecin: ', {'label_attr': {'class': 'control-label col-lg-2'}}) }}
+    <div class="col-lg-6">
+    {{ form_widget(form.medecin, { 'attr': { 'class':"chzn-select select2-offscreen", 'placeholder': "Medecin" } }) }}
+    </div>
+</div>
+
+<div class="form-group">
+  {{ form_label(form.patient_form_nom, 'Patient: ', {'label_attr': {'class': 'control-label col-lg-2'}}) }}
+    <div class="col-lg-6">
+    {{ form_widget(form.patient_form_nom, { 'attr': { 'class':"autocomplete_patient", 'placeholder': "Patient" } }) }}
+        <div id="results" ></div>
+    {{ form_errors(form.patient_form_nom) }}
+    </div>
+</div>
+<div class="form-group">
+  {{ form_label(form.visible, 'Visible: ', {'label_attr': {'class': 'control-label col-lg-2'}}) }}
+  <div class="col-lg-8">
+      {{ form_widget(form.visible, { 'attr': { 'class': "icheck" } }) }}
+  </div>
+</div>
+
+<div class="form-group">
+  {{ form_label(form.bloquante, 'Bloquante: ', {'label_attr': {'class': 'control-label col-lg-2'}}) }}
+  <div class="col-lg-8">
+      {{ form_widget(form.bloquante, { 'attr': { 'class': "icheck" } }) }}
+  </div>
+</div>
+
+<div class="form-actions">
+  <div class="col-lg-8">
+    {{ form_widget(form.Enregistrer, { 'attr': { 'class': "btn btn-blue" }}) }}
+    {{ form_widget(form.Annuler, { 'attr': { 'class': "btn btn-default" }}) }}
+  </div>
+</div>
+
+{{ form_widget(form.patient_form_id) }}
+{{ form_widget(form.patient, { 'attr': { 'class':"invisible"} }) }}
+
+{{ form_rest(form) }}

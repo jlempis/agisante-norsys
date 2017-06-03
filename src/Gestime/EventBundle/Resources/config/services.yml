@@ -1,0 +1,30 @@
+services :
+    gestime.event.manager:
+        arguments: ['@service_container', '@doctrine.orm.entity_manager']
+        class: Gestime\EventBundle\Business\EventManager
+
+    gestime.absence.manager:
+        arguments: ['@service_container', '@doctrine.orm.entity_manager']
+        class: Gestime\EventBundle\Business\AbsenceManager
+
+    gestime.recherche.manager:
+        arguments: ['@service_container', '@doctrine.orm.entity_manager']
+        class: Gestime\EventBundle\Business\RechercheManager
+
+    gestime_event.form.type.evenement:
+        class: Gestime\EventBundle\Form\Type\EventType
+        arguments: ['@doctrine.orm.entity_manager']
+        tags:
+            - { name: form.type, alias: evenement }
+
+    gestime_event.form.type.adresse:
+        class: Gestime\EventBundle\Form\Type\AdresseType
+        arguments: ['@doctrine.orm.entity_manager']
+        tags:
+            - { name: form.type, alias: adresse }
+
+    gestime_event.form.type.personne:
+        class: Gestime\EventBundle\Form\Type\PersonneType
+        arguments: ['@doctrine.orm.entity_manager']
+        tags:
+            - { name: form.type, alias: personne }

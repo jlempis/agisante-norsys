@@ -1,0 +1,11 @@
+{% extends '::base.html.twig' %}
+
+{% block titrePage %}<i class="icon-music"></i> Repondeurs{% endblock %}
+
+{% block title %}Liste des répondeurs{% endblock %}
+
+{% block body %}
+
+{% include 'GestimeTelephonieBundle:repondeurs:templates/datatable.html.twig'  %}
+
+{% endblock %}

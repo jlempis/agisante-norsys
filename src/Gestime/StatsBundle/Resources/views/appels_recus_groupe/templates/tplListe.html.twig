@@ -1,0 +1,105 @@
+{#  Template affichage liste des abonnes  #}
+ <script type="text/javascript">
+$(document).ready(function(){
+
+    function getId() { return "{{id}}"; };
+    var multiple = {% if multiple %} true {% else %} false {% endif %};
+
+    var $options = {{ js }};
+    var $aoColumnDefs = new Array();
+    var $aoColumns = new Array();
+
+    {% if action and not action_twig %}
+
+    $aoColumnDefs.push({
+     "render": function ( data, type, row, meta ) {
+        var $edit_url = strtr(
+            "{{ path(edit_route , { 'idAbonne': "xx" }) }}",
+            { "xx": row[{{fields|length}}-1] }
+            );
+        var $link_edit = "<a  style='float:right; margin-right:10px' class='dialog' title='modifier'";
+        $link_edit += "href='"+$edit_url+"'>";
+        $link_edit += "{{ 'ali.common.edit'|trans()}}</a>";
+
+
+        var $delete_url = strtr(
+            "{{ path(delete_route, { 'idAbonne': "xx" }) }}",
+            { "xx": row[{{fields|length}}-1] }
+            );
+        var $link_delete = "<a  style='float:right; margin-right:10px' class='dialog' title='suppimer'";
+        $link_delete += "href='"+$delete_url+"'>";
+        $link_delete += "{{ 'ali.common.delete'|trans()}}</a>";
+
+        var $out = $link_delete+ " " + $link_edit ;
+        if (row[{{fields|length}}-1] == null )
+        {
+            $out = "<div style='float:right'>{{ 'ali.common.no_action'|trans() }}</div>";
+        }
+        return $out
+    },
+    "aTargets": [ multiple ? {{fields|length}} : ({{fields|length}} -1)  ]
+}     );
+
+{% endif %}
+
+var $defaults = {
+    "aoColumns": [
+    { "sWidth": "10%" },
+    { "sWidth": "8%" },
+    { "sWidth": "8%" },
+    { "sWidth": "12%" },
+    { "sWidth": "14%" }
+    ],
+    "aoColumnDefs": $aoColumnDefs,
+    "bJQueryUI": false,
+    "bAutoWidth": false,
+    "sPaginationType": "full_numbers",
+    "sDom": "<\"table-header\"fl>t<\"table-footer\"ip>",
+    "oLanguage": {
+        "sProcessing":     '{{ 'ali.common.sProcessing' | trans() }}',
+        "sLengthMenu":     '{{ 'ali.common.sLengthMenu' | trans() }}',
+        "sZeroRecords":    '{{ 'ali.common.sZeroRecords' | trans() }}',
+        "sInfo":           '{{ 'ali.common.sInfo' | trans() }}',
+        "sInfoEmpty":      '{{ 'ali.common.sInfoEmpty' | trans() }}',
+        "sInfoFiltered":   '{{ 'ali.common.sInfoFiltered' | trans() }}',
+        "sInfoPostFix":    '{{ 'ali.common.sInfoPostFix' | trans() }}',
+        "sSearch":         '{{ 'ali.common.sSearch' | trans() }}',
+        "sLoadingRecords": '{{ 'ali.common.sLoadingRecords' | trans() }}',
+        "sUrl":            "",
+        "oPaginate": {
+            "sFirst":    '{{ 'ali.common.sFirst' | trans() }}',
+            "sPrevious": '{{ 'ali.common.sPrevious' | trans() }}',
+            "sNext":     '{{ 'ali.common.sNext' | trans() }}',
+            "sLast":     '{{ 'ali.common.sLast' | trans() }}'
+        }
+    },
+};
+$.extend($defaults,$options);
+
+$.uniform.defaults.selectAutoWidth = false;
+$('#{{id}}').dataTable($defaults);
+$("select.uniform, input:file, .dataTables_length select").uniform();
+
+});
+
+</script>
+
+
+<div class="box-content">
+    <div id="dataTables">
+        <table  id="{{id}}" >
+           <thead>
+                <tr>
+                    {% for label,key in fields %}
+                        {% if label != '_identifier_' %}
+                            <th><div>{{ label }}</div></th>
+                        {% endif %}
+                    {% endfor %}
+                    {% if action %}
+                        <th>{{ 'ali.common.action'|trans()  }}</th>
+                    {% endif %}
+                </tr>
+            </thead>
+        </table>
+    </div>
+</div>

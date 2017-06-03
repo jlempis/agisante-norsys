@@ -1,0 +1,64 @@
+<RestClientRequest>
+  <option name="biscuits">
+    <list>
+      <Biscuit>
+        <option name="date" value="-1" />
+        <option name="domain" value="oscar.dev" />
+        <option name="name" value="PHPSESSID" />
+        <option name="path" value="/" />
+        <option name="value" value="58c7a25d85d253dd7636d8d6d73325bb" />
+      </Biscuit>
+      <Biscuit>
+        <option name="date" value="-1" />
+        <option name="domain" value="agisante.fr" />
+        <option name="name" value="PHPSESSID" />
+        <option name="path" value="/" />
+        <option name="value" value="veq50kb60crhu8kdu4h2tknc97" />
+      </Biscuit>
+      <Biscuit>
+        <option name="date" value="-1" />
+        <option name="domain" value="api.agisante.fr" />
+        <option name="name" value="PHPSESSID" />
+        <option name="path" value="/" />
+        <option name="value" value="qu63t4d1rqrilh468df05kns54" />
+      </Biscuit>
+    </list>
+  </option>
+  <option name="httpMethod" value="POST" />
+  <option name="urlBase" value="https://api.agisante.fr" />
+  <option name="urlPath" value="/app_dev.php/v1/login_check" />
+  <option name="headers">
+    <list>
+      <KeyValuePair>
+        <option name="key" value="Accept" />
+        <option name="value" value="*/*" />
+      </KeyValuePair>
+      <KeyValuePair>
+        <option name="key" value="Cache-Control" />
+        <option name="value" value="no-cache" />
+      </KeyValuePair>
+      <KeyValuePair>
+        <option name="key" value="Cookie" />
+        <option name="value" value="XDEBUG_SESSION=PHPSTORM" />
+      </KeyValuePair>
+    </list>
+  </option>
+  <option name="parameters">
+    <list>
+      <KeyValuePair>
+        <option name="key" value="username" />
+        <option name="value" value="apiDoc24" />
+      </KeyValuePair>
+      <KeyValuePair>
+        <option name="key" value="password" />
+        <option name="value" value="niNZYmd8g{vj6Tn?8pjv" />
+      </KeyValuePair>
+    </list>
+  </option>
+  <option name="parametersEnabled" value="true" />
+  <option name="haveTextToSend" value="false" />
+  <option name="haveFileToSend" value="false" />
+  <option name="isFileUpload" value="false" />
+  <option name="textToSend" value="" />
+  <option name="filesToSend" value="" />
+</RestClientRequest>

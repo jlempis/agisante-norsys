@@ -1,0 +1,15 @@
+<div class="form-group">
+  {{ form_label(form.numero, 'Numéro: ', {'label_attr': {'class': 'control-label col-lg-2'}}) }}
+  <div class="col-lg-4">
+      {{ form_widget(form.numero, { 'attr': { 'placeholder': "Numéro de la ligne" } }) }}
+      {{ form_errors(form.numero) }}
+  </div>
+</div>
+
+<div class="form-actions">
+  {{ form_widget(form.Enregistrer, { 'attr': { 'class': "btn btn-blue" }}) }}
+  {{ form_widget(form.Annuler, { 'attr': { 'class': "btn btn-default" }}) }}
+</div>
+
+{{ form_errors(form) }}
+{{ form_rest(form) }}

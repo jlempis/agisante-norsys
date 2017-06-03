@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, maximum-scale=1, initial-scale=1, user-scalable=0">
+        <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+
+        <title>{% block title %}Gestime V2 - Rapports{% endblock %}</title>
+
+        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+        {% include 'GestimeRapportsBundle:css:cssPdf.html.twig' %}
+    </head>
+    <body>
+        <div class="row">
+            <div id="entete">
+                {{entete.nom}}: {{entete.raisonSociale}}
+                <br />
+                Tél: {{entete.telephone}} Fax: {{entete.fax}}
+                <br />
+                Le {{ "now"|date("d/m/Y") }}
+                <br />
+                <b>{{docteur.nom}}</b>
+            </div>
+        </div>
+        <div class="row">
+            <div id="titre" style="text-align:center;">
+                <span><h3>Liste des Rendez-Vous du {{debut|date("d/m/Y")}} au {{fin|date("d/m/Y")}}</h3></span>
+            </div>
+        </div>
+
+        <div class="row">
+          <div class="table-responsive" style="overflow: hidden; width: 100%; height: auto;">
+            <table id="liste">
+                <colgroup>
+                   <col span="1" style="width: 5%;">
+                   <col span="1" style="width: 15%;">
+                   <col span="1" style="width: 10%;">
+                   <col span="1" style="width: 10%;">
+                   <col span="1" style="width: 25%;">
+                   <col span="1" style="width: 35%;">
+                </colgroup>
+                <tbody>
+                    <tr>
+                        <th></td>
+                        <th>Date</td>
+                        <th>Début</td>
+                        <th>Fin</td>
+                        <th>Patient/Labo</td>
+                        <th>Objet</td>
+                    </tr>
+
+                    {% for ligne in liste %}
+
+                        <tr class="{{ cycle(['even','odd'],loop.index) }}">
+                            <td style="text-align:center;">{% if ligne.name ends with 'SITE' %}*{% endif %}</td>
+                            <td>{{ligne.debutRdv|date("d/m/Y")}}</td>
+                            <td>{{ligne.debutRdv|date("H:i")}}</td>
+                            <td>{{ligne.finRdv|date("H:i")}}</td>
+                            <td>{{ligne.prenom}} {{ligne.nom}}</td>
+                            <td>{{ligne.objet}}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </body>
+</html>

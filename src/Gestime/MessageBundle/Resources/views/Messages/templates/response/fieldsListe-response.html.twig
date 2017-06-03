@@ -1,0 +1,23 @@
+<div class="form-group">
+    <div class="col-lg-11">
+        {{ form_widget(form.sujet, { 'attr': { 'placeholder': "Sujet" } }) }}
+        {{ form_errors(form.sujet) }}
+    </div>
+</div>
+
+<div class="form-group">
+    <div class="col-lg-11">
+        {{ form_widget(form.objet, { 'attr': { 'style' : 'height:140px', 'placeholder': "Texte du message" } }) }}
+        {{ form_errors(form.objet) }}
+    </div>
+</div>
+
+<div class="form-group">
+  <div class="col-lg-11">
+    {{ form_widget(form.Envoyer, { 'attr': { 'class': "btn btn-blue" }}) }}
+    {{ form_widget(form.Annuler, { 'attr': { 'class': "btn btn-default" }}) }}
+  </div>
+</div>
+
+{{ form_errors(form) }}
+{{ form_rest(form) }}

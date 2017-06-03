@@ -1,0 +1,41 @@
+<div class="col-md-10 col-sm-12" id="view-mail-wrapper">
+    <div class="panel">
+        <div class="panel-body">
+            <div class="mail-box-header">
+                <h2>{{message_origine.sujet}}</h2>
+                <div class="mail-tools tooltip-demo m-t-md">
+                    <h5>
+                        <span class="pull-right font-noraml">{{ message_origine.dateEnvoi | localizeddate('full', 'short') }}</span>
+                        <span class="font-noraml">De :</span>{{message_origine.medecins[0].nom|upper}}
+                    </h5>
+                </div>
+            </div>
+            <div class="mail-box">
+                <div class="mail-body">
+                    {{message_origine.objet}}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="panel">
+        <div class="panel-body">
+            <header>
+                <h2>Message de réponse</h2>
+            </header>
+
+            <div class="row view-mail-header">
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="panel view-compose-body">
+                        <div class="panel-body">
+                            <form action="#" method="post" {{ form_enctype(form) }} class="form-horizontal fill-up validatable">
+                                {% include 'GestimeMessageBundle:Messages:templates/response/fieldsListe-response.html.twig'  %}
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

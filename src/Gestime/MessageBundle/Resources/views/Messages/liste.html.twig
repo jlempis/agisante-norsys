@@ -1,0 +1,75 @@
+{% extends '::base.html.twig' %}
+{% block titrePage %}<i class="icon-inbox"></i> Messages{% endblock %}
+
+{% block title %}{{ action }}{% endblock %}
+
+{% block stylesheets %}
+  {{ parent() }}
+  <style>
+  .compose-nav>li.active>a, .compose-nav>li.active>a:focus, .compose-nav>li.active>a:hover, .compose-nav>li>a:focus, .compose-nav>li>a:hover {
+background: #f9f9f9;
+color: #1abc9c;
+border-left: 3px solid #1abc9c;
+margin-left: -3px;
+}
+.compose-nav li a, .compose-nav li a:visited {
+-webkit-border-radius: 0;
+-moz-border-radius: 0;
+-ms-border-radius: 0;
+-o-border-radius: 0;
+border-radius: 0;
+border-top: 1px solid #f2f3f6;
+padding: 15px;
+border-right: 3px solid rgba(0,0,0,0);
+color: #5D5F63;
+}
+.nav-pills>li.active>a, .nav-pills>li.active>a:hover, .nav-pills>li.active>a:focus {
+color: #fff;
+/*background-color: #428bca;*/
+}
+.compose-nav li a, .compose-nav li a:visited {
+-webkit-border-radius: 0;
+-moz-border-radius: 0;
+-ms-border-radius: 0;
+-o-border-radius: 0;
+border-radius: 0;
+border-top: 1px solid #f2f3f6;
+padding: 15px;
+border-right: 3px solid rgba(0,0,0,0);
+color: #5D5F63;
+}
+  </style>
+  <link rel="stylesheet" type="text/css" href="{{ asset('bundles/gestimemessage/css/messages.css') }}">
+{% endblock %}
+
+{% block includesjs %}
+  {{ parent() }}
+  <script src="{{ asset('bundles/gestimemessage/js/messages.js') }}"></script>
+{% endblock %}
+
+{% block body %}
+
+{% if action == 'suppr' %}
+  {% set validation = 'novalidate' %}
+{% else %}
+  {% set validation = '' %}
+{% endif %}
+
+<div class="row">
+  <div class="col-lg-12">
+    <div class="box">
+      <div class="box-content">
+          <div class="mail padded">
+            <div class="row">
+              {% include 'GestimeMessageBundle:Messages:templates/message-menu.html.twig'  %}
+              {% include 'GestimeMessageBundle:Messages:templates/list/messages-liste.html.twig'  %}
+            </div>
+
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

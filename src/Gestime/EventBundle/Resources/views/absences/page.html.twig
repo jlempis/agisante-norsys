@@ -1,0 +1,56 @@
+{% extends '::base.html.twig' %}
+
+{% block titrePage %}<i class="icon-briefcase"></i> Absences{% endblock %}
+
+{% block title %}{{ action }}{% endblock %}
+
+{% block stylesheets %}
+  {{ parent() }}
+  <style>
+    .btn-green {
+      margin-bottom: 10px;
+    }
+
+  .ui-datepicker-absence a {
+    background: lime !important;
+}
+  </style>
+{% endblock %}
+
+{% block includesjs %}
+  {{ parent() }}
+{% endblock %}
+
+{% block body %}
+   
+{% form_theme form with ['GestimeCoreBundle:Form:form_date_time_picker.html.twig', 'GestimeEventBundle:absences:templates/collectionRemplacements.html.twig'] %}
+
+ 
+
+<div class="row">
+  <div class="col-lg-12">
+    <div class="box">
+      <div class="box-header">
+        <span class="title"><i class="icon-user"></i>{{ action }}</span>
+      </div>
+      <div class="box-content">
+        <form action="#" method="post" {{ form_enctype(form) }} class="form-horizontal fill-up validatable">
+          <div class="padded">
+            {% include 'GestimeEventBundle:absences:templates/fieldsListe.html.twig'  %}
+          </div>
+        </form>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+{% include 'GestimeEventBundle:absences:templates/datatable.html.twig'  %}
+
+
+{% include 'GestimeEventBundle:absences:templates/subFormRemplacement.html.twig'  %}
+{% endblock %}
+
+

@@ -1,0 +1,128 @@
+<div class="col-md-10 col-sm-12" id="view-mail-wrapper">
+
+    {% if message_mirroir is null %}
+        {% set message_haut = message %}
+    {% else %}
+        {% if message.isResponse %}
+            {% set message_haut = message %}
+            {% set message_bas = message_mirroir %}
+        {% else %}
+            {% set message_haut = message_mirroir %}
+            {% set message_bas = message %}
+        {% endif %}
+    {% endif %}
+
+    {# Panel Message de réponse (ou panel de message si pas de réponse #}
+    <div class="panel">
+        <div class="panel-body">
+            <div class="mail-box-header">
+
+                <div class="pull-right tooltip-demo">
+
+                    {% if message_mirroir is null %}
+                        <div class="btn-group">
+                            <a id="btn-response" data-original-title="Répondre" data-placement="top" data-toggle="tooltip"
+                            href="{{ path('messages_reponse', { 'idMessage': message_haut.idMessage }) }}" class="btn btn-default btn-sm tooltips">
+                                <i class="icon-reply"></i> Répondre
+                            </a>
+                        </div>
+                    {% endif %}
+                    <div class="btn-group">
+                        <a id="btn-print" data-original-title="Imprimer" data-placement="top" data-toggle="tooltip"
+                        href="#" class="btn btn-default btn-sm tooltips">
+                            <i class="icon-print"></i>
+                            <span id="idMessage" class="invisible">{{message_haut.idMessage}}</span>
+                        </a>
+                    </div>
+                    {% if message_haut.canBeModifiedByUser(app.user) %}
+                        <div class="btn-group">
+                            <a id="btn-suppr-view" data-original-title="Supprimer" data-placement="top" data-toggle="tooltip"
+                            href="#" class="btn btn-default btn-sm tooltips">
+                                <i class="icon-trash"></i>
+                            </a>
+                        </div>
+                    {% endif %}
+                </div>
+                <h2>{{message_haut.sujet}}{% if message_haut.isSupprime() %} (Supprimé){% endif %}</h2>
+                <div class="mail-tools tooltip-demo m-t-md" style="padding-top:10px;">
+                    <h5>
+                        <span class="pull-right font-noraml">{{ message_haut.dateEnvoi | localizeddate('full', 'short')  }}</span>
+                        <span class="font-noraml">
+                            {% if message_haut.sens == 1 %} A: {% else %} De: {% endif %}
+                        </span>{{ message_haut.medecins[0].nom|upper}}
+                    </h5>
+                </div>
+                <div class="mail-tools tooltip-demo m-t-md">
+                    <span id="idmessage" style="visibility: hidden">{{ message_haut.idMessage }}</span>
+                    <span class="text-warning pull-left">
+                        {% if message_haut.isfavori(app.user)  %}
+                           <i class="favori icon-star"></i>
+                        {% else %}
+                            <i class="favori icon-star-empty"></i>
+                        {% endif %}
+                    </span>
+                    <span class="pull-left categories">
+                        {% for categorie in message_haut.categories %}
+                            <span class="label label-{{categorie.style}} pull-right" style="margin-left:5px;">{{categorie.nom}}</span>
+                        {% endfor %}
+                        {% if message_haut.sms == 1 %}
+                            <span class="label label-info pull-right" style="margin-left:5px;">SMS</span>
+                        {% endif %}
+                    </span>
+
+                </div>
+
+            </div>
+            <div class="mail-box">
+                <div class="mail-body">
+                    {{ message_haut.objet}}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% if not message_mirroir is null %}
+        {# Panel Message d'origine  (ou panel de message si pas de réponse #}
+        <div class="panel">
+            <div class="panel-body">
+                <div class="mail-box-header">
+                    <div class="pull-right tooltip-demo">
+
+                    </div>
+                    <h2>{{message_bas.sujet}}</h2>
+                    <div class="mail-tools tooltip-demo m-t-md">
+                        <h5>
+                            <span class="pull-right font-noraml">{{ message_bas.dateEnvoi |localizeddate('full', 'short')  }}</span>
+                            <span class="font-noraml">
+                            {% if message_bas.sens == 1 %} A: {% else %} De: {% endif %}
+                            </span>{{ message_bas.medecins[0].nom|upper}}
+                        </h5>
+                    </div>
+                    <div class="mail-tools tooltip-demo m-t-md">
+                        <span class="text-warning pull-left">
+                            {% if message_bas.isfavori(app.user)  %}
+                               <i class="favori icon-star"></i>
+                            {% else %}
+                                <i class="favori icon-star-empty"></i>
+                            {% endif %}
+                        </span>
+                        <span class="pull-left categories">
+                            {% for categorie in message_bas.categories %}
+                                <span class="label label-{{categorie.style}} pull-right" style="margin-left:5px;">{{categorie.nom}}</span>
+                            {% endfor %}
+                            {% if message_bas.sms == 1 %}
+                                <span class="label label-info pull-right" style="margin-left:5px;">SMS</span>
+                            {% endif %}
+                        </span>
+                    </div>
+                </div>
+
+                <div class="mail-box">
+                    <div class="mail-body">
+                        {{ message_bas.objet}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+</div>

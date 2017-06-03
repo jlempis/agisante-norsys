@@ -1,0 +1,137 @@
+
+
+<div class="form-group">
+  {{ form_label(form.medecin, 'Medecin: ', {'label_attr': {'class': 'control-label col-lg-2 col-md-2 col-sm-2'}}) }}
+    <div class=" col-lg-6 col-md-10 col-sm-10">
+    {{ form_widget(form.medecin, { 'attr': { 'class':"chzn-select select2-offscreen", 'placeholder': "Medecin" } }) }}
+    </div>
+</div>
+
+
+<div class="form-group ">
+      {{ form_label(form.debutRdv, 'Date: ', {'label_attr': {'class': 'control-label col-lg-2 col-md-2 col-sm-2'}}) }}
+
+        <div class=" col-lg-4 col-md-5 col-sm-5">
+        {{ form_widget(form.debutRdv) }}
+      </div>
+
+      {{ form_label(form.heureDebut, 'Début: ', {'label_attr': {'class': 'control-label col-lg-1 col-md-1 col-sm-1'}}) }}
+      <div class="col-lg-2 col-md-2 col-sm-2 ">
+        {{ form_widget(form.heureDebut) }}
+
+      </div>
+
+      {{ form_label(form.heureFin, 'Fin: ', {'label_attr': {'class': 'control-label col-lg-1 col-md-1 col-sm-1'}}) }}
+      <div class="col-lg-2 col-md-2 col-sm-2">
+        {{ form_widget(form.heureFin) }}
+      </div>
+</div>
+<div class="form-group ">
+    <div class="col-lg-2 col-md-2 col-sm-2"></div>
+    <div class="col-lg-10 col-md-10 col-sm-10">
+      <div id="error_debutRdv" class="invisible" data-element="evenement_debutRdv_datepicker"></div>
+      <div id="error_heureDebut" class="invisible"  data-element="evenement_heureDebut"></div>
+      <div id="error_heureFin" class="invisible" data-element="evenement_heureFin"></div>
+    </div>
+</div>
+
+<div class="form-group">
+      {{ form_label(form.type, 'Type: ', {'label_attr': {'class': 'control-label col-lg-2 col-md-2 col-sm-2'}}) }}
+      <div class="col-lg-10 col-md-10  col-sm-10">
+        {{ form_widget(form.type, { 'attr': { 'placeholder': "Objet" } }) }}
+        <div id="error_type" class="invisible" data-element="evenement_type"></div>
+      </div>
+</div>
+
+<div class="form-group">
+  {{ form_label(form.rappel, 'Rappel: ', {'label_attr': {'class': 'control-label col-lg-2'}}) }}
+  <div class="col-lg-1">
+      {{ form_widget(form.rappel, { 'attr': { 'class': "icheck" } }) }}
+  </div>
+  {{ form_label(form.nonExcuse, 'Non excusé: ', {'label_attr': {'class': 'control-label col-lg-2'}}) }}
+  <div class="col-lg-3">
+      {{ form_widget(form.nonExcuse, { 'attr': { 'class': "icheck" } }) }}
+  </div>
+{{ form_label(form.nouveauPatient, 'Nouveau patient: ', {'label_attr': {'class': 'control-label col-lg-3'}}) }}
+<div class="col-lg-1">
+    {{ form_widget(form.nouveauPatient, { 'attr': { 'class': "icheck" } }) }}
+</div>
+</div>
+
+<div class="form-group">
+  {{ form_label(form.patient.civilite, 'Civilité: ', {'label_attr': {'class': 'control-label col-lg-2 col-md-2 col-sm-2 '}}) }}
+    <div class="col-lg-3 col-md-3 col-sm-3 ">
+    {{ form_widget(form.patient.civilite, { 'attr': { 'class':"chzn-select select2-offscreen", 'placeholder': "Civilité" } }) }}
+     <div id="error_civilite" class="invisible" data-element="evenement_patient_civilite" ></div>
+    </div>
+</div>
+
+<div class="form-group">
+  {{ form_label(form.patient.nom, 'Patient: ', {'label_attr': {'class': 'control-label col-lg-2 col-md-2 col-sm-2'}}) }}
+    <div class="col-lg-10 col-md-10 col-sm-10 ">
+    {{ form_widget(form.patient.nom, { 'attr': { 'class':"autocomplete_patient", 'placeholder': "Nom" } }) }}
+    {{ form_widget(form.patient.nom_id) }}
+    {{ form_widget(form.patient.nom_entity, { 'attr': { 'style':"display:none;"} }) }}
+    <div id="results_nom" ></div>
+    <div id="error_nom" class="invisible" data-element="evenement_patient_nom"></div>
+    </div>
+</div>
+
+<div class="form-group">
+  {{ form_label(form.patient.prenom, 'Prénom: ', {'label_attr': {'class': 'control-label col-lg-2 col-md-2 col-sm-2'}}) }}
+    <div class="col-lg-4 col-md-4 col-sm-4">
+    {{ form_widget(form.patient.prenom, { 'attr': { 'class':"autocomplete_patient", 'placeholder': "Prénom" } }) }}
+     <div id="error_prenom" class="invisible" data-element="evenement_patient_prenom"></div>
+    </div>
+
+    {{ form_label(form.patient.nomJF, 'Nom de jeune fille: ', {'label_attr': {'class': 'control-label col-lg-2 col-md-2 col-sm-2 '}}) }}
+    <div class="col-lg-4 col-md-4 col-sm-4">
+    {{ form_widget(form.patient.nomJF, { 'attr': { 'class':"autocomplete_patient", 'placeholder': "Nom de jeune fille" } }) }}
+     <div id="error_nomJF" class="invisible" data-element="evenement_patient_nomJF"></div>
+    </div>
+</div>
+
+<div class="form-group">
+  {{ form_label(form.patient.telephone, 'Téléphone: ', {'label_attr': {'class': 'control-label col-lg-2 col-md-2 col-sm-2 '}}) }}
+    <div class="col-lg-4 col-md-4 col-sm-4">
+    {{ form_widget(form.patient.telephone, { 'attr': { 'class':"autocomplete_patient", 'placeholder': "Téléphone" } }) }}
+    <div id="error_telephone" class="invisible" data-element="evenement_patient_telephone"></div>
+    </div>
+
+    <div class="col-lg-4">
+      {% if action != "supprimer" %}
+            <div id="btnSupp" class="col-lg-1" ></div>
+        <button class="btn btn-green btn-adresse">Ajouter une adresse</button>
+      {% endif %}
+    </div>
+</div>
+
+<div class="form-group">
+  {{ form_label(form.objet, 'Objet: ', {'label_attr': {'class': 'control-label col-lg-2 col-md-2 col-sm-2'}}) }}
+  <div class="col-lg-10  col-md-10  col-sm-10">
+      {{ form_widget(form.objet, { 'attr': { 'placeholder': "Objet" } }) }}
+     <div id="error_objet" class="invisible" data-element="evenement_objet"></div>
+  </div>
+</div>
+
+<div class="form-group">
+    {{ form_label(form.patient.entreprise, 'Laboratoire: ', {'label_attr': {'class': 'control-label col-lg-2 col-md-2 col-sm-2 '}}) }}
+    <div class="col-lg-10 col-md-10 col-sm-10 ">
+    {{ form_widget(form.patient.entreprise, { 'attr': { 'class':"autocomplete_entreprise", 'placeholder': "Société" } }) }}
+    {{ form_widget(form.patient.entreprise_id) }}
+    {{ form_widget(form.patient._entreprise, { 'attr': { 'style':"display:none;"} }) }}
+    <div id="results_entreprise" ></div>
+     <div id="error_entreprise" class="invisible" data-element="evenement_patient_entreprise"></div>
+    </div>
+</div>
+
+
+
+<div class="form-group">
+  <div class="col-lg-12 col-md-12 col-sm-12">
+
+    <div id="infos"></div>
+  </div>
+</div>
+
+{{ form_rest(form) }}

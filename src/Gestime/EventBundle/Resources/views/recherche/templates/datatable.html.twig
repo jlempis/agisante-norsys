@@ -1,0 +1,20 @@
+<div class="row">
+      <div class="col-lg-12">
+
+        {{ datatable ({
+          'id' : 'idEvenement',
+          'main_template' : 'GestimeEventBundle:recherche:liste.html.twig' ,
+          'js' : {
+            'iDisplayLength': 10,
+              'sAjaxSource' : path('recherche_grille',
+                                   {'medecinId': form.medecin.vars.value|default(0) ,
+                                    'nom':  form.nom.vars.value|default('[]'),
+                                    'prenom':  form.prenom.vars.value|default('[]'),
+                                    'telephone':  form.telephone.vars.value|default('[]'),
+                                  })
+                }
+          }) | raw
+        }}
+
+      </div>
+</div>

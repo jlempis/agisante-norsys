@@ -1,0 +1,1 @@
+server 'server1.example.com', :app, :web, :primary => true, :parameters_file => 'production1.yml'

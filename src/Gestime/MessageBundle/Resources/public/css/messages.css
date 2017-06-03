@@ -1,0 +1,115 @@
+.mail-box {
+    background-color: #ffffff;
+    border: 1px solid #E7EAEC;
+    border-top: 0;
+    padding: 0px;
+    margin-bottom: 20px;
+}
+.mail-box-header {
+    background-color: #ffffff;
+    border: 1px solid #E7EAEC;
+    border-bottom: 0;
+    padding: 30px 20px 20px 20px;
+}
+.mail-box-header h2 {
+    margin-top: 0px;
+}
+.mailbox-content .tag-list li a {
+    background: #ffffff;
+}
+.font-noraml {
+    font-weight: 400;
+}
+.mail-body {
+    border-top: 1px solid #E7EAEC;
+    padding: 20px;
+}
+.mail-text {
+    border-top: 1px solid #E7EAEC;
+}
+
+.mail-text .note-toolbar {
+    padding: 10px 15px;
+}
+
+.mail-body .form-group {
+    margin-bottom: 5px;
+}
+
+.mail-text .note-editor .note-toolbar {
+    background-color: #F9F8F8;
+}
+
+.mail-attachment {
+    border-top: 1px solid #E7EAEC;
+    padding: 20px;
+    font-size: 12px;
+}
+
+.mailbox-content {
+    background: none;
+    border: none;
+    padding: 10px;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-weight: 100;
+}
+
+h1 {
+    font-size: 30px;
+}
+
+h2 {
+    font-size: 24px;
+}
+
+h3 {
+    font-size: 16px;
+}
+
+h4 {
+    font-size: 14px;
+}
+
+h5 {
+    font-size: 12px;
+}
+
+h6 {
+    font-size: 10px;
+}
+
+h3,h4,h5 {
+    margin-top: 5px;
+    font-weight: 600;
+}
+.table tr.unread {
+    background: #ff;
+}
+.table tr.read a {
+    color:grey;
+}
+.read {
+    background: #f9f9f9;
+}
+.select2-container .select2-choice {
+    height: 30px;
+    min-width: 150px;
+}
+.txtrecherche{
+    float: left;
+    width: 200px;
+    height: 30px !important;
+}
+.mail-option{
+    margin-bottom: 10px;
+}
+.invisible{
+    display:none;
+}
+@media (max-width: 767px) {
+    span.categories{
+      display: none;
+    }
+}

@@ -1,0 +1,141 @@
+<div class="col-md-10 col-sm-12" id="inbox-wrapper">
+    <section class="panel">
+        <form id="form_recherche" action="#" method="post" {{ form_enctype(form) }} class="validatable">
+        <header class="panel-heading wht-bg">
+            <h2 class="gen-case">
+                {% if filtre ==  "Reception" %}Boite de réception{% endif %}
+                {% if filtre ==  "Favoris" %}Messages favoris{% endif %}
+                {% if filtre ==  "Envoyes" %}Messages envoyés{% endif %}
+                {% if filtre ==  "Supprimes" %}Messages supprimés{% endif %}
+                {% for categorie in categories %}
+                    {% if (categorie.nom == filtre) %}
+                        Messages ayant la categorie {{filtre}}
+                    {% endif %}
+                {% endfor %}
+                {% if filtre ==  "Recherche" %}Résultat de la recherche{% endif %}
+                 <div class="pull-right mail-src-position">
+                    <div class="input-append">
+                        {{ form_widget(form.texte, { 'attr': { 'class':"form-control txtrecherche", 'placeholder': "Rechercher" }}) }}
+                        {{ form_widget(form.Rechercher, { 'attr': { 'class': "btn btn-blue" }}) }}
+                        {{ form_errors(form.texte) }}
+                    </div>
+                </div>
+            </h2>
+        </header>
+        <div class="panel-body minimal">
+            <div class="mail-option">
+                <div class="pull-left mail-checkbox ">
+                    <div class="icheckbox_flat-green" style="position: relative;">
+                        <input type="checkbox" style="position: absolute; opacity: 0;">
+                        <ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; border: 0px; opacity: 0; background: rgb(255, 255, 255);"></ins>
+                    </div>
+                </div>
+                <div class="btn-group">
+                    {{ form_widget(form.action, { 'attr': { 'class':"chzn-select select2-offscreen", 'placeholder': "Action" } }) }}
+                    {{ form_errors(form.action) }}
+                    {{ form_rest(form) }}
+                </div>
+                <div class="btn-group">
+                    <a id="btn-refresh" data-original-title="Actualiser" data-placement="top" data-toggle="tooltip"
+                    href="#" class="btn btn-default btn-sm tooltips">
+                        <i class="icon-refresh"></i>
+                    </a>
+                </div>
+                <div class="btn-group">
+                    <a id="btn-read" data-original-title="Marquer comme lu" data-placement="top" data-toggle="tooltip"
+                    href="#" class="btn btn-default btn-sm tooltips">
+                        <i class="icon-eye-open"></i>
+                    </a>
+                </div>
+                {% if filtre !=  "Supprimes" %}
+                    <div class="btn-group">
+                        <a id="btn-suppr" data-original-title="Supprimer" data-placement="top" data-toggle="tooltip"
+                        href="#" class="btn btn-default btn-sm tooltips">
+                            <i class="icon-trash"></i>
+                        </a>
+                    </div>
+                 {% endif %}
+                 <ul class="inbox-pag pull-right" style="list-style-type: none;">
+                    <li style="margin-top:6px;">
+                        {% if (messagesCount >0) %}
+                            {% if (pagination.page * maxItemParPage) <= messagesCount %}
+                                <span>{{ ((pagination.page -1) * maxItemParPage)+1 }}-{{ pagination.page * maxItemParPage }} sur {{ messagesCount}}</span>
+                            {% else %}
+                                <span>{{ ((pagination.page -1) * maxItemParPage)+1 }}-{{ messagesCount }} sur {{ messagesCount}}</span>
+                            {% endif %}
+                        {% endif %}
+                    </li>
+                    {% if pagination.page > 1 %}
+                        <li>
+                            <a class="btn btn-default btn-sm"
+                                href="{{ path(pagination.route, pagination.route_params|merge({'page': pagination.page-1})) }}"><i class=" icon-chevron-left"></i></a>
+                        </li>
+                    {% endif %}
+                    {% if pagination.page<pagination.pages_count %}
+                        <li>
+                            <a class="btn btn-default btn-sm"
+                                href="{{ path(pagination.route,pagination.route_params|merge({'page': pagination.page+1})) }}"><i class=" icon-chevron-right"></i></a>
+                        </li>
+                    {% endif %}
+                </ul>
+
+            </div>
+            <div class="table-responsive">
+                <table class="table table-inbox table-hover">
+                    <tbody>
+                        {% if messagesCount == 0 %}
+                                <span><h4>Aucun Message ne correspond à votre critère de recherche.</h4></span>
+                        {% else %}
+                            {% for message in messages %}
+                                <tr {% if message.lu == 1 %} class="row read" {% else %} class="row unread"{% endif %}>
+                                <td style="text-align:center; width:5%">
+                                      <input type="checkbox" class="icheck" value={{ message.idMessage}}>
+                                </td>
+                                <td class="message" style="width:88%">
+                                    <strong>
+                                        {% if (message.medecins.count > 0) %}
+                                            <span class="title">{{ message.medecins[0].nom|upper}}
+                                                {% if message.medecins.count > 1 %}
+                                                    et {{ message.medecins.count -1 }} de plus
+                                                {% endif %}
+                                            </span>
+                                        {% endif %}
+                                    </strong>
+                                    <span class="text-warning pull-right" style="margin-left:10px;">
+                                        {% if message.isfavori(app.user)  %}
+                                           <i class="favori icon-star"></i>
+                                        {% else %}
+                                            <i class="favori icon-star-empty"></i>
+                                        {% endif %}
+                                    </span>
+                                    {% if message.isResponse  %}
+                                        <span class="text-warning pull-right" style="margin-left:10px;">
+                                               <i class="icon-reply"></i>
+                                        </span>
+                                    {% endif %}
+                                    <span class="categories">
+                                        {% for categorie in message.categories %}
+                                            <span class="label label-{{categorie.style}} pull-right" style="margin-left:5px;">{{categorie.nom}}</span>
+                                        {% endfor %}
+                                    </span>
+                                    <br>
+                                    <a href="{{ path('messages_view', { 'idMessage': message.idMessage }) }}">
+                                        {{ message.sujet}}<br>{{ message.objet}}
+                                    </a>
+                                </td>
+                                <td class="text-right"  style="width:7%">{{ message.dateEnvoi|date("d/m") }}<br>{{ message.dateEnvoi|date("H:i") }}
+                                    {% if message.sms == 1 %}
+                                        <br><span class="label label-info pull-right" style="margin-left:5px;">SMS
+                                         </span>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        {% endif %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        </form>
+    </section>
+</div>

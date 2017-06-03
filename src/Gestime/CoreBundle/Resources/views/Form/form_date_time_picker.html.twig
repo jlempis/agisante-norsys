@@ -1,0 +1,15 @@
+{% block datePicker_widget %}
+    {% spaceless %}
+        <input type="text" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %}/>
+        {%  set attr = attr|merge({'class': ((attr.class|default('') ~ ' Gestimedatepicker fill-up')|trim)}) %}
+        {% set  id = id ~ "_datepicker" %}
+        {% set  full_name = "datepicker_" ~ full_name  %}
+        <input type="text" {{ block('widget_attributes') }} />
+    {% endspaceless %}
+{% endblock datePicker_widget %}
+{% block timePicker_widget %}
+    {% spaceless %}
+        {%  set attr = attr|merge({'class': ((attr.class|default('') ~ ' Gestimetimepicker fill-up')|trim)}) %}
+        <input type="text" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %} />
+    {% endspaceless %}
+{% endblock timePicker_widget %}

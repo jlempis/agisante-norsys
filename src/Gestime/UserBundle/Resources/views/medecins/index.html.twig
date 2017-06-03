@@ -1,0 +1,9 @@
+{% extends '::base.html.twig' %}
+
+{% block titrePage %}  <i class="icon-user-md"></i> Médecins{% endblock %}
+{% block title %}Liste des medecins{% endblock %}
+
+{% block body %}
+
+{% include 'GestimeUserBundle:medecins:templates/datatable.html.twig'  %}
+{% endblock %}

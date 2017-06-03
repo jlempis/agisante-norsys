@@ -1,0 +1,49 @@
+{% extends '::base.html.twig' %}
+
+{% block titrePage %}<i class="icon-bar-chart"></i> Appels reçus{% endblock %}
+
+{% block title %}{% endblock %}
+
+{% block stylesheets %}
+
+  {{ parent() }}
+
+{% endblock %}
+
+{% block includesjs %}
+
+  {{ parent() }}
+
+{% endblock %}
+
+{% block body %}
+
+{% form_theme form with 'GestimeCoreBundle:Form:form_date_time_picker.html.twig' %}
+
+<div class="row">
+  <form action="#" method="post" {{ form_enctype(form) }} class="form-horizontal fill-up validatable">
+    <div class="form-group">
+      {{ form_label(form.datedebut, 'Valide du : ', {'label_attr': {'class': 'control-label col-lg-1'}}) }}
+      <div class="col-lg-2">
+        {{ form_widget(form.datedebut) }}
+        {{ form_errors(form.datedebut) }}
+      </div>
+      {{ form_label(form.datefin, 'au : ', {'label_attr': {'class': 'control-label col-lg-1'}}) }}
+      <div class="col-lg-2">
+        {{ form_widget(form.datefin) }}
+        {{ form_errors(form.datefin) }}
+      </div>
+      <div class="col-lg-2">
+        <button type="submit" class="btn btn-blue">Filtrer et afficher</button>
+      </div>
+    </div>
+      {{ form_rest(form) }}
+   </form>
+
+{% include 'GestimeStatsBundle:appels_recus_detail:templates/datatable.html.twig'  %}
+<script>
+      GestimeDatePicker.initDatePicker();
+</script>
+</div>
+
+{% endblock %}

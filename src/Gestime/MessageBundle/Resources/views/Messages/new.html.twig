@@ -1,0 +1,72 @@
+{% extends '::base.html.twig' %}
+{% block titrePage %}<i class="icon-envelope"></i> Messages{% endblock %}
+
+{% block title %}{{ action }}{% endblock %}
+
+{% block stylesheets %}
+  {{ parent() }}
+
+{% endblock %}
+
+{% block includesjs %}
+  {{ parent() }}
+  <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+  <script src="{{ path('fos_js_routing_js', {"callback": "fos.Router.setData"}) }}"></script>
+  <script src="{{ asset('bundles/gestimemessage/js/messages.js') }}"></script>
+
+  <script type="text/javascript">
+      $().ready(function() {
+         $("form").change(function(e) {
+             e.preventDefault();
+             $nbNumerosSMS=0;
+             $medListIds = $('#gestime_messagebundle_Message_medecins').val();
+             $medListIdsArray=$medListIds.toString().split(",");
+             $.each($medListIdsArray, function(index,value) {
+                var $url = Routing.generate('medecin_get_numerosms',  { idMedecin:value } );
+                 $.ajax({
+                     type: "POST",
+                     url: $url
+                 }).done(function( result ) {
+                    if(result.success) {
+                      $nbNumerosSMS++;
+                      if($nbNumerosSMS ==1) $('.copiesms').html('Copie par SMS au: ');
+                      if($nbNumerosSMS >1) $('.copiesms').append(', ');
+                      $('.copiesms').append(result.numero);
+                     }
+                 });
+             });
+         });
+         $('.icheck').iCheck({
+          checkboxClass: 'icheckbox_flat-aero',
+          radioClass: 'iradio_flat-aero'
+         });
+    });
+  </script>
+{% endblock %}
+
+{% block body %}
+
+{% if action == 'suppr' %}
+  {% set validation = 'novalidate' %}
+{% else %}
+  {% set validation = '' %}
+{% endif %}
+
+<div class="row">
+  <div class="col-lg-12">
+    <div class="box">
+      <div class="box-content">
+          <div class="mail padded">
+            <div class="row">
+              {% include 'GestimeMessageBundle:Messages:templates/message-menu.html.twig'  %}
+              {% include 'GestimeMessageBundle:Messages:templates/new/message-new.html.twig'  %}
+            </div>
+
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

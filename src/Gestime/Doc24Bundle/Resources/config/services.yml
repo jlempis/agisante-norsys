@@ -1,0 +1,4 @@
+services :
+    gestime.doc24.manager:
+        arguments: ['@service_container', '@doctrine.orm.entity_manager']
+        class: Gestime\Doc24Bundle\Business\Doc24Manager

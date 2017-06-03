@@ -1,0 +1,49 @@
+  {% if messageFromSite == true %}
+    {% set placeHolderMedecin = 'A' %}
+  {% else  %}
+    {% set placeHolderMedecin = 'De' %}
+  {% endif %}
+
+  <div class="form-group">
+    <div class="col-lg-11">
+      {{ form_widget(form.medecins, { 'attr': { 'class':"chzn-select select2-offscreen", 'placeholder': placeHolderMedecin } }) }}
+      {{ form_errors(form.medecins) }}
+    </div>
+  </div>
+
+
+<div class="form-group">
+    <div class="col-lg-11">
+        {{ form_widget(form.sujet, { 'attr': { 'placeholder': "Sujet" } }) }}
+        {{ form_errors(form.sujet) }}
+    </div>
+</div>
+
+<div class="form-group">
+    <div class="col-lg-11">
+        {{ form_widget(form.objet, { 'attr': { 'style' : 'height:140px', 'placeholder': "Texte du message" } }) }}
+        {{ form_errors(form.objet) }}
+    </div>
+</div>
+
+<div class="form-group">
+  <div class="col-lg-5">
+      {{ form_widget(form.sms, { 'attr': { 'class': "icheck"} }) }}
+      <label for="icheck1" class="copiesms">Copie par SMS</label>
+  </div>
+{{ form_label(form.categories, 'Catégorie: ', {'label_attr': {'class': 'control-label col-lg-1'}}) }}
+    <div class="col-lg-5">
+    {{ form_widget(form.categories, { 'attr': { 'class':"chzn-select select2-offscreen", 'placeholder': "Entrez une catégorie" } }) }}
+    {{ form_errors(form.categories) }}
+  </div>
+
+</div>
+
+<div class="form-group">
+  <div class="col-lg-11">
+    {{ form_widget(form.Envoyer, { 'attr': { 'class': "btn btn-blue" }}) }}
+    {{ form_widget(form.Annuler, { 'attr': { 'class': "btn btn-default" }}) }}
+  </div>
+</div>
+
+{{ form_rest(form) }}

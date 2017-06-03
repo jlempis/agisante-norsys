@@ -1,0 +1,11 @@
+{% extends '::base.html.twig' %}
+
+{% block titrePage %}<i class="icon-briefcase"></i> Absences{% endblock %}
+
+{% block title %}Liste des absences{% endblock %}
+
+{% block body %}
+
+{% include 'GestimeEventBundle:absences:templates/datatable.html.twig'  %}
+
+{% endblock %}

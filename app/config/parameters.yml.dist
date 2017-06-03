@@ -1,0 +1,111 @@
+# This file is auto-generated during the composer install
+parameters:
+# ************************************
+# Connexion base Gestime V2
+# ************************************
+    database_driver:        pdo_mysql
+    database_host:          127.0.0.1
+    database_port:          null
+    database_name:          gestime_dev
+    database_user:          gestimeDEV
+    database_password:      'MDP2dev*'
+# ************************************
+# Connexion base Gestime V1
+# ************************************
+    database_driver_v1:     pdo_mysql
+    database_host_v1:       127.0.0.1
+    database_port_v1:       null
+    database_name_v1:       gestime_dev
+    database_user_v1:       gestimeDEV
+    database_password_v1:   'MDP2dev*'
+# ************************************
+# Connexion serveur de messagerie
+# ************************************
+    mailer_transport:       gmail
+    mailer_user:            noreply.doc24
+    mailer_password:        CUpRXCvr7qg?p
+
+# ************************************
+#
+# ************************************
+    locale:                 fr
+    secret:                 Xp2DYWUkf2fnHXeYrHc!
+# ************************************
+# Connexion au serveur FTP de Bailleul
+# ************************************
+    ftp_host:               ftp.smf-59.com
+    ftp_user:               gestime
+    ftp_password:           MDP2gestime
+    ftp_dir:                /telephonie
+# ************************************
+# Connexion à RabbitMQ
+# ************************************
+    rabbit_host:            localhost
+    rabbit_user:            gestime
+    rabbit_password:        AnU66irQ
+# ************************************
+# Gestion des répondeurs
+# ************************************
+    upload_dir:             ../web/repondeurs
+    fileConfigRepondeurs:   config_repondeurs.csv
+# ************************************
+# minification des CSS + Saas
+# ************************************
+    sass.bin:               /usr/local/bin/sass
+    compass.bin:            /usr/local/bin/compass
+    ruby.bin:               /usr/bin/ruby
+    assetic.filter.compass.images_dir:  '%kernel.root_dir%/../web/images'
+    assetic.filter.compass.http_path:   null
+# ************************************
+# Nombre de messages par pages
+# ************************************
+    maxitemspage:           15
+# ************************************
+# Connexion au serveur de SMS
+# ************************************
+    userSMS:                sophiesylvie
+    pwdSMS:                 up74u37f51
+    urlSMS:                 'https://api.msinnovations.com/http/sendSms_v8.php'
+    urlInfosSMS:            'https://api.msinnovations.com/http/getInfo_v8.php'
+# ************************************
+# Emetteur des mails (inscription doc24)
+# ************************************
+    mailerSender:           invitation@gestime.net
+# ************************************
+# Gestion des sessions en base ( plus géré pour le moment)
+# Bug Symfony
+# ************************************
+    pdo.options: {  }
+    pdo.db_options:
+        db_table:           Session
+        db_id_col:          id_session
+        db_data_col:        value
+        db_time_col:        time
+        db_lifetime_col:    lifetime
+        default_locale:     '%locale%'
+        lifetime:           3600
+        auto_start:         true
+# ************************************
+# Surcharge bundle AliDatatable
+# ************************************
+    datatable.class:        Gestime\CoreBundle\Datatable\Datatable
+# ************************************
+# Certificat LexikJwt
+# ************************************
+    private_key_path:       '%kernel.root_dir%/var/jwt/private.pem'
+    public_key_path:        '%kernel.root_dir%/var/jwt/public.pem'
+    pass_phrase:            ThisTokenIsNotSoSecretChangeItPlease
+    token_ttl:              86400
+# *****************************************
+# Parametrage des sous domaines pour routes
+# *****************************************
+    websubdomain:   pro
+    apisubdomain:   api
+# ***************************************
+# Cloudinary : Gestion des images
+# ***************************************
+    cloudName:      doc24
+    apiKey:         753332521939685
+    apiSecret:      TW1dRcS3N5yicZXgiazuOC-rB18
+    avatar_dir:     ../web/avatars
+

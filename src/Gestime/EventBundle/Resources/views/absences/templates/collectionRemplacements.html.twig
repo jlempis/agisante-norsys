@@ -1,0 +1,65 @@
+
+{% block collection_row %}
+    {{ block('collection_widget') }}
+{% endblock %}
+
+{% block collection_widget %}
+{% spaceless %}
+        {% if prototype is defined %}
+            {% set attr = attr|merge({'data-prototype': block('collection_item_widget') }) %}
+        {% endif %}
+        <div {{ block('widget_container_attributes') }}>
+            {% for prototype in form %}
+                {{ block('collection_item_widget') }}
+            {% endfor %}
+        </div>
+{% endspaceless %}
+{% endblock collection_widget %}
+
+{% block collection_item_widget %}
+{% spaceless %}
+    <div class="rowRemplacement form-group" style="margin-left: -5px; margin-right: -5px; ">
+        <div class="col-lg-1">
+            {{ form_label(prototype.children.debut, 'Début:', {'label_attr': {'class': 'control-label col-lg-1'}} ) }}
+        </div>
+        <div class="col-lg-2">
+            {{ form_widget(prototype.children.debut)}}
+        </div>
+        <div class="col-lg-1">
+            {{ form_label(prototype.children.fin, 'Fin:', {'label_attr': {'class': 'control-label col-lg-1'}} ) }}
+        </div>
+        <div class="col-lg-2">
+            {{ form_widget(prototype.children.fin)}}
+        </div>
+        <div class="col-lg-1">
+            {{ form_label(prototype.children.medecinRemplacant, 'Medecin:', {'label_attr': {'class': 'control-label col-lg-2'}} ) }}
+        </div>
+        <div class="col-lg-2">
+            {{ form_widget(prototype.children.medecinRemplacant)}}
+        </div>
+        <div class="col-lg-1 btnSupp"></div>
+        <div class="error">
+            <br /><br />
+            {{ form_errors(prototype.children.debut) }}
+            {{ form_errors(prototype.children.fin) }}
+        </div>
+    </div>
+{% endspaceless %}
+{% endblock collection_item_widget %}
+
+{# fields_errors.html.twig #}
+{% block form_errors %}
+    {% spaceless %}
+        {% if errors|length > 0 %}
+        <ul class="error_list" style>
+            {% for error in errors %}
+                <li class="help-block">  <i class="icon-warning-sign"></i>{{
+                    error.messagePluralization is null
+                        ? error.messageTemplate|trans(error.messageParameters, 'validators')
+                        : error.messageTemplate|transchoice(error.messagePluralization, error.messageParameters, 'validators')
+                }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+    {% endspaceless %}
+{% endblock form_errors %}

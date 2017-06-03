@@ -1,0 +1,88 @@
+Gestime\ApiBundle\Model\UtilisateurWeb:
+    getters:
+        nom:
+            - NotBlank:
+            - Length:
+                min: 2
+                max: 32
+                minMessage: "Votre nom doit faire au moins {{ limit }} caractères"
+                maxMessage: "Votre nom ne peut pas être plus long que {{ limit }} caractères"
+            - Regex: "/^[a-zA-Z áàâäãåçéèêëíìîïñóòôöõúùûüýÿæœÁÀÂÄÃÅÇÉÈÊËÍÌÎÏÑÓÒÔÖÕÚÙÛÜÝŸÆŒ._\s-]{2,32}$/"
+        prenom:
+             - NotBlank:
+             - Length:
+                 min: 2
+                 max: 32
+                 minMessage: "Votre prénom doit faire au moins {{ limit }} caractères"
+                 maxMessage: "Votre prénom ne peut pas être plus long que {{ limit }} caractères"
+             - Regex: "/^[a-zA-Z áàâäãåçéèêëíìîïñóòôöõúùûüýÿæœÁÀÂÄÃÅÇÉÈÊËÍÌÎÏÑÓÒÔÖÕÚÙÛÜÝŸÆŒ._\s-]{2,32}$/"
+        email:
+            - Email:
+                message: "'{{ value }}' n'est pas un email valide."
+                checkMX: false
+        password:
+            - NotBlank:
+            - Length:
+                min: 6
+                max: 15
+                minMessage: "Votre mot de passe doit faire au moins {{ limit }} caractères"
+                maxMessage: "Votre mot de passe ne peut pas être plus long que {{ limit }} caractères"
+        naissance:
+            - NotBlank:
+            - Date:
+                message: "La date de naissance est incorrecte"
+        sexe:
+            - Choice:
+                choices:  [H, F]
+                message: "Le sexe doit être H ou F"
+
+Gestime\ApiBundle\Model\RdvWeb:
+    getters:
+        email:
+            - Email:
+                message: "'{{ value }}' n'est pas une adresse email valide."
+                checkMX: false
+        telephone:
+            - NotBlank:
+        medecinId:
+            - NotBlank:
+            - Range:
+                min: 1
+                max: 3000
+        dateRdv:
+            - NotBlank:
+            - DateTime:
+                message: "La date de rendez-vous est incorrecte"
+        codeActivation:
+            - NotBlank:
+        dejaVenu:
+           - Choice:
+               choices:  [dv, jv]
+        raison:
+            - NotBlank:
+Gestime\ApiBundle\Model\InfoUserWeb:
+    getters:
+        nom:
+            - NotBlank:
+            - Length:
+                min: 2
+                max: 32
+                minMessage: "Votre nom doit faire au moins {{ limit }} caractères"
+                maxMessage: "Votre nom ne peut pas être plus long que {{ limit }} caractères"
+            - Regex: "/^[A-Za-z ]+$/"
+        prenom:
+             - NotBlank:
+             - Length:
+                 min: 2
+                 max: 32
+                 minMessage: "Votre prénom doit faire au moins {{ limit }} caractères"
+                 maxMessage: "Votre prénom ne peut pas être plus long que {{ limit }} caractères"
+             - Regex: "/^[A-Za-z -]+$/"
+        sexe:
+            - Choice:
+                choices:  [H, F]
+                message: "Le sexe doit être H ou F"
+        naissance:
+            - NotBlank:
+            - Date:
+                message: "La date de naissance est incorrecte"

@@ -1,0 +1,17 @@
+  <div class="row">
+        <div class="col-lg-12">
+
+          {{ datatable ({
+            'id' : 'id',
+            'edit_route' : 'abonnes_edit',
+            'delete_route' : 'abonnes_delete',
+            'main_template' : 'GestimeUserBundle:abonnes:liste.html.twig' ,
+            'js' : {
+              'iDisplayLength': 10,
+              'sAjaxSource' : path('abonnes_grille')
+              }
+            }) | raw
+          }}
+
+        </div>
+  </div>

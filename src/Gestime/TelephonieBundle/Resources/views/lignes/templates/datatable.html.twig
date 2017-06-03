@@ -1,0 +1,18 @@
+
+<div class="row">
+      <div class="col-lg-12">
+
+        {{ datatable ({
+          'id' : 'id',
+          'edit_route' : 'lignes_edit',
+          'delete_route' : 'lignes_delete',
+          'main_template' : 'GestimeTelephonieBundle:lignes:liste.html.twig' ,
+          'js' : {
+            'iDisplayLength': 10,
+            'sAjaxSource' : path('lignes_grille')
+            }
+          }) | raw
+        }}
+
+      </div>
+</div>

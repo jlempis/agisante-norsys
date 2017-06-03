@@ -1,0 +1,51 @@
+<div class="form-group">
+  {{ form_label(form.tag, 'Tag: ', {'label_attr': {'class': 'control-label col-lg-2'}}) }}
+  <div class="col-lg-6">
+      {{ form_widget(form.tag, { 'attr': { 'placeholder': "Tag" } }) }}
+      {{ form_errors(form.tag) }}
+  </div>
+</div>
+{% if action != 'Supprimer un répondeur' %}
+  <div class="form-group">
+    {{ form_label(form.file, 'Fichier: ', {'label_attr': {'class': 'control-label col-lg-2'}}) }}
+    <div class="col-lg-8">
+        {{ form_widget(form.file, { 'attr': { 'placeholder': "Fichier" } }) }}
+        {{ form_errors(form.file) }}
+    </div>
+  </div>
+{% endif %}
+<div class="form-group">
+  {{ form_label(form.commentaire, 'Commentaire: ', {'label_attr': {'class': 'control-label col-lg-2'}}) }}
+  <div class="col-lg-8">
+      {{ form_widget(form.commentaire, { 'attr': { 'placeholder': "Commentaire" } }) }}
+      {{ form_errors(form.commentaire) }}
+  </div>
+</div>
+
+{% if repondeur != '' %}
+  <div class="form-group">
+    {{ form_label(form.name, 'Source: ', {'label_attr': {'class': 'control-label col-lg-2'}}) }}
+    <div class="col-lg-8">
+        {{ form_widget(form.name, { 'attr': { 'placeholder': "Source" } }) }}
+        {{ form_errors(form.name) }}
+    </div>
+  </div>
+
+  <div class="form-group">
+    {{ form_label(form.name, 'Ecouter: ', {'label_attr': {'class': 'control-label col-lg-2'}}) }}
+    <div class="col-lg-8">
+      <audio controls>
+        <source src="{{ asset('repondeurs/' ~ repondeur ~ '.ogg') }}" type="audio/ogg">
+        <source src="{{ asset('repondeurs/' ~ repondeur ~ '.mp3') }}" type="audio/mp3">
+          Votre naigateur ne supporte pas la fonction lecture audio.
+      </audio>
+    </div>
+  </div>
+{% endif %}
+<div class="form-actions">
+  {{ form_widget(form.Enregistrer, { 'attr': { 'class': "btn btn-blue" }}) }}
+  {{ form_widget(form.Annuler, { 'attr': { 'class': "btn btn-default" }}) }}
+</div>
+<div class="form-group">
+  {{ form_rest(form) }}
+</div>

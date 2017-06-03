@@ -1,0 +1,15 @@
+/* line 3, ../../compass/sass/thumbnails.scss */
+.thumbnails {
+  list-style: none;
+  *zoom: 1;
+}
+/* line 24, ../../compass/sass/mixin_helpers.scss */
+.thumbnails:before, .thumbnails:after {
+  display: table;
+  content: "";
+  line-height: 0;
+}
+/* line 30, ../../compass/sass/mixin_helpers.scss */
+.thumbnails:after {
+  clear: both;
+}

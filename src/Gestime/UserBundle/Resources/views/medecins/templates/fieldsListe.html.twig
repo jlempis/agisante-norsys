@@ -1,0 +1,113 @@
+<div class="form-group">
+  {{ form_label(form.nom, 'Nom: ', {'label_attr': {'class': 'control-label col-lg-2'}}) }}
+  <div class="col-lg-4">
+      {{ form_widget(form.nom, { 'attr': { 'placeholder': "Nom du médecin" } }) }}
+      {{ form_errors(form.nom) }}
+  </div>
+  {{ form_label(form.prenom, 'Prénom: ', {'label_attr': {'class': 'control-label col-lg-1'}}) }}
+  <div class="col-lg-4">
+      {{ form_widget(form.prenom, { 'attr': { 'placeholder': "Prénom du médecin" } }) }}
+      {{ form_errors(form.prenom) }}
+  </div>
+</div>
+
+<div class="form-group ">
+  {{ form_label(form.dureeRdv, 'Durée du rendez-vous: ', {'label_attr': {'class': 'control-label col-lg-2'}}) }}
+  <div class="col-lg-3">
+      {{ form_widget(form.dureeRdv, { 'attr': { 'placeholder': "Durée du rendez-vous" } }) }}
+      {{ form_errors(form.dureeRdv) }}
+      </span>
+  </div>
+  {{ form_label(form.remplacant, 'Remplacant: ', {'label_attr': {'class': 'control-label col-lg-2'}}) }}
+  <div class="col-lg-4">
+      {{ form_widget(form.remplacant, { 'attr': { 'class': "icheck" } }) }}
+  </div>
+</div>
+
+<div class="form-group">
+  {{ form_label(form.specialites, 'Specialités: ', {'label_attr': {'class': 'control-label col-lg-2'}}) }}
+  <div class="col-lg-3">
+    {{ form_widget(form.specialites, { 'attr': { 'class':"select2-container select2-container-multi chzn-select", 'placeholder': "Cliquez pour ajouter une specialité" } }) }}
+    {{ form_errors(form.specialites) }}
+  </div>
+  {{ form_label(form.generaliste, 'Généraliste: ', {'label_attr': {'class': 'control-label col-lg-2'}}) }}
+  <div class="col-lg-4">
+      {{ form_widget(form.generaliste, { 'attr': { 'class': "icheck" } }) }}
+  </div>
+</div>
+
+<div class="form-group">
+    {{ form_label(form.rdvInternet, 'Rendez-vous Internet: ', {'label_attr': {'class': 'control-label col-lg-2'}}) }}
+    <div class="col-lg-3">
+        {{ form_widget(form.rdvInternet, { 'attr': { 'class': "icheck" } }) }}
+    </div>
+    {{ form_label(form.abonnement, 'Abonnement Doc24: ', {'label_attr': {'class': 'control-label col-lg-2 col-md-2 col-sm-2'}}) }}
+    <div class="col-lg-2 col-md-2  col-sm-2">
+        {{ form_widget(form.abonnement, { 'attr': { 'placeholder': "Objet" } }) }}
+        <div id="error_type" class="invisible" data-element="evenement_type"></div>
+    </div>
+</div>
+
+<div class="form-group">
+    {{ form_label(form.agenda, "Accès à l'agenda: ", {'label_attr': {'class': 'control-label col-lg-2'}}) }}
+    <div class="col-lg-3">
+        {{ form_widget(form.agenda, { 'attr': { 'class': "icheck" } }) }}
+    </div>
+</div>
+
+<div class="form-group">
+  {{ form_label(form.abonneSms, 'Rappel patients par SMS: ', {'label_attr': {'class': 'control-label col-lg-2'}}) }}
+  <div class="col-lg-2">
+      {{ form_widget(form.abonneSms, { 'attr': { 'class': "icheck" } }) }}
+  </div>
+  {{ form_label(form.tempsAvantRappel, 'Nb jours avant rappel: ', {'label_attr': {'class': 'control-label col-lg-3'}}) }}
+  <div class="col-lg-2">
+      {{ form_widget(form.tempsAvantRappel) }}
+  </div>
+</div>
+
+<div class="form-group">
+  {{ form_label(form.msgRappel, 'Message de rappel: ', {'label_attr': {'class': 'control-label col-lg-2'}}) }}
+  <div class="col-lg-8">
+    {{ form_widget(form.msgRappel, { 'attr': { 'placeholder': "Message de rappel" } }) }}
+      {{ form_errors(form.msgRappel) }}
+  </div>
+</div>
+
+<div class="form-group">
+  {{ form_label(form.abonne, 'Abonné: ', {'label_attr': {'class': 'control-label col-lg-2'}}) }}
+  <div class="col-lg-8">
+    {{ form_widget(form.abonne, { 'attr': { 'class':"chzn-select select2-offscreen", 'placeholder': "Abonné" } }) }}
+  </div>
+</div>
+
+<div class="form-group">
+  {{ form_label(form.telephones, 'Téléphones: ', {'label_attr': {'class': 'control-label col-lg-2'}}) }}
+  <div class="col-lg-9">
+    {% if action != "supprimer" %}
+      <button class="btn btn-green btn-telephone">Ajouter un téléphone</button>
+    {% endif %}
+    {{ form_widget(form.telephones) }}
+    {{ form_errors(form) }}
+  </div>
+</div>
+
+<div class="form-group">
+  {{ form_label(form.horaires, 'Horaires: ', {'label_attr': {'class': 'control-label col-lg-2'}}) }}
+  <div class="col-lg-10">
+    {% if action != "supprimer" %}
+      <button class="btn btn-green btn-horaire">Ajouter un horaire</button>
+    {% endif %}
+    {{ form_widget(form.horaires) }}
+    {{ form_errors(form) }}
+  </div>
+</div>
+
+
+<div class="form-actions">
+  <div class="col-lg-8">
+    {{ form_widget(form.Enregistrer, { 'attr': { 'class': "btn btn-blue" }}) }}
+    {{ form_widget(form.Annuler, { 'attr': { 'class': "btn btn-default" }}) }}
+  </div>
+</div>
+{{ form_rest(form) }}

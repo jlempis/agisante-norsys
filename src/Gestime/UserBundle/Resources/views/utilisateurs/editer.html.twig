@@ -1,0 +1,61 @@
+{% extends '::base.html.twig' %}
+
+{% block titrePage %}<i class="icon-user"></i> Utilisateurs{% endblock %}
+
+{% block title %}Modifier un utilisateur{% endblock %}
+
+{% block stylesheets %}
+  {{ parent() }}
+  <style>
+.separate-sections > li, .separate-sections > div {
+margin-bottom: 0px !important;
+}
+  .progress{
+    margin-bottom: 0px !important;
+  }
+      .radiobutton {
+          float: left;
+          width: auto;
+          margin-left: 3em;
+      }
+  </style>
+{% endblock %}
+
+{% block includesjs %}
+  {{ parent() }}
+  <script src="{{ asset('bundles/gestimeuser/js/password-strength.js') }}"></script>
+  <script src="{{ asset('bundles/gestimeuser/js/utilisateurs/editer.js') }}"></script>
+{% endblock %}
+
+{% block body %}
+    {% form_theme form with ['GestimeCoreBundle:Form:form_date_time_picker.html.twig'] %}
+
+    <div class="row">
+  <div class="col-lg-12">
+    <div class="box">
+      <div class="box-header">
+        <span class="title"><i class="icon-user"></i> Modifier un utilisateur</span>
+      </div>
+      <div class="box-content">
+        <form action="#" method="post" {{ form_enctype(form) }} class="form-horizontal fill-up validatable">
+          <div class="padded">
+            {% include 'GestimeUserBundle:utilisateurs:templates/fieldsListe.html.twig'  %}
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% include 'GestimeUserBundle:utilisateurs:templates/datatable.html.twig'  %}
+{% include 'GestimeUserBundle:utilisateurs:templates/changePassword.html.twig'  %}
+<script>
+  jQuery(document).ready(function () {
+      GestimeDatePicker.initDatePicker();
+
+      $('.icheck').iCheck({
+        checkboxClass: 'icheckbox_flat-aero',
+        radioClass: 'iradio_flat-aero'
+      });
+  });
+</script>
+{% endblock %}

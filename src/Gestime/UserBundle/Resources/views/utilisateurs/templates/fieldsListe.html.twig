@@ -1,0 +1,105 @@
+<div class="form-group">
+  {{ form_label(form.nom, 'Nom: ', {'label_attr': {'class': 'control-label col-lg-2'}}) }}
+  <div class="col-lg-3">
+      {{ form_widget(form.nom, { 'attr': { 'placeholder': "Nom de l'utilisateur" } }) }}
+  </div>
+  {{ form_label(form.prenom, 'Prénom: ', {'label_attr': {'class': 'control-label col-lg-2'}}) }}
+  <div class="col-lg-3">
+      {{ form_widget(form.prenom, { 'attr': { 'placeholder': "Prénom de l'utilisateur" } }) }}
+  </div>
+</div>
+
+<div class="form-group">
+  {{ form_label(form.username, 'Identifiant: ', {'label_attr': {'class': 'control-label col-lg-2'}}) }}
+  <div class="col-lg-3">
+    {{ form_widget(form.username, { 'attr': { 'placeholder': "Identifiant de connexion" } }) }}
+    {{ form_errors(form.username) }}
+  </div>
+    {{ form_label(form.email, 'E-mail: ', {'label_attr': {'class': 'control-label col-lg-2'}}) }}
+    <div class="col-lg-3">
+        {{ form_widget(form.email, { 'attr': { 'placeholder': "email" } }) }}
+        {{ form_errors(form.email) }}
+    </div>
+</div>
+
+{% if action == "ajouter" %}
+  <div class="form-group">
+    {{ form_label(form.password, 'Mot de passe: ', {'label_attr': {'class': 'control-label col-lg-2'}}) }}
+    <div class="col-lg-3">
+        {{ form_widget(form.password, { 'attr': { 'placeholder': "Mot de passe" } }) }}
+    </div>
+    <div id="messages" class="col-lg-4">
+    </div>
+  </div>
+{% endif %}
+
+
+<div class="form-group">
+
+    {{ form_label(form.dateNaissance, 'Naissance: ', {'label_attr': {'class': 'control-label col-lg-2'}}) }}
+    <div class="col-lg-3">
+        {{ form_widget(form.dateNaissance, { 'attr': { 'placeholder': "Date de naissance" } }) }}
+    </div>
+    {{ form_label(form.sexe, 'Sexe: ', {'label_attr': {'class': 'control-label col-lg-2'}}) }}
+    <div class="col-lg-3">
+        {{ form_widget(form.sexe, { 'attr': { 'class':"select2-container select2-container-multi chzn-select", 'placeholder': "Sexe" } }) }}
+    </div>
+</div>
+
+<div class="form-group">
+
+  {{ form_label(form.groups, 'Profils: ', {'label_attr': {'class': 'control-label col-lg-2'}}) }}
+  <div class="col-lg-3">
+    {{ form_widget(form.groups, { 'attr': { 'class':"select2-container select2-container-multi chzn-select", 'placeholder': "Cliquez pour ajouter un role" } }) }}
+    {{ form_errors(form.groups) }}
+
+  </div>
+
+    {{ form_label(form.medecins, 'Medecins: ', {'label_attr': {'class': 'control-label col-lg-2'}}) }}
+  <div class="col-lg-3">
+    {{ form_widget(form.medecins, { 'attr': { 'class':"select2-container select2-container-multi chzn-select", 'placeholder': "Cliquez pour ajouter un médecin" } }) }}
+    {{ form_errors(form.medecins) }}
+
+    </div>
+</div>
+
+<div class="form-group">
+  {{ form_label(form.medecindefault, 'Medecin par defaut: ', {'label_attr': {'class': 'control-label col-lg-2'}}) }}
+  <div class="col-lg-3">
+    {{ form_widget(form.medecindefault, { 'attr': { 'class':"select2-container select2-container-multi chzn-select", 'placeholder': "Cliquez pour ajouter un médecin" } }) }}
+    {{ form_errors(form.medecindefault) }}
+  </div>
+</div>
+
+<div class="form-group">
+  {{ form_label(form.locked, 'Bloqué: ', {'label_attr': {'class': 'control-label col-lg-2'}}) }}
+  <div class="col-lg-3">
+      {{ form_widget(form.locked, { 'attr': { 'class': "icheck" } }) }}
+  </div>
+    {{ form_label(form.userWeb, 'Utilisateur Doc24: ', {'label_attr': {'class': 'control-label col-lg-2'}}) }}
+    <div class="col-lg-3">
+        {{ form_widget(form.userWeb, { 'attr': { 'class': "icheck" } }) }}
+    </div>
+</div>
+
+<div class="form-group">
+    {{ form_label(form.phoneNumber, 'Téléphone: ', {'label_attr': {'class': 'control-label col-lg-2'}}) }}
+    <div class="col-lg-3">
+        {{ form_widget(form.phoneNumber) }}
+    </div>
+    {{ form_label(form.emailAuthCode, 'Code activation: ', {'label_attr': {'class': 'control-label col-lg-2'}}) }}
+    <div class="col-lg-3">
+        {{ form_widget(form.emailAuthCode) }}
+    </div>
+</div>
+
+<div class="form-actions">
+  {{ form_widget(form.Enregistrer, { 'attr': { 'class': "btn btn-blue" }}) }}
+  {{ form_widget(form.Annuler, { 'attr': { 'class': "btn btn-default" }}) }}
+  {% if action != "ajouter" %}
+        <a data-toggle="modal" href="#modal-password" class="btn btn-green pull-right"><i class="icon-external-link"></i> Ré-initialiser le mot de passe</a>
+  {% endif %}
+</div>
+
+{{ form_errors(form) }}
+{{ form_rest(form) }}

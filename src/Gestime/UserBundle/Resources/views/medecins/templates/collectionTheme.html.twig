@@ -1,0 +1,89 @@
+{% block _medecin_telephones_entry_widget %}
+    {% spaceless %}
+        <div class="rowTelephones form-group" style="margin-left: -5px; margin-right: -5px; ">
+            {{ form_label(form.numero,'Num.:', {'label_attr': {'class': 'control-label col-lg-1'}} ) }}
+            <div class="col-lg-2">
+                {{ form_widget(form.numero)}}
+            </div>
+            {{ form_label(form.type, 'Type:', {'label_attr': {'class': 'control-label col-lg-1'}} ) }}
+            <div class="col-lg-2">
+                {{ form_widget(form.type)}}
+            </div>
+            {{ form_label(form.envoiSMS, 'SMS:', {'label_attr': {'class': 'control-label col-lg-1'}} ) }}
+            <div class="col-lg-1">
+                {{ form_widget(form.envoiSMS, { 'attr': { 'class': "icheck" } }) }}
+            </div>
+            {{ form_label(form.token, 'Token:', {'label_attr': {'class': 'control-label col-lg-1'}} ) }}
+            <div class="col-lg-2">
+                {{ form_widget(form.token)}}
+            </div>
+            <div class="col-lg-1 btnSupp"></div>
+            <div class="error">
+                <br /><br />
+                {{ form_errors(form) }}
+            </div>
+        </div>
+    {% endspaceless %}
+{% endblock %}
+
+{% block _medecin_horaires_entry_widget %}
+    {% spaceless %}
+        <div class="rowHoraires form-group" style="margin-left: -5px; margin-right: -5px; ">
+            <div class="form-group">
+                {{ form_label(form.jour, 'Jour:', {'label_attr': {'class': 'control-label col-lg-1'}} ) }}
+                <div class="col-lg-2">
+                    {{ form_widget(form.jour)}}
+                </div>
+                {{ form_label(form.activite, 'Activité:', {'label_attr': {'class': 'control-label col-lg-1'}} ) }}
+                <div class="col-lg-2">
+                    {{ form_widget(form.activite)}}
+                </div>
+                <div class="col-lg-2">
+                    {{ form_widget(form.classe)}}
+                </div>
+                {{ form_label(form.internet, 'Internet:', {'label_attr': {'class': 'control-label col-lg-1'}} ) }}
+                <div class="col-lg-1">
+                    {{ form_widget(form.internet, { 'attr': { 'class': "icheck" } }) }}
+                </div>
+            </div>
+            <div class="form-group">
+                {{ form_label(form.debut, 'Début:', {'label_attr': {'class': 'control-label col-lg-1'}} ) }}
+                <div class="col-lg-2">
+                    {{ form_widget(form.debut)}}
+                </div>
+                {{ form_label(form.fin, 'Fin:', {'label_attr': {'class': 'control-label col-lg-1'}} ) }}
+                <div class="col-lg-2">
+                    {{ form_widget(form.fin)}}
+                </div>
+                {{ form_label(form.texte, 'Texte:', {'label_attr': {'class': 'control-label col-lg-1'}} ) }}
+                <div class="col-lg-2">
+                    {{ form_widget(form.texte)}}
+                </div>
+                <div class="col-lg-1 btnSupp"></div>
+                <div class="error">
+                    <br /><br />
+                    {{ form_errors(form.debut) }}
+                    {{ form_errors(form.fin) }}
+                </div>
+            </div>
+
+        </div>
+    {% endspaceless %}
+{% endblock %}
+
+{# fields_errors.html.twig #}
+{% block form_errors %}
+    {% spaceless %}
+        {% if errors|length > 0 %}
+        <ul class="error_list" style>
+            {% for error in errors %}
+                <li class="help-block">  <i class="icon-warning-sign"></i>{{
+                    error.messagePluralization is null
+                        ? error.messageTemplate|trans(error.messageParameters, 'validators')
+                        : error.messageTemplate|transchoice(error.messagePluralization, error.messageParameters, 'validators')
+                }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+    {% endspaceless %}
+{% endblock form_errors %}

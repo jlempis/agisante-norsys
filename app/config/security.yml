@@ -1,0 +1,105 @@
+# app/config/security.yml
+
+jms_security_extra:
+  secure_all_services: false
+  expressions: true
+
+# ************************************
+# Protection CSRF si appel via angular
+# ************************************
+dunglas_angular_csrf:
+  # Collection of patterns where to set the cookie
+  cookie:
+      set_on:
+          - { path: ^/$ }
+          - { route: ^app_, methods: [GET, HEAD] }
+  # On securise doc24 mais pas la synchro avec la V1
+
+
+  secure:
+    - { path: ^/apiV2, methods: [POST, PUT, PATCH, LINK] }
+    - { route: ^api3_ }
+
+# ************************************
+#
+# ************************************
+security:
+    encoders:
+        FOS\UserBundle\Model\UserInterface:
+            #algorithm: bcrypt
+            #cost: 15
+            algorithm: sha512
+            encode_as_base64: true
+
+    role_hierarchy:
+        ROLE_ADMIN:       ROLE_USER
+        ROLE_SUPER_ADMIN: [ROLE_USER, ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
+
+    providers:
+        main:
+            id: fos_user.user_provider.username
+
+    firewalls:
+        api_login:
+            pattern:  ^/v1/login
+            stateless: true
+            anonymous: true
+            form_login:
+                check_path: /v1/login_check
+                require_previous_session: false
+                username_parameter: username
+                password_parameter: password
+                success_handler: lexik_jwt_authentication.handler.authentication_success
+                failure_handler: lexik_jwt_authentication.handler.authentication_failure
+
+        api_secure:
+            pattern:   ^/v1
+            stateless: true
+            lexik_jwt:
+                authorization_header:
+                    enabled: true
+                    prefix:  Bearer
+                query_parameter:
+                    enabled: true
+                    name:    bearer
+
+        api_public:
+            pattern:   ^/public
+            stateless: true
+            anonymous: true
+
+
+        dev:
+            pattern:  ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+
+        main_login:
+            pattern:   ^/login$
+            anonymous: true
+
+        main:
+            pattern:   ^/
+            anonymous: false
+            provider:  main
+            form_login:
+                login_path: fos_user_security_login
+                check_path: fos_user_security_check
+                remember_me: true
+            logout:
+                path:   fos_user_security_logout
+                target: /login
+            remember_me:
+                key: '%secret%'
+                lifetime: 31536000
+                path: /
+                domain: ~
+
+    access_control:
+
+       - { path: ^/v1/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+       - { path: ^/public, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+       - { path: ^/v1/secure, roles: IS_AUTHENTICATED_FULLY }
+
+
+#        - path: "^/api/users/\d+$"
+#          allow_if: "'DELETE' == request.getMethod() and has_role('ROLE_ADMIN')"

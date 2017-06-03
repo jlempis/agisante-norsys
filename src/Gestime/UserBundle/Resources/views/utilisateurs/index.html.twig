@@ -1,0 +1,11 @@
+{% extends '::base.html.twig' %}
+
+{% block titrePage %}<i class="icon-user"></i> Utilisateurs{% endblock %}
+
+{% block title %}Liste des utilisateurs{% endblock %}
+
+{% block body %}
+
+{% include 'GestimeUserBundle:utilisateurs:templates/datatable.html.twig'  %}
+
+{% endblock %}

@@ -1,0 +1,70 @@
+<script type="text/javascript">
+  $(document).ready(function() {
+
+    var $idCollectionParent  = 'gestime_corebundle_abonne';
+    var $idCollectionChild = 'periodes';
+    var $elements=[ 'debut', 'fin', 'jour', 'repondeur'];
+
+    var $idCollection = $idCollectionParent + '_' + $idCollectionChild;
+    var $container = $('div#' + $idCollection);
+    var index = $container.find(':input').length;
+    index=index / $elements.length;
+
+    if (index != 0) {
+        $container.children('div.rowPeriode').each(function() {
+        ajouterLienSuppression($(this));
+      });
+    }
+
+    applyStyle();
+
+   $( ".btn-green" ).click(function(e) {
+      ajouterPeriode($container);
+      applyStyle();
+      e.preventDefault();
+
+      return false;
+    });
+
+    function applyStyle() {
+      $(".sel2").select2();
+      $('.Gestimetimepicker').timepicker({ 'step': 15, 'timeFormat': 'H:i' });
+      GestimeDatePicker.initDatePicker();
+    }
+
+   function ajouterPeriode($container) {
+      var $prototype = $($container.attr('data-prototype').replace(/__name__/g, index));
+      ajouterLienSuppression($prototype);
+      $container.append($prototype);
+      reorder($idCollectionParent, $idCollectionChild, $elements);
+      index++;
+    }
+
+    function reorder($idCollectionParent, $idCollectionChild, $elements) {
+      jQuery.each($elements, function(index, value) {
+        _reorder($idCollection, value, $idCollectionParent + '[' + $idCollectionChild + '][', '][' + value + ']');
+      });
+    }
+
+    function _reorder($debselector, $endselector, $debname, $endname) {
+      var i=0;
+      $('*[id^=' + $debselector + '][id$=' + $endselector + ']').each(function() {
+        $(this).attr('name', $debname + i +  $endname  );
+        i++;
+      });
+    }
+
+    function ajouterLienSuppression($prototype) {
+      $lienSuppression = $('<a href="#" class="btn btn-danger">Supprimer</a><div class="clear">');
+      $($prototype).children('div.btnSupp').append($lienSuppression);
+      $lienSuppression.click(function(e) {
+        $prototype.remove();
+        reorder($idCollectionParent, $idCollectionChild, $elements);
+        e.preventDefault();
+
+        return false;
+      });
+    }
+
+  });
+</script>

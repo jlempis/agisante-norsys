@@ -1,0 +1,95 @@
+
+<div class="form-group">
+  {{ form_label(form.nom, 'Nom: ', {'label_attr': {'class': 'control-label col-lg-2'}}) }}
+  <div class="col-lg-4">
+      {{ form_widget(form.nom) }}
+      {{ form_errors(form.nom) }}
+  </div>
+  {{ form_label(form.nom, 'Prénom: ', {'label_attr': {'class': 'control-label col-lg-2'}}) }}
+  <div class="col-lg-4">
+      {{ form_widget(form.prenom) }}
+      {{ form_errors(form.prenom) }}
+  </div>
+</div>
+
+<div class="form-group">
+    {{ form_label(form.specialites, 'Specialités: ', {'label_attr': {'class': 'control-label col-lg-2'}}) }}
+    <div class="col-lg-4">
+        {{ form_widget(form.specialites, { 'attr': { 'class':"select2-container select2-container-multi chzn-select", 'placeholder': "Cliquez pour ajouter une specialité" } }) }}
+        {{ form_errors(form.specialites) }}
+    </div>
+</div>
+<div class="form-group">
+  {{ form_label(form.adresse1, 'Adresse ligne 1: ', {'label_attr': {'class': 'control-label col-lg-2'}}) }}
+  <div class="col-lg-4">
+      {{ form_widget(form.adresse1) }}
+      {{ form_errors(form.adresse1) }}
+  </div>
+    {{ form_label(form.adresse2, 'Adresse ligne 2: ', {'label_attr': {'class': 'control-label col-lg-2'}}) }}
+  <div class="col-lg-4">
+      {{ form_widget(form.adresse2) }}
+      {{ form_errors(form.adresse2) }}
+  </div>
+</div>
+<div class="form-group">
+    {{ form_label(form.adresse3, 'Numéro et voie', {'label_attr': {'class': 'control-label col-lg-2'}}) }}
+    <div class="col-lg-4">
+        {{ form_widget(form.adresse3) }}
+        {{ form_errors(form.adresse3) }}
+    </div>
+    {{ form_label(form.adresse4, 'Adresse ligne 4:', {'label_attr': {'class': 'control-label col-lg-2'}}) }}
+    <div class="col-lg-4">
+        {{ form_widget(form.adresse4) }}
+        {{ form_errors(form.adresse4) }}
+    </div>
+</div>
+<div class="form-group">
+    {{ form_label(form.codePostal, 'Code postal: ', {'label_attr': {'class': 'control-label col-lg-2'}}) }}
+    <div class="col-lg-4">
+        {{ form_widget(form.codePostal) }}
+        {{ form_errors(form.codePostal) }}
+    </div>
+    {{ form_label(form.codePostal, 'Ville: ', {'label_attr': {'class': 'control-label col-lg-2'}}) }}
+    <div class="col-lg-4">
+        {{ form_widget(form.ville) }}
+        {{ form_errors(form.ville) }}
+    </div>
+</div>
+<div class="form-group">
+    {{ form_label(form.latitude, 'Latitude', {'label_attr': {'class': 'control-label col-lg-2'}}) }}
+    <div class="col-lg-4">
+        {{ form_widget(form.latitude) }}
+        {{ form_errors(form.latitude) }}
+    </div>
+    {{ form_label(form.longitude, 'Longitude:', {'label_attr': {'class': 'control-label col-lg-2'}}) }}
+    <div class="col-lg-4">
+        {{ form_widget(form.longitude) }}
+        {{ form_errors(form.longitude) }}
+    </div>
+</div>
+<div class="form-group">
+    {{ form_label(form.telephone, 'Téléphone: ', {'label_attr': {'class': 'control-label col-lg-2'}}) }}
+    <div class="col-lg-4">
+        {{ form_widget(form.telephone) }}
+        {{ form_errors(form.telephone) }}
+    </div>
+    {{ form_label(form.codePostal, 'Fax: ', {'label_attr': {'class': 'control-label col-lg-2'}}) }}
+    <div class="col-lg-4">
+        {{ form_widget(form.fax) }}
+        {{ form_errors(form.fax) }}
+    </div>
+</div>
+<div class="form-group">
+  {{ form_label(form.email, 'E-mail: ', {'label_attr': {'class': 'control-label col-lg-2'}}) }}
+  <div class="col-lg-4">
+      {{ form_widget(form.email) }}
+      {{ form_errors(form.email) }}
+  </div>
+</div>
+<div class="form-actions">
+  {{ form_widget(form.Enregistrer, { 'attr': { 'class': "btn btn-blue" }}) }}
+  {{ form_widget(form.Annuler, { 'attr': { 'class': "btn btn-default" }}) }}
+</div>
+<div class="form-group">
+{{ form_rest(form) }}
+</div>

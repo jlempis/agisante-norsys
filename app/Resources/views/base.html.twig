@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, maximum-scale=1, initial-scale=1, user-scalable=0">
+        <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+        <meta name="robots" content="noindex">
+        <title>{% block title %}AgiSanté{% endblock %}</title>
+
+        {% block stylesheets %}
+        <link href="//fonts.googleapis.com/css?family=Open+Sans:300italic,300,400italic,400,600italic,600,700italic,700,800italic,800" rel="stylesheet" type="text/css">
+          <link rel="stylesheet" href="{{ asset('bundles/gestimecore/css/combined.css') }}">
+          <link rel="stylesheet" href="{{ asset('bundles/gestimecore/css/accueil.css') }}">
+        {% endblock %}
+
+        {% block includesjs %}
+          <script  src="{{ asset('bundles/gestimecore/js/combined.js') }}" type="text/javascript"></script>
+          <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+          <script src="{{ path('fos_js_routing_js', {"callback": "fos.Router.setData"}) }}"></script>
+        {% endblock %}
+
+        <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/x-icon" href="/favicon.png" />
+    </head>
+
+    <body id="sign-in">
+        {% block modale %}
+          <div></div>
+        {% endblock %}
+        {% block navbar %}
+            <nav class="navbar navbar-default navbar-inverse navbar-static-top" role="navigation">
+            <div class="navbar-header">
+              <a class="navbar-brand logo" style="margin-left:10px;" href="{{ path('gestime_accueil') }}" ><img src="{{ asset('bundles/gestimecore/images/agisante-white.png') }}"></a>
+
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse-primary">
+                <span class="sr-only"></span>
+                <i class="icon-th-list"></i>
+              </button>
+
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse-top">
+                <span class="sr-only"></span>
+                <i class="icon-align-justify"></i>
+              </button>
+            </div>
+
+            <div class="collapse navbar-collapse navbar-collapse-top">
+                <div class="navbar-left">
+                  <h2>
+                    {% block titrePage %}Titre{% endblock %}
+                     <div id="loader"  class="img-responsive center-block">
+                      <img src="{{ asset('bundles/gestimecore/images/loading2.gif') }}" /></div>
+                  </h2>
+                </div>
+              <div class="navbar-right">
+
+                <ul class="nav navbar-nav navbar-left">
+
+                  {% if is_granted("ROLE_ACCES_DIRECT") %}
+                    <li class="cdrop active"><a id="cptSMS" href="#"></a></li>
+                  {% endif %}
+
+                  {% if is_granted("ROLE_GESTION_MESSAGERIE") %}
+                            <li class="cdrop"><a id="cptMessages" href="{{ path('messages_liste') }}"></a></li>
+                  {% endif %}
+
+                  {% if is_granted("ROLE_ACCES_DIRECT") %}
+                    <li class="dropdown cdrop">
+                      <a href="#" class="dropdown-toggle" data-toggle="dropdown">Accès direct <b class="caret"></b></a>
+                      <ul class="dropdown-menu">
+                        <li><a target="_blank" href="http://manager.allmysms.com/auth/login">Acheter des crédits SMS</a></li>
+                        <li><a target="_blank" href="https://www.ovh.com/manager/dedicated/login.html">Acheter des crédits Faxs</a></li>
+                        <li><a target="_blank" href="https://www.doc24.fr/templates/accueil/#">Doc24.fr</a></li>
+                        <li><a target="_blank" href="https://redmine.gestime.net">Demandes</a></li>
+                      </ul>
+                    </li>
+                  {% endif %}
+
+                </ul>
+
+                {% if is_granted("ROLE_VISU_AGENDA") %}
+                    <form id="form-search" class="navbar-form navbar-left" style="border:none;" role="search">
+                      <div class="form-group">
+                        <input id="input-recherche" type="text" class="search-query animated" style="color:white" placeholder="Rechercher ">
+                        <i class="icon-search" style="color:grey; padding-left:7px;"></i>
+                      </div>
+                    </form>
+                {% endif %}
+
+                <ul class="nav navbar-nav navbar-left">
+                  <li class="dropdown">
+                    <a href="#" class="dropdown-toggle dropdown-avatar" data-toggle="dropdown">
+                      <span>
+                        <span>{{ app.user.prenom }} {{ app.user.nom }}<i class="icon-caret-down"></i></span>
+                        <span class="badge badge-dark-red">5</span>
+                      </span>
+                    </a>
+                    <ul class="dropdown-menu">
+                      <li class="with-image">
+                        <span>{{ app.user.username }}</span>
+                      </li>
+
+                      <li class="divider"></li>
+                      <li><a href="{{ path('fos_user_security_logout')}}"><i class="icon-off"></i> <span>Deconnexion</span></a></li>
+                    </ul>
+                  </li>
+                </ul>
+              </div>
+
+            </div><!-- /.navbar-collapse -->
+
+          </nav>
+
+        {% endblock %}
+         {% block sidebar %}
+       <div class="sidebar-background">
+            <div class="primary-sidebar-background"></div>
+        </div>
+
+        <div class="primary-sidebar">
+
+          {% if menuactif is not defined %}{% set menuactif=''%}{% endif %}
+          <!-- Main nav -->
+          <ul class="nav navbar-collapse collapse navbar-collapse-primary">
+
+                <li class="dark-nav {% if menuactif == 'Accueil' %}active{% endif %}">
+                  <span class="glow"></span>
+                  <a href="{{ path('gestime_home') }}">
+                      <i class="icon-home icon-2x"></i>
+                      <span>Accueil</span>
+                  </a>
+                </li>
+
+               {% if is_granted("ROLE_VISU_AGENDA")
+                  or is_granted('ROLE_VISU_AGENDA_TOUS')
+                  or is_granted('ROLE_GESTION_ABSENCES')
+               %}
+
+                  <li class="dark-nav {% if menuactif == 'Agenda' %}active{% endif %}">
+                    <span class="glow"></span>
+
+                    <a class="accordion-toggle collapsed " data-toggle="collapse" href="#MenuAgenda">
+                          <i class="icon-calendar icon-2x"></i>
+                          <span>Planning<i class="icon-caret-down"></i></span>
+                    </a>
+
+                    <ul id="MenuAgenda" class="collapse">
+                      {% if is_granted("ROLE_VISU_AGENDA") or is_granted('ROLE_VISU_AGENDA_TOUS') %}
+                        <li class="">
+                          <a href="{{ path('agenda') }}">
+                             <img src="{{ asset('bundles/gestimecore/images/ico-sms.png') }}" alt="Sms"  width="16" height="16">Agenda
+                          </a>
+                        </li>
+                      {% endif %}
+                      {% if is_granted("ROLE_GESTION_ABSENCES") %}
+                        <li class="">
+                          <a href="{{ path('absences') }}">
+                             <img src="{{ asset('bundles/gestimecore/images/ico-sms.png') }}" alt="Sms"  width="16" height="16">Absences
+                          </a>
+                        </li>
+                      {% endif %}
+                      {% if is_granted("ROLE_GESTION_CONSIGNES") %}
+                        <li class="">
+                          <a href="{{ path('consignes') }}">
+                             <img src="{{ asset('bundles/gestimecore/images/ico-sms.png') }}" alt="Sms"  width="16" height="16">Consignes
+                          </a>
+                        </li>
+                      {% endif %}
+                    </ul>
+                  </li>
+
+                {% endif %}
+
+                {% if is_granted("ROLE_GESTION_MESSAGERIE")
+                  or is_granted('ROLE_GESTION_SMS')
+                %}
+                  <li class="dark-nav {% if menuactif == 'Messages' %}active{% endif %}">
+                    <span class="glow"></span>
+
+                    <a class="accordion-toggle collapsed " data-toggle="collapse" href="#MenuMessages">
+                          <i class=" icon-envelope icon-2x"></i>
+                          <span>Messages<i class="icon-caret-down"></i></span>
+                    </a>
+
+                    <ul id="MenuMessages" class="collapse">
+                      {% if is_granted("ROLE_GESTION_MESSAGERIE") %}
+                        <li class="">
+                          <a href="{{ path('messages_liste') }}">
+                             <img src="{{ asset('bundles/gestimecore/images/ico-sms.png') }}" alt="Messages"  width="16" height="16">Messagerie
+                          </a>
+                        </li>
+                      {% endif %}
+                      {% if is_granted("ROLE_GESTION_SMS") %}
+                        <li class="">
+                          <a href="{{ path('rapports_sms') }}">
+                             <img src="{{ asset('bundles/gestimecore/images/ico-sms.png') }}" alt="Non excusés"  width="16" height="16">Gestion des SMS
+                          </a>
+                        </li>
+                      {% endif %}
+                    </ul>
+                  </li>
+
+                {% endif %}
+
+                {% if is_granted("ROLE_GESTION_RDV") %}
+                  <li class="dark-nav {% if menuactif == 'Rapports' %}active{% endif %}">
+                    <span class="glow"></span>
+
+                    <a class="accordion-toggle collapsed " data-toggle="collapse" href="#MenuRapports">
+                          <i class=" icon-file-alt icon-2x"></i>
+                          <span>Rapports<i class="icon-caret-down"></i></span>
+                    </a>
+
+                    <ul id="MenuRapports" class="collapse">
+                        <li class="">
+                          <a href="{{ path('rapports_rdvs') }}">
+                             <img src="{{ asset('bundles/gestimecore/images/ico-sms.png') }}" alt="Rendez-vous"  width="16" height="16">Rendez-vous
+                          </a>
+                        </li>
+                        <li class="">
+                          <a href="{{ path('rapports_mvts') }}">
+                             <img src="{{ asset('bundles/gestimecore/images/ico-sms.png') }}" alt="Mouvements"  width="16" height="16">Mouvements
+                          </a>
+                        </li>
+                        <li class="">
+                          <a href="{{ path('rapports_nexc') }}">
+                             <img src="{{ asset('bundles/gestimecore/images/ico-sms.png') }}" alt="Non excusés"  width="16" height="16">Patients non excusés
+                          </a>
+                        </li>
+                        <li class="">
+                          <a href="{{ path('rapports_messages') }}">
+                             <img src="{{ asset('bundles/gestimecore/images/ico-sms.png') }}" alt="Non excusés"  width="16" height="16">Messages
+                          </a>
+                        </li>
+                    </ul>
+                  </li>
+
+                {% endif %}
+
+                {% if is_granted("ROLE_GESTION_ABONNES")
+                  or is_granted('ROLE_GESTION_MEDECINS')
+                  or is_granted('ROLE_GESTION_UTILISATEURS')
+                %}
+
+                  <li class="dark-nav {% if menuactif == 'Utilisateurs' %}active{% endif %}">
+                    <span class="glow"></span>
+
+                    <a class="accordion-toggle collapsed " data-toggle="collapse" href="#MenuUtilisateurs">
+                          <i class=" icon-group icon-2x"></i>
+                          <span>Utilisateurs<i class="icon-caret-down"></i></span>
+                    </a>
+
+                    <ul id="MenuUtilisateurs" class="collapse">
+                       {% if is_granted("ROLE_GESTION_ABONNES") %}
+                          <li class="">
+                            <a href="{{ path('abonnes_liste') }}">
+                               <img src="{{ asset('bundles/gestimecore/images/ico-sms.png') }}" alt="Sms"  width="16" height="16">Abonnés
+                            </a>
+                          </li>
+                      {% endif %}
+                      {% if is_granted("ROLE_GESTION_MEDECINS") %}
+                          <li class="">
+                            <a href="{{ path('medecins_liste') }}">
+                               <img src="{{ asset('bundles/gestimecore/images/ico-sms.png') }}" alt="Sms"  width="16" height="16">Médecins
+                            </a>
+                          </li>
+                      {% endif %}
+                      {% if is_granted("ROLE_GESTION_UTILISATEURS") %}
+                          <li class="">
+                            <a href="{{ path('utilisateurs_liste') }}">
+                               <img src="{{ asset('bundles/gestimecore/images/ico-sms.png') }}" alt="Sms"  width="16" height="16">Utilisateurs
+                            </a>
+                          </li>
+                      {% endif %}
+                    </ul>
+                  </li>
+                {% endif %}
+
+                {% if is_granted('ROLE_GESTION_LIGNES')
+                  or is_granted('ROLE_GESTION_REPONDEURS')
+                  or is_granted('ROLE_GESTION_FERMETURES')
+                %}
+
+                  <li class="dark-nav {% if menuactif == 'Telephonie' %}active{% endif %}">
+                    <span class="glow"></span>
+
+                    <a class="accordion-toggle collapsed " data-toggle="collapse" href="#MenuTelephonie">
+                          <i class=" icon-headphones icon-2x"></i>
+                          <span>Téléphonie<i class="icon-caret-down"></i></span>
+                    </a>
+
+                    <ul id="MenuTelephonie" class="collapse">
+                      {% if is_granted("ROLE_GESTION_LIGNES") %}
+                          <li class="">
+                            <a href="{{ path('lignes_liste') }}">
+                               <img src="{{ asset('bundles/gestimecore/images/ico-sms.png') }}" alt="Sms"  width="16" height="16">Lignes
+                            </a>
+                          </li>
+                      {% endif %}
+                      {% if is_granted("ROLE_GESTION_REPONDEURS") %}
+                          <li class="">
+                            <a href="{{ path('repondeurs_liste') }}">
+                               <img src="{{ asset('bundles/gestimecore/images/ico-sms.png') }}" alt="Sms"  width="16" height="16">Repondeurs
+                            </a>
+                          </li>
+                      {% endif %}
+                      {% if is_granted("ROLE_GESTION_FERMETURES") %}
+                          <li class="">
+                            <a href="{{ path('fermetures_liste') }}">
+                               <img src="{{ asset('bundles/gestimecore/images/ico-sms.png') }}" alt="Sms"  width="16" height="16">Fermetures
+                            </a>
+                          </li>
+                      {% endif %}
+                    </ul>
+
+                {% endif %}
+
+                {% if is_granted("ROLE_VISU_STATISTIQUES") %}
+
+                  <li class="dark-nav {% if menuactif == 'Statistiques' %}active{% endif %}">
+                      <span class="glow"></span>
+                      <a class="accordion-toggle collapsed " data-toggle="collapse" href="#MenuStatistiques">
+                            <i class=" icon-dashboard icon-2x"></i>
+                            <span>Statistiques<i class="icon-caret-down"></i></span>
+                      </a>
+                      <ul id="MenuStatistiques" class="collapse">
+                            <li class="">
+                              <a href="{{ path('appel_recus_detail_liste') }}">
+                                 <img src="{{ asset('bundles/gestimecore/images/ico-sms.png') }}" alt="Sms"  width="16" height="16">Detail des appels reçus
+                              </a>
+                            </li>
+                            <li class="">
+                              <a href="{{ path('appel_recus_groupe_liste') }}">
+                                 <img src="{{ asset('bundles/gestimecore/images/ico-sms.png') }}" alt="Sms"  width="16" height="16">Appels reçus par abonné
+                              </a>
+                            </li>
+                            <li class="">
+                              <a href="{{ path('appel_recus_groupe_liste') }}">
+                                 <img src="{{ asset('bundles/gestimecore/images/ico-sms.png') }}" alt="Sms"  width="16" height="16">Statistiques
+                              </a>
+                            </li>
+                      </ul>
+                  </li>
+
+                {% endif %}
+
+              {% if is_granted("ROLE_DOC24") %}
+                  <li class="dark-nav {% if menuactif == 'Doc24' %}active{% endif %}">
+                      <span class="glow"></span>
+                      <a class="accordion-toggle collapsed " data-toggle="collapse" href="#MenuDoc24">
+                          <i class="icon-plus-sign-alt icon-2x"></i>
+                          <span>Doc24<i class="icon-caret-down"></i></span>
+                      </a>
+                      <ul id="MenuDoc24" class="collapse">
+                          <li class="">
+                              <a href="{{ path('infosDoc24') }}">
+                                  <img src="{{ asset('bundles/gestimecore/images/ico-sms.png') }}" alt="Sms"  width="16" height="16">Informations médecins
+                              </a>
+                          </li>
+                          {% if is_granted("ROLE_GESTION_FERMETURES") %}
+                              <li class="">
+                                  <a href="{{ path('prospects_liste') }}">
+                                      <img src="{{ asset('bundles/gestimecore/images/ico-sms.png') }}" alt="Sms"  width="16" height="16">Prospects
+                                  </a>
+                              </li>
+                          {% endif %}
+                      </ul>
+                  </li>
+
+              {% endif %}
+          </ul>
+        </div>
+
+        {% endblock %}
+
+        <div class="main-content">
+            <div class="container">
+              {% block body %}{% endblock %}
+            </div>
+
+        </div>
+
+        {% block javascripts %}{% endblock %}
+
+    </body>
+</html>

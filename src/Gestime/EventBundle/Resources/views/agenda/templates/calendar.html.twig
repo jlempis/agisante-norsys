@@ -1,0 +1,69 @@
+<div class="col-lg-2">
+    <div id="RdvRapides" class="box">
+        <div class="box-header">
+            <span class="title"><i class="icon-time"></i> Rendez-vous rapides</span>
+        </div>
+        <div class="box-content">
+            <div class="vertical-box-column p-15 bg-silver width-sm ui-sortable">
+                <div id="external-events">
+                   {% for typeRdv in listeTypeRendezVous %}
+                        <div class="external-event ui-draggable {{typeRdv.argument}}"
+                        style="position: relative;"
+                        data-type="{{typeRdv.code}}"
+                        data-couleur="{{typeRdv.argument}}"
+                        data-copy="0"
+                        data-id="{{typeRdv.idParametre}}">
+                            <i class="drag-event icon-move"></i>{{typeRdv.value}}
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="RdvCopies" class="box">
+        <div class="box-header">
+            <span class="title"><i class="icon-paper-clip"></i> Rendez-vous épinglés</span>
+        </div>
+        <div class="box-content">
+            <div class="vertical-box-column p-15 bg-silver width-sm ui-sortable">
+                <div id="zone-depot-rdv"  class="dropzone">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="DetailRdvBox" class="box">
+        <div class="box-header">
+            <span class="title"><i class="icon-paper-clip"></i> Informations</span>
+        </div>
+        <div class="box-content">
+            <div class="vertical-box-column p-15 bg-silver width-sm ui-sortable">
+                <div id="detailRdv">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="col-lg-10">
+    <div class="box">
+        <div class="box-header">
+            <span class="title" style="width:300px; text-align:left;">
+                {{ form_widget(listeMedecins.medecin, { 'attr': { 'class':"chzn-select select2-offscreen", 'placeholder': "Medecin" } }) }}
+            </span>
+            <span class="title" style="width:300px; text-align:left;">
+                {% form_theme listeMedecins 'GestimeCoreBundle:Form:form_date_time_picker.html.twig' %}
+                {{ form_widget(listeMedecins.dateAgenda) }}
+                <span id="btn-refresh" style="margin-left: 10px;">
+                    <i class="icon-refresh"></i>
+                </span>
+            </span>
+        </div>
+        <div class="box-content">
+            {% include 'ADesignsCalendarBundle::calendar.html.twig' %}
+        </div>
+    </div>
+</div>
+
+<i class="ace-icon fa fa-arrows"></i>

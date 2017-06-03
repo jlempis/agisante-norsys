@@ -1,0 +1,15 @@
+services:
+    # ***********************************************
+    # Managers
+    # ***********************************************
+    gestime.synchro.evenement.manager:
+        class: Gestime\SynchroV1Bundle\Business\SynchroEventManager
+        arguments: ['@service_container', '@doctrine']
+
+    gestime.synchro.personne.manager:
+        class: Gestime\SynchroV1Bundle\Business\SynchroPersonneManager
+        arguments: ['@service_container', '@doctrine']
+
+    gestime.synchro.message.manager:
+        class: Gestime\SynchroV1Bundle\Business\SynchroMessageManager
+        arguments: ['@service_container', '@doctrine']

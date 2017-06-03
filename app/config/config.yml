@@ -1,0 +1,392 @@
+
+imports:
+    - { resource: parameters.yml }
+    - { resource: security.yml }
+
+# ************************************
+# Symfony Configuration
+# ************************************
+framework:
+    #esi:             ~
+    translator:      { fallback: %locale% }
+    secret:          %secret%
+    router:
+        resource: "%kernel.root_dir%/config/routing.yml"
+        strict_requirements: ~
+    form:            ~
+    csrf_protection:
+        enabled: true
+    validation:      { enable_annotations: true }
+    templating:
+        engines: ['twig']
+        #assets_version: SomeVersionScheme
+    default_locale:  "%locale%"
+    trusted_proxies: ~
+    session:
+        handler_id: session.handler.native_file
+        save_path: "%kernel.root_dir%/sessions"
+    fragments:       ~
+    http_method_override: true
+
+# ************************************
+# Twig Configuration
+# ************************************
+twig:
+    debug:            %kernel.debug%
+    strict_variables: %kernel.debug%
+    form:
+        resources:
+            - 'GestimeCoreBundle:common:fields_error.html.twig'
+
+# ************************************
+# Assetic Configuration
+# ************************************
+assetic:
+    debug:          %kernel.debug%
+    use_controller: false
+    bundles:        []
+    filters:
+        cssrewrite: ~
+
+# ************************************
+# Doctrine Configuration
+# ************************************
+doctrine:
+    dbal:
+        default_connection:   default
+        connections:
+            default:
+                driver:   %database_driver%
+                host:     %database_host%
+                port:     %database_port%
+                dbname:   %database_name%
+                user:     %database_user%
+                password: %database_password%
+                charset:  UTF8
+                server_version: 5.6
+            gestimeV1:
+                driver:   %database_driver_v1%
+                host:     %database_host_v1%
+                port:     %database_port_v1%
+                dbname:   %database_name_v1%
+                user:     %database_user_v1%
+                password: %database_password_v1%
+                charset:  UTF8
+    orm:
+        auto_generate_proxy_classes: %kernel.debug%
+        default_entity_manager:     default
+
+        entity_managers:
+            default:
+                connection:         default
+       #         metadata_cache_driver: redis
+       #         query_cache_driver: redis    # enable query caching
+                mappings:
+                    GestimeCoreBundle: ~
+                    FOSUserBundle: ~
+                dql:
+                    numeric_functions:
+                        ifNull:         Gestime\CoreBundle\Dql\IfNull
+                        Day:            Gestime\CoreBundle\Dql\Day
+                        Month:          Gestime\CoreBundle\Dql\Month
+                        Year:           Gestime\CoreBundle\Dql\Year
+                        GroupConcat:    Gestime\CoreBundle\Dql\GroupConcat
+                    string_functions:
+                        replace:        Gestime\CoreBundle\Dql\Replace
+            gestime_v1:
+                connection:     gestimeV1
+                mappings:
+                    GestimeSynchroV1Bundle: ~
+
+# ************************************
+# Extensions doctrine
+# ************************************
+stof_doctrine_extensions:
+    default_locale: en_US
+    orm:
+        default:
+            timestampable: true
+            blameable: true
+
+# ************************************
+# Swiftmailer Configuration
+# ************************************
+swiftmailer:
+    transport: %mailer_transport%
+    username:  %mailer_user%
+    password:  %mailer_password%
+    spool:     { type: memory }
+
+# ************************************
+# Ali datatable Configuration
+# ************************************
+ali_datatable:
+    all:    ~
+    js:     ~
+
+# ************************************
+# Genemu Configuration
+# Used for autocomplete (Patients)
+# ************************************
+genemu_form:
+    autocomplete: ~
+
+# ************************************
+# Fos Js Routing Configuration
+# ************************************
+fos_js_routing:
+    routes_to_expose: [ 'medecin_get_numerosms' ]
+
+# ************************************
+# Fos User Bundle Configuration
+# ************************************
+fos_user:
+    db_driver:     orm
+    firewall_name: main
+    user_class:    Gestime\CoreBundle\Entity\Utilisateur
+    group:
+        group_class: Gestime\CoreBundle\Entity\Group
+    registration:
+        confirmation:
+            from_email:
+                address:        contact@doc24.fr
+                sender_name:    inscription
+            enabled:
+            template:           FOSUserBundle:Registration:email.txt.twig
+        form:
+            type:               gestime_user_registration
+    service:
+        mailer:                 fos_user.mailer.twig_swift
+# *************************************************
+# Gaufrette Configuration (Used for Ftp-Repondeurs)
+# *************************************************
+knp_gaufrette:
+    stream_wrapper: ~
+
+    adapters:
+        repondeur_local:
+            local:
+                directory: %kernel.root_dir%/%upload_dir%
+        avatar_local:
+            local:
+                directory: %kernel.root_dir%/%avatar_dir%
+        smf_ftp:
+            ftp:
+                host:       %ftp_host%
+                username:   %ftp_user%
+                password:   %ftp_password%
+                directory:  %ftp_dir%
+                create:     true
+                mode:       FTP_BINARY
+
+    filesystems:
+        repondeur_local_fs:
+            adapter:    repondeur_local
+        avatar_local_fs:
+            adapter:    avatar_local
+        smf:
+            adapter:    repondeur_local
+            alias:      smf_filesystem
+
+# ************************************************
+# Vich Uploader Configuration
+# Used for : Telechargement des repondeurs
+# ************************************************
+vich_uploader:
+    db_driver: orm
+
+    storage:   gaufrette
+
+    mappings:
+        repondeur:
+            delete_on_remove:   true
+            delete_on_update:   true
+            inject_on_load:     false
+            uri_prefix:         /repondeurs/sons
+            upload_destination: repondeur_local_fs
+            namer:              gestime.namer_uniqid
+
+        avatar:
+            delete_on_remove:   true
+            delete_on_update:   true
+            inject_on_load:     false
+            uri_prefix:         /avatars
+            upload_destination: avatar_local_fs
+            namer:              vich_uploader.namer_uniqid
+
+# ************************************************
+# RabbitMQ Configuration
+# Used for : Repondeurs via FTP
+# ************************************************
+old_sound_rabbit_mq:
+    connections:
+        default:
+            host:     %rabbit_host%
+            port:     5672
+            user:     %rabbit_user%
+            password: %rabbit_password%
+            vhost:    '/'
+            lazy:     false
+    producers:
+        traite_repondeur:
+            connection:       default
+            exchange_options: {name: 'gestime_upload_repondeur', type: direct}
+    consumers:
+        upload_repondeur:
+            connection:       default
+            exchange_options: {name: 'gestime_upload_repondeur', type: direct}
+            queue_options:    {name: 'gestime_upload_repondeur'}
+            callback:         upload_repondeur_service
+
+
+# ************************************************
+# Fos Rest Configuration
+# Bundle pour les services REST
+# ************************************************
+fos_rest:
+    param_fetcher_listener: true
+    routing_loader:
+        default_format: json
+    body_listener: true
+    access_denied_listener:
+        json: true
+    routing_loader:
+        default_format: json
+    serializer:
+        serialize_null: true
+    format_listener:
+        rules:
+            - { path: '^/v1', priorities: ['json'], fallback_format: json, prefer_extension: false }
+            - { path: '^/', priorities: ['html'], fallback_format: html, prefer_extension: false }
+    view:
+        view_response_listener: true
+        formats:
+            json: true
+            xml:  false
+# ************************************************
+# JMS Serializer
+# ************************************************
+jms_serializer:
+    metadata:
+        auto_detection: true
+# ************************************************
+# LexikJwtBundle
+# Authentification de l'api via JWT
+# ************************************************
+lexik_jwt_authentication:
+    private_key_path:   %private_key_path%
+    public_key_path:    %public_key_path%
+    pass_phrase:        %pass_phrase%
+    token_ttl:          %token_ttl%
+
+# ************************************************
+# NelmioCorsBundle
+# Permet de faire du Cross Domaine
+# ************************************************
+nelmio_cors:
+    defaults:
+        allow_credentials: false
+        allow_origin: []
+        allow_headers: []
+        allow_methods: []
+        expose_headers: []
+        max_age: 0
+        hosts: []
+    paths:
+        '^/v1':
+            allow_origin: ['*']
+            allow_headers: ['X-Custom-Auth', 'content-type', 'authorization']
+            allow_methods: ['POST', 'PUT', 'GET', 'DELETE', 'OPTIONS']
+            max_age: 3600
+
+# ************************************************
+# Sensio Framework Exta Configuration
+# ************************************************
+sensio_framework_extra:
+    view:
+        annotations: false
+
+# ************************************************
+# Validation utilisateur par SMS
+# ************************************************
+scheb_two_factor:
+    email:
+        enabled: true
+        mailer: gestime.sms_mailer
+        sender_email: %mailerSender%
+        template: GestimeUserBundle:Security:login_validation.html.twig
+        digits: 6
+
+    model_manager_name: ~
+
+    trusted_computer:
+        enabled: true
+        cookie_name: gestime_trusted_computer
+        cookie_lifetime: 5184000 # 60 jours
+
+# ************************************************
+# KnpSnappyBundle
+# Gere la creation des PDF avec wkhtmltopdf
+# ************************************************
+knp_snappy:
+    pdf :
+        enabled :  true
+        binary   :  /usr/local/bin/wkhtmltopdf
+        options :  []
+
+# ************************************************
+# REDIS
+#
+# ************************************************
+snc_redis:
+    # configure predis as client
+    clients:
+        default:
+            type: predis
+            alias: default
+            dsn: redis://localhost
+        doctrine:
+            type: predis
+            alias: doctrine
+            dsn: redis://localhost
+    # configure doctrine caching
+    doctrine:
+        metadata_cache:
+            client: doctrine
+            entity_manager: default
+            document_manager: default
+        result_cache:
+            client: doctrine
+            entity_manager: [default]
+        query_cache:
+            client: doctrine
+            entity_manager: default
+
+# ************************************************
+# GESTION DES LOGS
+# ************************************************
+monolog:
+    channels: ["doc24", "main"]
+    handlers:
+        doc24:
+            type: stream
+            path: /var/log/doc24.log
+            channels: doc24
+
+# ************************************************
+# CONFIGURATION CLOUDINARY (Photos)
+# ************************************************
+misteio_cloudinary:
+    cloud_name:   %cloudName%
+    api_key:      %apiKey%
+    secret_key:   %apiSecret%
+
+
+ivory_google_map:
+    geocoder:
+        class:   "Geocoder\\Geocoder"
+        provider:
+            class:   "Geocoder\\Provider\\HostIpProvider"
+            api_key: "AIzaSyCdxGJwqh32KdkhbtHvc2YsRr96NF2goIM"
+            locale:  "fr"
+        adapter: "Geocoder\\HttpAdapter\\CurlHttpAdapter"

@@ -1,0 +1,30 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+
+    <parameters>
+        <parameter key="gestime.repondeur_uploader.class">Gestime\TelephonieBundle\Upload\RepondeurUploader</parameter>
+        <parameter key="gestime.repondeur.manager.class">Gestime\TelephonieBundle\Business\RepondeurManager</parameter>
+        <parameter key="gestime.namer_uniqid.class">Gestime\TelephonieBundle\Upload\RepondeurUniqidNamer</parameter>
+    </parameters>
+
+    <services>
+
+        <service id="gestime.repondeur_uploader" class="%gestime.repondeur_uploader.class%">
+            <argument type="service" id="smf_filesystem" />
+        </service>
+
+        <service id="gestime.repondeur.manager" class="%gestime.repondeur.manager.class%">
+            <argument type="service" id="service_container" />
+            <argument type="service" id="doctrine.orm.entity_manager" />
+        </service>
+
+        <service id="gestime.namer_uniqid" class="%gestime.namer_uniqid.class%">
+        </service>
+
+
+    </services>
+</container>

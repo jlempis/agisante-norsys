@@ -1,0 +1,11 @@
+{% extends '::base.html.twig' %}
+
+{% block titrePage %}<i class="icon-ban-circle"></i> Prospects{% endblock %}
+
+{% block title %}Liste des prospects{% endblock %}
+
+{% block body %}
+
+{% include 'GestimeDoc24Bundle:prospects:templates/datatable.html.twig'  %}
+
+{% endblock %}

@@ -1,0 +1,58 @@
+{% extends '::base.html.twig' %}
+
+{% block titrePage %}<i class="icon-plus-sign-alt"></i> Informations Doc24{% endblock %}
+
+{% block title %}{{ action }}{% endblock %}
+
+{% block stylesheets %}
+  {{ parent() }}
+  <style>
+    #infosComplementaires_horairesInternet >div >label.required {
+      display:none
+    }
+    #infosComplementaires_infosDoc24_tarification >div >label.required {
+      display:none
+    }
+    #infosComplementaires_infosDoc24_transport >div >label.required {
+      display:none
+    }
+    #infosComplementaires_infosDoc24_photosCabinets >div >label.required {
+      display:none
+    }
+    .btn-green {
+      margin-bottom: 10px;
+    }
+}
+  </style>
+{% endblock %}
+
+{% block includesjs %}
+  {{ parent() }}
+  <script src="{{ asset('bundles/gestimeuser/js/infosDoc24/collectionMgr.js') }}"></script>
+{% endblock %}
+
+{% block body %}
+
+{% form_theme form with ['GestimeCoreBundle:Form:form_date_time_picker.html.twig', 'GestimeUserBundle:infosDoc24:templates/infosDoc24.html.twig'] %}
+
+<div class="row">
+  <div class="col-lg-12">
+    <div class="box">
+      <div class="box-header">
+        <span class="title"><i class="icon-user"></i>{{ action }}</span>
+      </div>
+      <div class="box-content">
+        <form action="#" method="post" {{ form_enctype(form) }} class="form-horizontal fill-up validatable">
+          <div class="padded">
+            {% include 'GestimeUserBundle:infosDoc24:templates/fieldsListe.html.twig'  %}
+          </div>
+        </form>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
+
+

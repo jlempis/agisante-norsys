@@ -1,0 +1,18 @@
+
+<div class="row">
+      <div class="col-lg-12">
+
+        {{ datatable ({
+          'id' : 'idFerme',
+          'edit_route' : 'fermetures_edit',
+          'delete_route' : 'fermetures_delete',
+          'main_template' : 'GestimeTelephonieBundle:fermetures:liste.html.twig' ,
+          'js' : {
+            'iDisplayLength': 10,
+            'sAjaxSource' : path('fermetures_grille')
+            }
+          }) | raw
+        }}
+
+      </div>
+</div>

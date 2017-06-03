@@ -1,0 +1,18 @@
+
+<div class="row">
+      <div class="col-lg-12">
+
+        {{ datatable ({
+          'id' : 'idProspect',
+          'edit_route' : 'prospects_edit',
+          'delete_route' : 'prospects_delete',
+          'main_template' : 'GestimeDoc24Bundle:prospects:liste.html.twig' ,
+          'js' : {
+            'iDisplayLength': 10,
+            'sAjaxSource' : path('prospects_grille')
+            }
+          }) | raw
+        }}
+
+      </div>
+</div>

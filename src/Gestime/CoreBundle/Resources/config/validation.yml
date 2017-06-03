@@ -1,0 +1,18 @@
+Gestime\CoreBundle\Entity\Utilisateur:
+    constraints:
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity: username
+
+Gestime\CoreBundle\Entity\Medecin:
+    properties:
+        nom:
+            - NotBlank: ~
+        dureeRdv:
+            - NotBlank: ~
+            - Range:
+                min: 10
+                max: 60
+                minMessage: La durée d'un rendez-vous est d'au moins 10 minutes
+                maxMessage: La durée d'un rendez-vous est d'au plus 60 minutes
+            - Type:
+                type: integer
+                message: La valeur {{ value }} n'est pas un type {{ type }} valide.

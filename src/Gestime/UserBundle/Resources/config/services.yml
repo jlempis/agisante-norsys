@@ -1,0 +1,44 @@
+services :
+    wsse.security.authentication.listener:
+        class:  Gestime\UserBundle\Security\Firewall\WsseListener
+        arguments: ["@security.context", "@security.authentication.manager","@logger"]
+        tags:
+            - { name: monolog.logger, channel: wsse }
+
+    gestime.utilisateur.manager:
+        arguments: ['@service_container', '@doctrine.orm.entity_manager']
+        class: Gestime\UserBundle\Business\UtilisateurManager
+
+    gestime.medecin.manager:
+        arguments: ['@service_container', '@doctrine.orm.entity_manager']
+        class: Gestime\UserBundle\Business\MedecinManager
+
+    gestime.abonne.manager:
+        arguments: ['@service_container', '@doctrine.orm.entity_manager']
+        class: Gestime\UserBundle\Business\AbonneManager
+
+    gestime.ligne.manager:
+        arguments: ['@service_container', '@doctrine.orm.entity_manager']
+        class: Gestime\TelephonieBundle\Business\LigneManager
+
+    gestime.sms_mailer:
+        class: Gestime\UserBundle\Services\SmsMailer
+        arguments:
+            - @gestime.sms
+            - @mailer
+            - %mailerSender%
+
+    gestime_user.registration.form.type:
+        class: Gestime\UserBundle\Form\Type\RegistrationFormType
+        tags:
+            - { name: form.type, alias: gestime_user_registration }
+
+# ************************************************
+# Interception Uplaod fichier
+# Pour gérer les avatars
+# ************************************************
+    gestime.file_subscriber:
+        class: Gestime\UserBundle\Services\FileSubscriber
+        arguments: ['@service_container']
+        tags:
+        - { name: kernel.event_subscriber }

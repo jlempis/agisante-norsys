@@ -1,0 +1,37 @@
+/*
+Ajout spécifiques GESTIME V2
+*/
+
+.rowPeriode {
+    padding-left:0px;margin-left:0px;margin-top:7px;
+}
+.numerotel {
+  margin-left:0px; float:left;
+}
+.clear { clear: both;
+}
+.rowtelmedecin {
+  padding-left:0px;margin-left:0px;margin-top:5px;
+}
+.help-block {
+    margin: 0;
+    margin-left:5px;
+}
+.help-block ul {
+    display: inline-block;
+    margin: 0;
+    padding: 0;
+}
+.help-block li {
+list-style: none outside none;
+    margin: 0;
+    padding: 0;
+    margin-left:5px;
+}
+.btnsupptel>.btn{
+  margin-left:10px;
+  height:26px;
+}
+.error_list {
+  margin-bottom: 0;
+}

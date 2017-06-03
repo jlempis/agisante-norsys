@@ -1,0 +1,36 @@
+{% extends '::base.html.twig' %}
+
+{% block titrePage %}
+  <i class="icon-phone"></i> Lignes
+{% endblock %}
+
+{% block title %}Supprimer une ligne{% endblock %}
+
+{% block body %}
+
+
+<div class="row">
+  <div class="col-lg-8">
+    <div class="box">
+      <div class="box-header">
+        <span class="title"><i class="icon-user"></i> Supprimer une ligne</span>
+      </div>
+      <div class="box-content">
+        <form action="#" method="post" {{ form_enctype(form) }} class="form-horizontal fill-up validatable">
+          <div class="padded">
+            {% include 'GestimeTelephonieBundle:lignes:templates/fieldsListe.html.twig'  %}
+          </div>
+        </form>
+      </div>
+      {% if action == 'Supprimer une ligne' and  encoreAffectee == true %}
+        <div class="alert alert-error" style="margin:10px;">
+          <button type="button" class="close" data-dismiss="alert">×</button>
+         Cette ligne est encore affectée. Vous ne pouvez pas la supprimer.
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+{% include 'GestimeTelephonieBundle:lignes:templates/datatable.html.twig'  %}
+
+{% endblock %}

@@ -1,0 +1,35 @@
+{% extends '::base.html.twig' %}
+
+{% block titrePage %}<i class="icon-music"></i> Repondeurs{% endblock %}
+
+{% block title %}{{ action }}{% endblock %}
+
+{% block body %}
+
+
+<div class="row">
+  <div class="col-lg-8">
+    <div class="box">
+      <div class="box-header">
+        <span class="title"><i class="icon-user"></i>{{ action }}</span>
+      </div>
+      <div class="box-content">
+        <form action="#" method="post" {{ form_enctype(form) }} class="form-horizontal fill-up validatable">
+          <div class="padded">
+            {% include 'GestimeTelephonieBundle:repondeurs:templates/fieldsListe.html.twig'  %}
+          </div>
+        </form>
+        {{ form_errors(form) }}
+      </div>
+      {% if actif == true and action == 'Supprimer un répondeur' %}
+        <div class="alert alert-info" style="margin:10px;">
+          <button type="button" class="close" data-dismiss="error">×</button>
+          Ce répondeur est actif (Abonné ou Fermeture exceptionnelle.) Vous ne pouvez pas le supprimer.
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+{% include 'GestimeTelephonieBundle:repondeurs:templates/datatable.html.twig'  %}
+
+{% endblock %}
