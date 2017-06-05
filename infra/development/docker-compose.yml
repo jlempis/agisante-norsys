@@ -2,7 +2,7 @@ version: '2'
 
 services:
     db:
-        image: mysql
+        image: mysql:5.6
         ports:
             - 127.0.0.1:3306:3306
         volumes:
@@ -11,7 +11,7 @@ services:
             MYSQL_ROOT_PASSWORD: MDP2mysql* 
             MYSQL_DATABASE: agisante
             MYSQL_USER: agisante
-            MYSQL_PASSWORD: '!MDP2prodV2#'
+            MYSQL_PASSWORD: MDP2prodV2*
     redis:
         image: redis:alpine
         ports:
@@ -25,9 +25,10 @@ services:
             - db:mysqldb
             - redis
         volumes:
-            - /var/www/oscar:/var/www/oscar
-            - /var/www/oscarinfo:/var/www/oscarinfo
-            - ./logs/oscar:/var/www/oscar/back/var/logs
+            - /app/agisante/agisante-norsys:/var/www/agisante
+            - /swap:/swap
+            - ./logs/agisante:/var/www/agisante/var/logs
+        privileged: true
 
     nginx:
         build: nginx

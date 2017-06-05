@@ -30,13 +30,22 @@ RUN \
     apt-get install php7.0-zip -y && \
     apt-get install php7.0-gd -y && \
     apt-get install php-xml -y && \
-    rm -rf /var/lib/apt/lists/*
+    rm -rf /var/lib/apt/lists/* && \
+    docker-php-ext-install bcmath
 
 #Permissions Symfony
-#HTTPDUSER=`ps axo user,comm | grep -E '[a]pache|[h]ttpd|[_]www|[w]ww-data|[n]ginx' | grep -v root | head -1 | cut -d\  -f1`
-#setfacl -R -m u:"$HTTPDUSER":rwX -m u:`whoami`:rwX var
-#setfacl -dR -m u:"$HTTPDUSER":rwX -m u:`whoami`:rwX var
+RUN chmod 777 app/sessions/
+RUN chmod 777 -R /var/www/agisante/app/cache
+RUN chown -R www-data:www-data app/logs
+
 
 RUN echo 'alias sf="php app/console"' >> ~/.bashrc
+
+#Installation du repertoire vendor
+RUN cd /var/www/agisante/
+RUN /usr/local/bin/composer update
+
+#Creation des tables de la base
+php app/console doctrine:schema:update --force
 
 WORKDIR /var/www/agisante
