@@ -29,9 +29,7 @@ class PersonneRepository extends EntityRepository
     public function findEntreprisesLike($term, $limit = 50)
     {
         $qb = $this->createQueryBuilder('c');
-        $qb->select('DISTINCT c.id, c.civilite, c.nomJF, c.entreprise, p.value, c.nom, c.prenom, c.telephone, adr.voie, adr.complement, adr.codePostal, ville.id as villeId, ville.nom as localite')
-            ->leftJoin('c.adresses', 'adr')
-            ->leftJoin('adr.ville', 'ville')
+        $qb->select('DISTINCT c.id, c.civilite, c.nomJF, c.entreprise, p.value, c.nom, c.prenom, c.telephone, p.adresse')
             ->leftJoin('Gestime\CoreBundle\Entity\Parametre', 'p',
                 \Doctrine\ORM\Query\Expr\Join::WITH,
                 'c.civilite = p.code'
@@ -59,11 +57,7 @@ class PersonneRepository extends EntityRepository
                              'Prenom'       => $data['prenom'],
                              'NomJF'        => $data['nomJF'],
                              'Telephone'    => $data['telephone'],
-                             'Voie'         => $data['voie'],
-                             'Complement'   => $data['complement'],
-                             'CodePostal'   => $data['codePostal'],
-                             'villeId'      => $data['villeId'],
-                             'Localite'     => $data['localite'],
+                             'Adresse'      => $data['adresse'],
                              );
         }
 
@@ -80,10 +74,8 @@ class PersonneRepository extends EntityRepository
     public function findPatientsLike($medecinId, $term, $limit = 50)
     {
         $qb = $this->createQueryBuilder('c');
-        $qb->select('DISTINCT c.id, c.civilite, c.nomJF, p.value, c.nom, c.prenom, c.telephone, adr.voie, adr.complement, adr.codePostal, ville.id as villeId, ville.nom as localite')
+        $qb->select('DISTINCT c.id, c.civilite, c.nomJF, p.value, c.nom, c.prenom, c.telephone, c.adresse')
             ->leftJoin('c.medecins', 'medecin')
-            ->leftJoin('c.adresses', 'adr')
-            ->leftJoin('adr.ville', 'ville')
             ->leftJoin('Gestime\CoreBundle\Entity\Parametre', 'p',
                 \Doctrine\ORM\Query\Expr\Join::WITH,
                 'c.civilite = p.code'
@@ -112,11 +104,7 @@ class PersonneRepository extends EntityRepository
                              'Prenom'       => $data['prenom'],
                              'NomJF'        => $data['nomJF'],
                              'Telephone'    => $data['telephone'],
-                             'Voie'         => $data['voie'],
-                             'Complement'   => $data['complement'],
-                             'CodePostal'   => $data['codePostal'],
-                             'villeId'      => $data['villeId'],
-                             'Localite'     => $data['localite'],
+                             'Adresse'      => $data['adresse'],
                              );
         }
 
@@ -140,8 +128,7 @@ class PersonneRepository extends EntityRepository
     public function findByAllFields($civilite, $entreprise, $adresse, $nom, $prenom, $nomJF, $email, $telephone, $etat, $type)
     {
         $qb = $this->createQueryBuilder('p')
-            ->select('p, adr')
-            ->leftjoin('p.adresses', 'adr')
+            ->select('p')
             ->where('p.civilite = :civilite')
             ->andwhere('p.nom = :nom')
             ->andwhere('p.prenom = :prenom')

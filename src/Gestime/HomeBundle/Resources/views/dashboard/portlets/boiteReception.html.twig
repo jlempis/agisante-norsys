@@ -14,19 +14,17 @@
   </colgroup>
     <thead>
       <tr>
-        <td></td>
         <td>Date</td>
-        <td>Sujet</td>
+        <td>Medecin</td>
         <td>Objet</td>
       </tr>
       </thead>
       <tbody>
         {% for message in messages %}
           <tr class="status-pending">
-              <td class="icon"><i class="icon-exchange"></i></td>
               <td><a href="{{ path('messages_view', { 'idMessage': message.idMessage }) }}">{{ message.dateEnvoi|date("d/m/Y") }}</a></td>
-              <td><b>{{ message.sujet}}</b></td>
-              <td>{{ message.objet}}</td>
+              <td>{{ message.medecins[0].nom }} {{ message.medecins[0].prenom }}
+              <td><b>{{ message.sujet}}</b><br>{{ message.objet}}</td>
           </tr>
         {% endfor %}
       <tbody>

@@ -19,15 +19,15 @@ class ConsigneRepository extends EntityRepository
     public function getListConsignes()
     {
         return $this->createQueryBuilder('c')
-        ->select('med.nom,
-                  p.nom,
-                  c.idConsigne,
-                  c.description ,
-                  c.debut,
-                  c.fin,
-                  c.bloquante,
-                  c.visible')
-        ->leftjoin('c.medecin', 'med')
+        ->select('m.nom as m_nom,
+                  p.nom as p_nom,
+                  c.idConsigne as c_idConsigne,
+                  c.description as c_description ,
+                  c.debut as c_debut,
+                  c.fin as c_fin,
+                  c.bloquante as c_bloquante,
+                  c.visible as c_visible')
+        ->leftjoin('c.medecin', 'm')
         ->leftjoin('c.patient', 'p');
     }
 

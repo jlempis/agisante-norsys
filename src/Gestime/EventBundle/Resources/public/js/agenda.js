@@ -36,6 +36,9 @@ function editEvent_(rdvId) {
         idEvenement: $rdv.idEvenement,
         medecinId: $rdv.medecin.idMedecin,
         type: $rdv.type,
+        nonExcuse: $rdv.nonExcuse,
+        rappel: $rdv.rappel,
+        nouveauPatient: $rdv.nouveauPatient,
         start: moment($rdv.debutRdv.date),
         end: moment($rdv.finRdv.date),
         idType: $rdvParam.idParametre,
@@ -50,18 +53,11 @@ function editEvent_(rdvId) {
             nom: $rdv.patient.nom,
             prenom: $rdv.patient.prenom,
             nomJF: $rdv.patient.nomJF,
-            telephone: $rdv.patient.telephone
+            telephone: $rdv.patient.telephone,
+            adresse: $rdv.patient.adresse
         };
         var eventObject = $.extend({}, eventObject, eventPatientObject);
-        if ($rdv.patient.adresses.length > 0) {
-            var eventAdressObject = {
-                voie: $rdv.patient.adresses[0].voie,
-                complement: $rdv.patient.adresses[0].complement,
-                codePostal: $rdv.patient.adresses[0].codePostal,
-                idVille: $rdv.patient.adresses[0].ville.id
-            };
-            eventObject = $.extend({}, eventObject, eventAdressObject);
-        }
+
     }
 
     $('#btn-priseRdv').click();
@@ -76,19 +72,30 @@ function editEvent(e, rdvId) {
     return false;
 }
 
+function afficheBoutonSuppr(rdv) {
+    //Affichage des boutons Suppr et Epingler que si on est en modif
+    if (rdv.idEvenement > 0) {
+        $$('#groupe-boutons-modif').show()
+    } else {
+        $$('#groupe-boutons-modif').hide();
+    }
+}
+
+function texteBtnEnregistrer(rdv) {
+    //Affichage des boutons Suppr et Epingler que si on est en modif
+    if ((typeof rdv.idEvenement !== "undefined") && (rdv.idEvenement >0)) {
+        $$('#btn_enregistrer').html('Modifier le rendez-vous');
+    } else {
+        $$('#btn_enregistrer').html('Créer le rendez-vous');
+    }
+}
+
 function afficheDerniereModification(rdv) {
     var infos = $('#infos');
     infos.html('');
     if ((typeof rdv.nomutimodif !== "undefined") && (rdv.nomutimodif !== '')) {
         infos.html('Dernière modification le ' + rdv.datemodif + ' par ' + rdv.nomutimodif);
     }
-}
-
-function initFormAdresse() {
-    $('#evenement_patient_adresses_1_voie').val('');
-    $('#evenement_patient_adresses_1_complement').val('');
-    $('#evenement_patient_adresses_1_codePostal').val('');
-    $('#evenement_patient_adresses_1_ville').select2('data', null);
 }
 
 function initFormRdv(idmedecin) {
@@ -104,13 +111,13 @@ function initFormRdv(idmedecin) {
     $$('#evenement_patient_prenom').val('');
     $$('#evenement_patient_telephone').val('');
     $$('#evenement_heureDebut').val('').focus();
+    $$('#evenement_patient_adresse').val('');
 
-    // if(event.codePostal != undefined ) {
-    //   $('.btn-adresse').click();
-    // } else {
-    //   $('.btn-danger').click();
-    // }
-    initFormAdresse();
+    $$("#evenement_rappel").iCheck('uncheck');
+    $$('#evenement_nonExcuse').iCheck('uncheck');
+
+    $('#consignes').html('');
+    $('#nonExcuses').html('');
 }
 
 function bindFormRdv(rdv) {
@@ -128,20 +135,22 @@ function bindFormRdv(rdv) {
     $$('#evenement_patient_nom').val(rdv.nom);
     $$('#evenement_patient_prenom').val(rdv.prenom);
     $$('#evenement_patient_telephone').val(rdv.telephone);
-    $$("#evenement_rappel").val(rdv.rappel);
 
-    if (rdv.codePostal !== undefined) {
 
-        $$('.btn-adresse').click();
-        $('#evenement_patient_adresses_1_voie').val(rdv.voie);
-        $('#evenement_patient_adresses_1_complement').val(rdv.complement);
-        $('#evenement_patient_adresses_1_codePostal').val(rdv.codePostal);
-        $('#evenement_patient_adresses_1_ville').select2().html(getComboVillesByCpostal($('#evenement_patient_adresses_1_codePostal').val())).trigger("change");
-        $('#evenement_patient_adresses_1_ville').select2("val", rdv.idVille);
-    } else {
-        $('.btn-danger').click();
-        initFormAdresse();
+    if (rdv.rappel) {
+        $$("#evenement_rappel").iCheck('check');
     }
+    if (rdv.nonExcuse) {
+        $$("#evenement_nonExcuse").iCheck('check');
+    }
+    if (rdv.nouveauPatient) {
+        $$("#evenement_nouveauPatient").iCheck('check');
+    }
+
+    $$('#evenement_patient_adresse').val(rdv.adresse);
+
+    texteBtnEnregistrer(rdv)
+    afficheBoutonSuppr(rdv);
     afficheDerniereModification(rdv);
     objet.focus();
 }
@@ -220,23 +229,9 @@ function saiseAutocomplete(item) {
     $$('#evenement_patient_telephone').val(item.Telephone);
     $$('#evenement_patient_civilite').select2("val", item.IdCivilite);
     $$('#evenement_patient_nomJF').val(item.nomJF);
+    $$('#evenement_patient_adresse').val(item.adresse);
     setRappelSMS();
 
-    //Si le patient a une adresse, il faut afficher les champs avant de les binder
-
-    if (item.Voie !== null) {
-        $$('.btn-adresse').click();
-        $$('#evenement_patient_adresses_1_voie').val(item.Voie);
-        $$('#evenement_patient_adresses_1_complement').val(item.Complement);
-        $$('#evenement_patient_adresses_1_codePostal').val(item.CodePostal);
-
-        if (item.villeId !== null) {
-            $$('#evenement_patient_adresses_1_ville').select2().html('<option value=" ' + item.villeId + '">' + item.Localite + '</option>').trigger("change");
-        } else {
-            $$('#evenement_patient_adresses_1_ville').select2().html('').trigger("change");
-        }
-        $$('#evenement_patient_form_id').val(item.Id);
-    }
 
 }
 
@@ -256,16 +251,12 @@ function applyStyle() {
 function afficheConsignes($idPatient) {
     var consignes = getConsignesPatient($idPatient);
     if (consignes.length > 0) {
-        var $txtHtml = '<span data-original-title="';
+        var $txtHtml = '<div class="alert alert-danger" style="margin:10px;"><button type="button" class="close" data-dismiss="alert">×</button>';
         $.each(consignes, function() {
             $txtHtml += this.description + '<br>';
         });
-        $txtHtml += '" class="tooltips tooltip-warning" title=""><i style="vertical-align: middle;" class="icon-warning-sign"></i></span>';
+        $txtHtml += '</div>';
         $('#consignes').html($txtHtml);
-        $('.tooltips').tooltip('destroy').tooltip({
-            placement: 'right',
-            html: true
-        });
     } else {
         $('#consignes').html('');
     }
@@ -274,16 +265,12 @@ function afficheConsignes($idPatient) {
 function afficheNonExcuses($idMedecin, $idPatient) {
     var nonExcuses = getNonExcusesPatient($idMedecin, $idPatient);
     if (nonExcuses.length > 0) {
-        var $txtHtml = '<span data-original-title="Rendez-vous non excusés :';
+        var $txtHtml = '<div class="alert alert-info" style="margin:10px;"><button type="button" class="close" data-dismiss="alert">×</button>';
         $.each(nonExcuses, function() {
             $txtHtml += ' <strong>' + moment(this.debutRdv.date).locale("fr").format('LLLL') + '</strong><br>';
         });
-        $txtHtml += '" class="tooltips tooltip-info" title=""><i style="vertical-align: middle;" class="icon-info-sign"></i></span>';
+        $txtHtml += '</div>';
         $('#nonExcuses').html($txtHtml);
-        $('.tooltips').tooltip('destroy').tooltip({
-            placement: 'right',
-            html: true
-        });
     } else {
         $('#nonExcuses').html('');
     }
@@ -436,6 +423,7 @@ function agendaDateChange() {
 
 $(document).ready(function() {
 
+    optionsCalendar.slotDuration = '00:' + getDureeConsultationAjax($$('#agenda_medecin').val()) + ':01';
 
     $("#agenda_dateAgenda_datepicker").on("change", function(e) {
         var newdate = moment($("#agenda_dateAgenda_datepicker").val(), "DD/MM/YYYY").format("YYYY-MM-DD");
@@ -476,7 +464,7 @@ $(document).ready(function() {
         select: function(event, ui) {
             saiseAutocomplete(ui.item);
             afficheConsignes(ui.item.Id);
-            afficheNonExcuses(1, ui.item.Id);
+            afficheNonExcuses($$("#evenement_medecin").val(), ui.item.Id);
 
             return false;
         }
@@ -560,7 +548,6 @@ $(document).ready(function() {
         epingleRdv(event, idEvent)
     });
 
-
     optionsCalendar.medecinId = $$('#agenda_medecin').val();
     optionsCalendar.slotDuration = '00:' + getDureeConsultation($$('#agenda_medecin').val()) + ':01';
     optionsCalendar.defaultTimedEventDuration = optionsCalendar.slotDuration;
@@ -580,5 +567,7 @@ $(document).ready(function() {
     agendaDateChange();
     applyStyle();
     coloreJoursAbsences($$("#evenement_medecin").val());
+
+
 
 });

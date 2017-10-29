@@ -1,13 +1,21 @@
 <div class="row">
       <div class="col-lg-12">
 
+
+          {% if form.medecin.vars.data == null %}
+          {% set defaultValue = 0 %}
+          {% else %}
+          {% set defaultValue = form.medecin.vars.data %}
+          {% endif %}
+
+
         {{ datatable ({
           'id' : 'idEvenement',
           'main_template' : 'GestimeRapportsBundle:RendezVous:liste.html.twig' ,
           'js' : {
             'iDisplayLength': 10,
               'sAjaxSource' : path('rdvs_grille',
-                                   {'medecinId': form.medecin.vars.value|default(0) ,
+                                   {'medecinId': form.medecin.vars.value|default(defaultValue) ,
                                     'debut':  form.debut.vars.value|default('2014-01-15'),
                                     'fin':  form.fin.vars.value|default('2014-01-15'),
                                   })

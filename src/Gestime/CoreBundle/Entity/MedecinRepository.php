@@ -41,14 +41,19 @@ class MedecinRepository extends EntityRepository
      */
     private function allMedecinByUser($userId)
     {
-        return $this->createQueryBuilder('m')
+
+        $medecins =  $this->createQueryBuilder('m')
             ->select('m')
             ->leftjoin('m.utilisateurs', 'u')
+            ->leftjoin('u.medecindefault', 'd')
             ->where('u.id = :userId')
             ->andwhere('m.agenda = 1')
-            ->orderBy('m.generaliste', 'DESC')
+            ->orderBy('m.idMedecin-d.idMedecin', 'DESC')
+            ->addOrderBy('m.generaliste', 'DESC')
             ->addOrderBy('m.nom', 'ASC')
             ->setParameter('userId', $userId);
+
+        return $medecins;
     }
 
     /**

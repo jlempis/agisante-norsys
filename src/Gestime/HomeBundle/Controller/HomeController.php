@@ -15,6 +15,7 @@ namespace Gestime\HomeBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Accueil
@@ -29,7 +30,7 @@ class HomeController extends Controller
      * @Route("/", name="gestime_home")
      * @Method("GET")
      *
-     * @return Template
+     * @return Response
      */
     public function indexAction()
     {
@@ -37,13 +38,25 @@ class HomeController extends Controller
         $messageMgr = $this->container->get('gestime.message.manager');
         $medecin = $this->getUser()->getMedecindefault();
 
-        if ($this->getUser()->hasGroup('MEDECIN')|| $this->getUser()->hasGroup('SECRETAIRE-SITE')) {
+
+        $listMessagesArray = $messageMgr->getMessagesListePaginee(
+            $this->getUser(),
+            null,
+            'Reception',
+            '',
+            't',
+            1,
+            10
+        );
+
+        if ($this->getUser()->hasGroup('MEDECIN') || $this->getUser()->hasGroup('SECRETAIRE-SITE')) {
             $aujourdhui = new \DateTime();
             $infosRdv=$homeMgr->getFirstLastNextEvent($medecin, $aujourdhui->format('Y-m-d'));
 
             if ($medecin->isGeneraliste()) {
                 return $this->render('GestimeHomeBundle:dashboard:medecinGeneraliste.html.twig',
                     array('menuactif'        => 'Accueil',
+                             'messagesCount'    => $listMessagesArray['messagesCount'],
                              'adresse_cabinet'  => $homeMgr->getAdresseAbonne($medecin),
                              'visites'          => $homeMgr->getVisites($medecin, new \DateTime()),
                              'infosRdv'         => $infosRdv,
@@ -51,13 +64,7 @@ class HomeController extends Controller
                 );
             } else {
 
-                $listMessagesArray = $messageMgr->getMessagesListePaginee($this->getUser(),
-                    false,
-                    'Reception',
-                    '',
-                    1,
-                    10
-                );
+
 
                 return $this->render('GestimeHomeBundle:dashboard:medecinSpecialiste.html.twig',
                     array('menuactif'        => 'Accueil',
@@ -68,6 +75,7 @@ class HomeController extends Controller
                 );
             }
         }
+
         if ($this->getUser()->hasGroup('SECRETAIRE-CABINET') || $this->getUser()->hasGroup('DOC24')) {
             $adresseAbonneGeoloc = $homeMgr->getAdresseAbonne($medecin);
             $aujourdhui = new \DateTime();
@@ -90,6 +98,7 @@ class HomeController extends Controller
                          'action'           => 'Accueil', )
             );
         }
+
         if ($this->getUser()->hasGroup('SECRETAIRE-SIE')  ) {
             $adresseAbonneGeoloc = $homeMgr->getAdresseAbonne($medecin);
             $aujourdhui = new \DateTime();

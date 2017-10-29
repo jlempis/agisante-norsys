@@ -23,9 +23,12 @@ class AbsenceRepository extends EntityRepository
             ->select('a,m')
             ->leftjoin('a.medecin', 'm')
             ->where('m.site = :site')
+            ->andwhere('a.debut > :today')
             ->orderBy('m.nom', 'ASC')
+            ->orderBy('m.prenom', 'ASC')
             ->addOrderBy('a.debut', 'ASC')
-            ->setParameter('site', $site);
+            ->setParameter('site', $site)
+            ->setParameter('today', new \DateTime());
     }
 
     /**
@@ -40,9 +43,12 @@ class AbsenceRepository extends EntityRepository
             ->leftjoin('a.medecin', 'm')
             ->leftjoin('m.utilisateurs', 'u')
             ->where('u.id = :userId')
+            ->andwhere('a.debut > :today')
             ->orderBy('m.nom', 'ASC')
+            ->orderBy('m.prenom', 'ASC')
             ->addOrderBy('a.debut', 'ASC')
-            ->setParameter('userId', $userId);
+            ->setParameter('userId', $userId)
+            ->setParameter('today', new \DateTime());
     }
 
     /**

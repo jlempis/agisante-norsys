@@ -46,10 +46,10 @@ class NonExcusesController extends Controller
         $qbTable = $this->get('datatable')
               ->setFields(
                   array(
-                      'Créateur'        => 'groupe.name',
+                      'Créateur'        => 'group.name',
                       'date'            => 'rdv.debutRdv',
                       'Médecin'         => 'med.nom',
-                      'Patient'         => "Concat(param.value,' ',patient.prenom,' ',patient.nom)",
+                      'Patient'         => "patient.nomcomplet",
                       'Objet'           => 'rdv.objet',
                       '_identifier_'    => 'rdv.idEvenement', )
               )
@@ -101,7 +101,7 @@ class NonExcusesController extends Controller
     {
         $search = new RapportFilter();
         $form = $this->createForm(new RapportFilterType(), $search, array(
-                'attr' => array('user' => $this->getUser()), ));
+            'attr' => array('user' => $this->getUser()), ));
         $form->handleRequest($request);
 
         if ($form->isValid()) {
@@ -109,16 +109,73 @@ class NonExcusesController extends Controller
             if ($medecinId == 0 && !$this->getUser()->hasRole('ROLE_VISU_AGENDA_TOUS')) {
                 $medecinId = $this->getUser()->getMedecindefault()->getIdMedecin();
             }
-            $this->_datatableDetail($medecinId,
-                $form->getData()->debut,
-                $form->getData()->fin
-            );
+
+            $this->setMedecinId($medecinId);
+            $this->setDebut($form->getData()->debut);
+            $this->setFin($form->getData()->fin);
+
         } else {
-            $this->_datatableDetail($this->getUser()->getMedecindefault()->getIdMedecin(), '[]', '[]');
+
+            $this->setMedecinId($this->getUser()->getMedecindefault()->getIdMedecin());
+            $this->setDebut('[]');
+            $this->setFin('[]');
+
         }
 
-        return array('action' => 'Rapports - Non excusés',
-                      'form' => $form->createView(),
-                      'menuactif' => 'Rapports',        );
+        $this->_datatableDetail($this->getMedecinId(), $this->getDebut(), $this->getFin());
+
+        return array('action' => 'Rapports - Mouvements',
+            'form' => $form->createView(),
+            'menuactif' => 'Rapports',        );
     }
+
+
+    /**
+     * @return mixed
+     */
+    public function getMedecinId()
+    {
+        return $this->medecinId;
+    }
+
+    /**
+     * @param mixed $medecinId
+     */
+    public function setMedecinId($medecinId)
+    {
+        $this->medecinId = $medecinId;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getDebut()
+    {
+        return $this->debut;
+    }
+
+    /**
+     * @param mixed $debut
+     */
+    public function setDebut($debut)
+    {
+        $this->debut = $debut;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getFin()
+    {
+        return $this->fin;
+    }
+
+    /**
+     * @param mixed $fin
+     */
+    public function setFin($fin)
+    {
+        $this->fin = $fin;
+    }
+
 }

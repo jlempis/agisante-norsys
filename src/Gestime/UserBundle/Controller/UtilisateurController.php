@@ -127,6 +127,7 @@ class UtilisateurController extends Controller
             array('attr' => array('action' => 'ajouter',
                                   ))
         );
+        $utilisateur->setPlainPassword('12345678');
         $form->handleRequest($request);
 
         if ($form->isValid()) {
@@ -175,12 +176,18 @@ class UtilisateurController extends Controller
         $changePassword = new ChangePassword();
         $changePassword->username = $utilisateur->getUsername();
         $changePassword->userid = $utilisateur->getId();
-        $passwordForm = $this->createForm(new ChangePasswordType(),
-        $changePassword);
+        $passwordForm = $this->createForm(new ChangePasswordType(), $changePassword);
+
+        $utilisateur->setPlainPassword($form->get('password')->getData());
 
         $form->handleRequest($request);
 
         if ($form->isValid()) {
+
+            if(!empty($form->get('password')->getData())){
+                $utilisateur->setPlainPassword($form->get('password')->getData());
+            }
+
             $utilisateurMgr = $this->container->get('gestime.utilisateur.manager');
             $utilisateurMgr->editUtilisateur($utilisateur,
                 $form->getData(),
@@ -220,7 +227,7 @@ class UtilisateurController extends Controller
             array('attr' => array('action' => 'supprimer',)
             )
         );
-
+        $utilisateur->setPlainPassword($form->get('password')->getData());
         $form->handleRequest($request);
 
         if ($form->isValid()) {

@@ -44,7 +44,7 @@ class ConsigneController extends Controller
         $datatable = $this->get('datatable')
                 ->setFields(
                     array(
-                        'Medecin'           => 'med.nom',
+                        'Medecin'           => 'm.nom',
                         'Patient'           => 'p.nom',
                         'Début'             => 'c.debut',
                         'Fin'               => 'c.fin',
@@ -133,7 +133,7 @@ class ConsigneController extends Controller
      *
      * [ajouterAction description]
      * @param Request $request
-     * @return json
+     * @return array
      */
     public function ajouterAction(Request $request)
     {
@@ -175,7 +175,7 @@ class ConsigneController extends Controller
      * [editAction description]
      * @param Request  $request
      * @param Consigne $consigne
-     * @return Template
+     * @return array
      */
     public function editAction(Request $request, Consigne $consigne)
     {
@@ -220,7 +220,7 @@ class ConsigneController extends Controller
      * [deleteAction description]
      * @param Request  $request
      * @param Consigne $consigne
-     * @return Template
+     * @return array
      */
     public function deleteAction(Request $request, Consigne $consigne)
     {

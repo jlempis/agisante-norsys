@@ -79,8 +79,10 @@ class UtilisateurManager
      * @param array       $medecinsAvantModif
      * @return integer id de l'utilisateur crée
      */
-    public function editUtilisateur(Utilisateur $utilisateur, $data, $medecinsAvantModif)
+    public function editUtilisateur(Utilisateur $utilisateur, $userForm, $medecinsAvantModif)
     {
+        $userManager = $this->container->get('fos_user.user_manager');
+
         //Suppression des médecins autorisés si besoin
         foreach ($utilisateur->getMedecins() as $medecin) {
             foreach ($medecinsAvantModif as $key => $toDel) {
@@ -99,6 +101,10 @@ class UtilisateurManager
             $medecin->addUtilisateur($utilisateur);
             $this->entityManager->persist($medecin);
         }
+
+        $user = $userForm;
+        $user->setPlainPassword($user->getPassword());
+        $userManager->updateUser($user);
 
         $this->entityManager->persist($utilisateur);
         $this->entityManager->flush();

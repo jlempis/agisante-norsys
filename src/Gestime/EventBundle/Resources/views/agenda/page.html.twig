@@ -7,7 +7,6 @@
   {{ action }}
 {% endblock %}
 {% form_theme form with ['GestimeCoreBundle:Form:form_date_time_picker.html.twig',
-                         'GestimeEventBundle:agenda:templates/adresseTheme.html.twig',
                          'GestimeEventBundle:agenda:templates/theme_errors.html.twig'
                          ] %}
 
@@ -125,6 +124,15 @@ label {
       overflow: hidden;
       overflow-y: auto;
   }
+
+  .pac-container {
+    z-index: 99999 !important;
+  }
+
+  label {
+    text-align: left !important;
+  }
+
 
 </style>
   {{ form_stylesheet(form) }}

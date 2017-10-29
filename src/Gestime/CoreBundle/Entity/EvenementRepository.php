@@ -121,6 +121,7 @@ class EvenementRepository extends EntityRepository
      */
     private function qbListeRdv($medecinId, $debut, $fin, $byCreationDate = false)
     {
+
         $qb = $this->createQueryBuilder('rdv')
                 ->select("uti.id as uti_id,
                           rdv.idEvenement as rdv_idEvenement,
@@ -128,8 +129,8 @@ class EvenementRepository extends EntityRepository
                           rdv.debutRdv as rdv_debutRdv,
                           rdv.finRdv as rdv_finRdv,
                           rdv.objet as rdv_objet,
-                          med.nom as med_nom,
-                          Concat(param.value,' ',patient.prenom,' ',patient.nom) as Patient,
+                          Concat(med.nom, ' ', med.prenom) as med_nom,
+                          Concat(param.value,' ',patient.prenom,' ',patient.nom) as patient_nomcomplet,
                           param.value as param_value,
                           patient.nom as patient_nom,
                           patient.prenom as patient_prenom");
@@ -147,12 +148,12 @@ class EvenementRepository extends EntityRepository
            ->leftjoin('uti.groups', 'groupe')
            ->where('rdv.createdBy IS NOT NULL');
 
-      $orifnull = $qb->expr()->orX();
-      $orifnull->add($qb->expr()->eq('groupe.name',  $qb->expr()->literal('API')));
-      $orifnull->add($qb->expr()->like('groupe.name', ':groupname'));
+        $orifnull = $qb->expr()->orX();
+        $orifnull->add($qb->expr()->eq('groupe.name',  $qb->expr()->literal('API')));
+        $orifnull->add($qb->expr()->like('groupe.name', ':groupname'));
 
-      $qb->andWhere($orifnull)
-           ->setParameter('groupname', 'SECRETAIRE%');
+        $qb->andWhere($orifnull)
+             ->setParameter('groupname', 'SECRETAIRE%');
 
         if ($byCreationDate) {
             $qb->andwhere('rdv.updated >= :debut')
@@ -170,6 +171,7 @@ class EvenementRepository extends EntityRepository
             ->setParameter('medecinId', $medecinId);
         }
         $qb->orderBy('rdv.debutRdv DESC, med.nom, patient.nom');
+
 
         return $qb;
     }
@@ -288,6 +290,7 @@ class EvenementRepository extends EntityRepository
      */
     public function ListeRendezVous($medecinId, $debut, $fin)
     {
+
         $qb = $this->qbListeRdv($medecinId, $debut, $fin);
         $qb->andwhere('rdv.etat = :valide')
         ->setParameter('valide', 'V');
@@ -306,11 +309,9 @@ class EvenementRepository extends EntityRepository
     public function getRendezVousByType($medecin, $debut, $fin, $type)
     {
         return $this->createQueryBuilder('rdv')
-                  ->select('rdv,patient, med, adr, ville')
+                  ->select('rdv,patient, med')
                   ->leftjoin('rdv.medecin', 'med')
                   ->leftjoin('rdv.patient', 'patient')
-                  ->leftjoin('patient.adresses', 'adr')
-                  ->leftjoin('adr.ville', 'ville')
                   ->where('rdv.medecin = :medecin')
                   ->andwhere('rdv.type = :type')
                   ->andwhere('rdv.debutRdv > :debut')
@@ -332,11 +333,9 @@ class EvenementRepository extends EntityRepository
     {
         $qb = $this->createQueryBuilder('r');
 
-        $qb->select('r,patient, med, adr, ville, paramCivilite, paramTypeRdv, uti')
+        $qb->select('r,patient, med, paramCivilite, paramTypeRdv, uti')
             ->leftjoin('r.medecin', 'med')
             ->leftjoin('r.patient', 'patient')
-            ->leftjoin('patient.adresses', 'adr')
-            ->leftjoin('adr.ville', 'ville')
             ->leftjoin('r.updatedBy', 'uti')
             ->leftJoin('Gestime\CoreBundle\Entity\Parametre',
                 'paramCivilite', Join::WITH, $qb->expr()->andX(
@@ -472,9 +471,12 @@ class EvenementRepository extends EntityRepository
                       ->where('med.idMedecin = :idMedecin')
                       ->andwhere('patient.id = :idPatient')
                       ->andwhere('r.nonExcuse = :vrai')
+                      ->andwhere('r.etat = :valide')
+                      ->setParameter('valide', 'V')
                       ->setParameter('vrai', true)
                       ->setParameter('idMedecin', $idMedecin)
-                      ->setParameter('idPatient', $idPatient);
+                      ->setParameter('idPatient', $idPatient)
+                      ->orderBy('r.debutRdv', 'DESC');
     }
 
 

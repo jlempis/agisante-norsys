@@ -7,6 +7,7 @@ use Gestime\MessageBundle\Event\MessagePostEvent;
 use Gestime\MessageBundle\Event\MessagesEvents;
 use Gestime\CoreBundle\Entity\Utilisateur;
 use Gestime\CoreBundle\Entity\Message;
+use Gestime\CoreBundle\Entity\Medecin;
 
 /**
  * MessageManager
@@ -151,9 +152,18 @@ class MessageManager
      * @param integer     $maxItemParPage
      * @return array
      */
-    public function getMessagesListePaginee($user, $search, $filtre, $statutLecture, $page, $maxItemParPage)
+    public function getMessagesListePaginee($user, $medecin, $search, $filtre, $statutLecture, $page, $maxItemParPage)
     {
-        $medecinsIds = $this->getArrayUserMedecins($user);
+        //Si la selection est "Tous les médecins",
+        //On affiche les massages de tous les médecins auxquels l'utilisateur est habilité ...
+
+        if (is_null($medecin)) {
+            $medecinsIds = $this->getArrayUserMedecins($user);
+        } else {
+            $medecinsIds = array();
+            $medecinsIds[] = $medecin->getIdMedecin();
+        }
+
         $sens = ($filtre == 'Envoyes') ? $this->getSensEmission($user) : $this->getSensReception($user);
 
         $messages = $this->entityManager
@@ -211,6 +221,8 @@ class MessageManager
         }
     }
 
+
+
     /**
      * [saveMessage description]
      * @param Message $message
@@ -252,8 +264,8 @@ class MessageManager
         $this->entityManager->flush();
 
         //Synchro avec la base V1
-        $this->synchroMsgMgr->create_reponse($message);
 
+        $this->synchroMsgMgr->create_reponse($message);
         return $message->getIdMessage();
     }
 
@@ -262,10 +274,10 @@ class MessageManager
      * @param Message $message
      * @return array
      */
-    public function deleteMessage($message)
+    public function deleteMessage(Message $message)
     {
-        $message[0]->setEtat('A');
-        $this->entityManager->persist($message[0]);
+        $message->setEtat('A');
+        $this->entityManager->persist($message);
         $this->entityManager->flush();
 
         //Synchro avec la base V1
@@ -338,6 +350,17 @@ class MessageManager
         }
 
         return $statut;
+    }
+
+    /**
+     * [Récupération de l'objet Message par son Id]
+     * @param integer $id
+     * @return Message
+     */
+    public function getMessage($id)
+    {
+        return $this->entityManager->getRepository('GestimeCoreBundle:Message')
+            ->findById($id);
     }
 
     /**

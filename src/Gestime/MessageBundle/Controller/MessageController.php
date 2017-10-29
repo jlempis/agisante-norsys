@@ -41,7 +41,7 @@ class MessageController extends Controller
      * @param integer $page
      * @param Request $request
      * @param string  $search
-     * @return Template
+     * @return array
      */
     public function ListeAction($filtre, $page, Request $request, $search = false )
     {
@@ -52,7 +52,13 @@ class MessageController extends Controller
         $categories = $messageMgr->getCategories($this->getUser()->getSite());
 
         $searchText = new MessageListSearch();
-        $form = $this->createForm(new MessageListSearchType(), $searchText);
+        $ccc = null;
+
+        $form = $this->createForm(new MessageListSearchType(),
+                                $searchText,
+                                array(
+                                    'attr' => array('user' => $this->getUser()), ));
+
         $form->handleRequest($request);
 
         if ($form->getData()->texte  != '') {
@@ -60,7 +66,9 @@ class MessageController extends Controller
             $filtre = $form->getData()->texte;
         }
 
-        $listMessagesArray = $messageMgr->getMessagesListePaginee($this->getUser(),
+        $listMessagesArray = $messageMgr->getMessagesListePaginee(
+            $this->getUser(),
+            $form->getData()->medecin,
             $search,
             $filtre,
             $form->getData()->action,
@@ -95,7 +103,7 @@ class MessageController extends Controller
      *
      * @param request $request
      * @param Message $message
-     * @return Template
+     * @return array
      */
     public function ViewAction(Request $request, Message $message)
     {
@@ -120,7 +128,7 @@ class MessageController extends Controller
      *
      * @param request $request
      * @param Message $message
-     * @return Template
+     * @return array
      */
     public function ResponseAction(Request $request, Message $message)
     {
@@ -159,7 +167,7 @@ class MessageController extends Controller
      * @Template("GestimeMessageBundle:Messages:new.html.twig")
      *
      * @param request $request
-     * @return Template
+     * @return array
      */
     public function NewAction(Request $request)
     {
@@ -203,7 +211,7 @@ class MessageController extends Controller
      *
      * @param request $request
      * @param Message $message
-     * @return Template
+     * @return array
      */
     public function PrintAction(Request $request, Message $message)
     {

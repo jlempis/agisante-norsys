@@ -3,17 +3,15 @@
         <p><i class="icon ion-clipboard pull-left" style="clear:both;"></i> Vous avez {{ messagesCount }} message(s) à traiter <a href="{{ path('messages_liste') }}">Messagerie</a></p>
 
         <p><i class="icon ion-thumbsup pull-left"  style="clear:both;"></i> 
-        {% if infosRdv.last.memejour %}
+        {% if infosRdv.last %}
             Votre dernier rendez-vous se termine à {{infosRdv.last.fin|date("H:i")}}</p>
         {% else %}
             Vous n'avez pas de rendez-vous aujourd'hui.
         {% endif %}
 
         <p><i class="icon ion-person-stalker pull-left" style="clear:both;"></i> 
-        {% if infosRdv.next.memejour %}
-            Votre prochain rendez-vous commence à {{infosRdv.next.debut|date("H:i")}}</p>
-        {% else %}
-            Vous n'avez plus de rendez-vous aujourd'hui. (Prochain le {{infosRdv.next.debut|date(" d/m/y à H:i")}})
+        {% if infosRdv.next %}
+            Prochain le {{infosRdv.next.debut|date(" d/m/y à H:i")}}
         {% endif %}
 
         <i class="icon ion-star portlet-bg-icon pull-left"></i>

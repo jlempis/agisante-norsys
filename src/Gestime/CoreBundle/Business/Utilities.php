@@ -104,12 +104,61 @@ class Utilities
         return ($url);
     }
 
-      public function getGeoLoc($adresse)
-      {
-        $adresse =  urlencode(preg_replace('/\r|\n/', ' ', $adresse));
+    private function getGeoCode($address){
 
-        return Geocoder::getLocation($adresse);
-      }
+        // url encode the address
+        $address = urlencode($address);
+
+        // google map geocode api url
+        $url = "https://maps.google.com/maps/api/geocode/json?sensor=false&key=AIzaSyDZl_p4GvElS5VstE8L3Z2Da3YntKFfYeg&address={$address}";
+
+        // get the json response
+        $resp_json = file_get_contents($url);
+
+        // decode the json
+        $resp = json_decode($resp_json, true);
+
+        // response status will be 'OK', if able to geocode given address
+        if($resp['status']=='OK'){
+
+            // get the important data
+            $lat = $resp['results'][0]['geometry']['location']['lat'];
+            $lng = $resp['results'][0]['geometry']['location']['lng'];
+            $formatted_address = $resp['results'][0]['formatted_address'];
+
+            // verify if data is complete
+            if($lat && $lng && $formatted_address){
+
+                // put the data in the array
+                $data_arr = array();
+
+                array_push(
+                    $data_arr,
+                    $lat,
+                    $lng,
+                    $formatted_address
+                );
+
+                return $data_arr;
+
+            }else{
+                return false;
+            }
+
+        }else{
+            return false;
+        }
+    }
+
+
+    public function getGeoLoc($address)
+    {
+        $tabResults = $this->getGeoCode($address);
+
+        return array('lat'=>$tabResults[0], 'lng'=>$tabResults[1], 'adresse_formattee'=>$tabResults[2]);
+
+    }
+
 
     /**
      * civilité

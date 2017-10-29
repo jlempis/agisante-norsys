@@ -17,6 +17,8 @@ function getAnnotations($idMedecin, $debut, $fin) {
 }
 
 function getDureeConsultationAjax($idMedecin) {
+    console.log($idMedecin);
+
     var $url = Routing.generate('ajax_duree_consultation', {
         idMedecin: $idMedecin
     });
@@ -34,6 +36,20 @@ function getDureeConsultationAjax($idMedecin) {
 
 function getDureeConsultation($idMedecin) {
     return optionsCalendar.slotDuration.substr(3,2);
+}
+
+function getUserConnected() {
+    var $url = Routing.generate('ajax_connected_user', {
+    });
+    var absences = null;
+    $.ajax({
+        type: "POST",
+        url: $url,
+        async: false,
+    }).done(function(result) {
+        connected_user = result;
+    });
+    return connected_user;
 }
 
 function getAbsencesMedecin($idMedecin) {
@@ -84,6 +100,7 @@ function getConsignesPatient($idPatient) {
 }
 
 function getNonExcusesPatient($idMedecin, $idPatient) {
+
     var $url = Routing.generate('ajax_non_excuses_patient', {
         idPatient: $idPatient,
         idMedecin: $idMedecin

@@ -9,71 +9,62 @@ namespace Gestime\CoreBundle\Gmap;
 class Geocoder
 {
 
-    function encodeBase64UrlSafe($value)
-    {
-      return str_replace(array('+', '/'), array('-', '_'),
-        base64_encode($value));
+    private function geocode($address){
+
+        // url encode the address
+        $address = urlencode($address);
+
+        // google map geocode api url
+        $url = "https://maps.google.com/maps/api/geocode/json?sensor=false&key=AIzaSyDZl_p4GvElS5VstE8L3Z2Da3YntKFfYeg&address={$address}";
+
+        // get the json response
+        $resp_json = file_get_contents($url);
+
+        // decode the json
+        $resp = json_decode($resp_json, true);
+
+        // response status will be 'OK', if able to geocode given address
+        if($resp['status']=='OK'){
+
+            // get the important data
+            $lati = $resp['results'][0]['geometry']['location']['lat'];
+            $longi = $resp['results'][0]['geometry']['location']['lng'];
+            $formatted_address = $resp['results'][0]['formatted_address'];
+
+            // verify if data is complete
+            if($lati && $longi && $formatted_address){
+
+                // put the data in the array
+                $data_arr = array();
+
+                array_push(
+                    $data_arr,
+                    $lati,
+                    $longi,
+                    $formatted_address
+                );
+
+                return $data_arr;
+
+            }else{
+                return false;
+            }
+
+        }else{
+            return false;
+        }
     }
-
-    function decodeBase64UrlSafe($value)
-    {
-      return base64_decode(str_replace(array('-', '_'), array('+', '/'),
-        $value));
-    }
-
-    function signUrl($myUrlToSign, $privateKey)
-    {
-      $url = parse_url($myUrlToSign);
-      $urlPartToSign = $url['path'] . "?" . $url['query'];
-
-      // Decode the private key into its binary format
-      $decodedKey = decodeBase64UrlSafe($privateKey);
-
-      // Create a signature using the private key and the URL-encoded
-      // string using HMAC SHA1. This signature will be binary.
-      $signature = hash_hmac("sha1",$urlPartToSign, $decodedKey,  true);
-
-      $encodedSignature = encodeBase64UrlSafe($signature);
-
-      return $myUrlToSign."&signature=".$encodedSignature;
-    }
-
-    private static $url = 'https://maps.google.com/maps/api/geocode/json?sensor=false&key=AIzaSyDZl_p4GvElS5VstE8L3Z2Da3YntKFfYeg&address=';
 
     /**
      * [getLocation description]
      * @param string $address
      * @return boolean
      */
-    public static function getLocation($address)
+    public function getLocation($address)
     {
-        $url = self::$url.urlencode($address);
-
-        $respJson = self::curl_file_get_contents($url);
-        $resp = json_decode($respJson, true);
-
-        if ($resp['status'] == 'OK') {
-            return $resp['results'][0]['geometry']['location'];
-        } else {
-
-            return false;
-        }
+        return $this->geocode($address);
     }
 
-    private static function curl_file_get_contents($URL)
-    {
-        $c = curl_init();
-        curl_setopt($c, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt($c, CURLOPT_URL, $URL);
-        $contents = curl_exec($c);
-        curl_close($c);
-
-        if ($contents) {
-            return $contents;
-        } else {
-            return false;
-        }
-    }
 
     private function distance($lat1, $lon1, $lat2, $lon2, $unit) {
 

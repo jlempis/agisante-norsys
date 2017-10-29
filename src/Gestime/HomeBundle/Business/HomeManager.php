@@ -6,6 +6,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 use Gestime\CoreBundle\Entity\Evenement;
 use Gestime\CoreBundle\Gmap\Geocoder;
 use Gestime\CoreBundle\Entity\Medecin;
+use Gestime\CoreBundle\Entity\Abonne;
 
 /**
  * HomeManager
@@ -30,18 +31,19 @@ class HomeManager
         $this->container = $container;
     }
 
+
     /**
      * getAdresseAbonne
      * @param Medecin $medecin
-     * @return Geocoder
+     * @return array
      */
     public function getAdresseAbonne($medecin)
     {
-        $adresse =  urlencode(preg_replace('/\r|\n/', ' ', $medecin->getAbonne()->getAdresse()));
-
-        return Geocoder::getLocation($adresse);
+        return array(
+            "lng" => $medecin->getAbonne()->getLatitude(),
+            "lat" => $medecin->getAbonne()->getLongitude()
+        );
     }
-
 
 
     /**
@@ -70,10 +72,12 @@ class HomeManager
         $indexVisite = 0;
 
         foreach ($qbresult as $key => $value) {
-            if (is_object($value->getPatient()->getAdresses()[0])) {
-                $address = urlencode($value->getPatient()->getAdresses()[0]->getAdresseComplete());
-                $visites[$indexVisite]['coordonnees'] = Geocoder::getLocation($address);
-                $visites[$indexVisite]['nom'] = 'ABCD';
+            if ($value->getPatient()->getAdresse() != null) {
+                $visites[$indexVisite]['coordonnees'] =  array(
+                    "lat" => $value->getPatient()->getLatitude(),
+                    "lng" => $value->getPatient()->getLongitude()
+                );
+                $visites[$indexVisite]['nom'] = $value->getPatient()->getNom();
             }
             $indexVisite++;
         }
@@ -99,6 +103,10 @@ class HomeManager
             ->getRepository('GestimeCoreBundle:Evenement')
             ->getFirstRdv($medecin, $date, '00:00');
 
+
+
+
+
         $firstEventDetail=array();
 
         if (count($firstEvent)) {
@@ -115,9 +123,14 @@ class HomeManager
             );
         }
 
+
+
+
         $lastEvent = $this->entityManager
             ->getRepository('GestimeCoreBundle:Evenement')
             ->getLastRdv($medecin, $date, '23:59');
+
+
 
         $lastEventDetail=array();
         if (count($lastEvent)) {
@@ -137,6 +150,8 @@ class HomeManager
         $nextEvent = $this->entityManager
             ->getRepository('GestimeCoreBundle:Evenement')
             ->getFirstRdv($medecin, $date, $sysdate['tm_hour'].':'.$sysdate['tm_min']);
+
+
 
         $nextEventDetail=array();
         if (count($nextEvent)) {

@@ -96,11 +96,18 @@ class MessageController extends Controller
 
     }
 
+    /**
+     *
+     * @var Request $request
+     * @return array
+     * @FOSRest\View(statusCode=201)
+     * @Delete("/message")/{id}")
+     */
     public function deleteMessageAction($id)
     {
-        if (!$this->get('security.context')->isGranted('ROLE_API')) {
-            throw new AccessDeniedException();
-        }
+        $manager = $this->get('gestime.message.manager');
+        $message = $manager->getMessage($id);
+        $manager->deleteMessage($message);
 
     }
 }

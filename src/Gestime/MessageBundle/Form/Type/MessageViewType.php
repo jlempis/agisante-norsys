@@ -11,6 +11,7 @@ namespace Gestime\MessageBundle\Form\Type;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Gestime\CoreBundle\Entity\MedecinRepository;
 
 /**
  * Formulaire de saisie d'un message

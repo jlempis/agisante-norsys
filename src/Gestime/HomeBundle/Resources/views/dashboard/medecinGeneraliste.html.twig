@@ -4,15 +4,15 @@
 {% block title %}{{ action }}{% endblock %}
 
 {% block stylesheets %}
-  {{ parent() }}
+    {{ parent() }}
   <link rel="stylesheet" type="text/css" href="{{ asset('bundles/gestimehome/css/home.css') }}">
   <link rel="stylesheet" type="text/css" href="{{ asset('bundles/gestimecore/css/ionicons.min.css') }}">
 {% endblock %}
 
 {% block includesjs %}
-  {{ parent() }}
+    {{ parent() }}
   <script src="https://maps.googleapis.com/maps/api/js"></script>
-  {% include 'GestimeHomeBundle:dashboard:templates/gmap.html.twig'  %}
+    {% include 'GestimeHomeBundle:dashboard:templates/gmap.html.twig'  %}
 {% endblock %}
 
 {% block body %}
@@ -24,11 +24,11 @@
   </div>
 
   <div class="row">
-    <div class="col-md-6">
-        {% include 'GestimeHomeBundle:dashboard:portlets/today.html.twig'  %}
-        {% include 'GestimeHomeBundle:dashboard:portlets/prochainRdv.html.twig'  %}
-    </div>
-    <div class="col-md-6">
+  <div class="col-md-6">
+      {% include 'GestimeHomeBundle:dashboard:portlets/today.html.twig'  %}
+      {% include 'GestimeHomeBundle:dashboard:portlets/prochainRdv.html.twig'  %}
+  </div>
+  <div class="col-md-6">
       {% include 'GestimeHomeBundle:dashboard:portlets/gmap.html.twig'  %}
   </div>
 

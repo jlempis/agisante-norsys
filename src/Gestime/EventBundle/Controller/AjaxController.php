@@ -102,6 +102,22 @@ class AjaxController extends Controller
     }
 
     /**
+     * @Route("/admin/connecteduser", name="ajax_connected_user",options={"expose"=true})
+     * @Secure("ROLE_GESTION_RDV")
+     *
+     * @return json
+     */
+    public function ajaxGetConnectedUserAction()
+    {
+        $eventMgr = $this->container->get('gestime.event.manager');
+        $connectedUser = $eventMgr->getConnectedUser();
+        $response = new JsonResponse();
+        $response->setContent(json_encode($connectedUser));
+
+        return $response;
+    }
+
+    /**
      * @Route("/admin/absence/medecin/{idMedecin}", name="ajax_absences_medecin",options={"expose"=true})
      * @Secure("ROLE_GESTION_RDV")
      *

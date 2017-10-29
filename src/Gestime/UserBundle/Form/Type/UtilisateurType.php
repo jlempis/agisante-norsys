@@ -36,10 +36,10 @@ class UtilisateurType extends AbstractType
             ->add('prenom')
             ->add('username');
 
-        if ($options['attr']['action'] == 'ajouter') {
+     //   if ($options['attr']['action'] == 'ajouter') {
             $builder
             ->add('password');
-        }
+       // }
 
         $builder
             ->add('email')

@@ -7,7 +7,7 @@ $().ready(function() {
       $('#cptNonLusInbox').show();
       $('#cptNonLusInbox').text(compteurs.nonlus);
     }
-    if ((compteurs.nonluFavoris) == 0) {
+    if ((compteurs.nonluFavoris) === 0) {
       $('#cptNonLusFavoris').hide();
     } else {
       $('#cptNonLusFavoris').show();
@@ -76,7 +76,6 @@ $().ready(function() {
     return true;
   }
 
-
   $('#btn-suppr-view').click(function() {
         if (suppr($('#idMessage').text() )){
 
@@ -118,11 +117,15 @@ $().ready(function() {
     });
   });
 
+  var selectMedecin = $("#MessageListSearch_medecin").select2();
+    selectMedecin.on("change", function(e) {
+      $("#form_recherche").submit();
+  });
+
   var selectAction = $("#MessageListSearch_action").select2();
   selectAction.on("change", function(e) {
     $("#form_recherche").submit();
   });
-    //$("#MessageListSearch_Rechercher").click();;
 
   majCompteurs();
 

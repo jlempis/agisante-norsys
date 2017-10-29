@@ -45,7 +45,7 @@ class AjaxController extends Controller
         if (count($message) == 0) {
             $statut['success'] = false;
         } else {
-            $statut = $messageMgr->deleteMessage($message);
+            $statut = $messageMgr->deleteMessage($message[0]);
         }
 
         $response = new JsonResponse();

@@ -13,78 +13,85 @@
                     {% endif %}
                 {% endfor %}
                 {% if filtre ==  "Recherche" %}Résultat de la recherche{% endif %}
-                 <div class="pull-right mail-src-position">
-                    <div class="input-append">
-                        {{ form_widget(form.texte, { 'attr': { 'class':"form-control txtrecherche", 'placeholder': "Rechercher" }}) }}
-                        {{ form_widget(form.Rechercher, { 'attr': { 'class': "btn btn-blue" }}) }}
-                        {{ form_errors(form.texte) }}
+
+                <div class="form-group">
+                     <div class="pull-right mail-src-position">
+                        <div class="input-append">
+
+
+                            {{ form_widget(form.texte, { 'attr': { 'class':"form-control txtrecherche", 'placeholder': "Rechercher" }}) }}
+                            {{ form_widget(form.Rechercher, { 'attr': { 'class': "btn btn-blue" }}) }}
+                            {{ form_errors(form.texte) }}
+                        </div>
                     </div>
                 </div>
             </h2>
         </header>
         <div class="panel-body minimal">
-            <div class="mail-option">
-                <div class="pull-left mail-checkbox ">
-                    <div class="icheckbox_flat-green" style="position: relative;">
-                        <input type="checkbox" style="position: absolute; opacity: 0;">
-                        <ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; border: 0px; opacity: 0; background: rgb(255, 255, 255);"></ins>
+            <div class="form-group">
+                <div class="col-lg-4">
+                    {{ form_widget(form.medecin, { 'attr': { 'class':"chzn-select select2-offscreen", 'placeholder': "Medecin" } }) }}
+                </div>
+                <div class="col-lg-5">
+                    <div class="mail-option">
+                        <div class="btn-group">
+                            {{ form_widget(form.action, { 'attr': { 'class':"chzn-select select2-offscreen", 'placeholder': "Action" } }) }}
+                            {{ form_errors(form.action) }}
+                            {{ form_rest(form) }}
+                        </div>
+                        <div class="btn-group">
+                            <a id="btn-refresh" data-original-title="Actualiser" data-placement="top" data-toggle="tooltip"
+                            href="#" class="btn btn-default btn-sm tooltips">
+                                <i class="icon-refresh"></i>
+                            </a>
+                        </div>
+                        <div class="btn-group">
+                            <a id="btn-read" data-original-title="Marquer comme lu" data-placement="top" data-toggle="tooltip"
+                            href="#" class="btn btn-default btn-sm tooltips">
+                                <i class="icon-eye-open"></i>
+                            </a>
+                        </div>
+                        {% if filtre !=  "Supprimes" %}
+                            <div class="btn-group">
+                                <a id="btn-suppr" data-original-title="Supprimer" data-placement="top" data-toggle="tooltip"
+                                href="#" class="btn btn-default btn-sm tooltips">
+                                    <i class="icon-trash"></i>
+                                </a>
+                            </div>
+                         {% endif %}
                     </div>
                 </div>
-                <div class="btn-group">
-                    {{ form_widget(form.action, { 'attr': { 'class':"chzn-select select2-offscreen", 'placeholder': "Action" } }) }}
-                    {{ form_errors(form.action) }}
-                    {{ form_rest(form) }}
-                </div>
-                <div class="btn-group">
-                    <a id="btn-refresh" data-original-title="Actualiser" data-placement="top" data-toggle="tooltip"
-                    href="#" class="btn btn-default btn-sm tooltips">
-                        <i class="icon-refresh"></i>
-                    </a>
-                </div>
-                <div class="btn-group">
-                    <a id="btn-read" data-original-title="Marquer comme lu" data-placement="top" data-toggle="tooltip"
-                    href="#" class="btn btn-default btn-sm tooltips">
-                        <i class="icon-eye-open"></i>
-                    </a>
-                </div>
-                {% if filtre !=  "Supprimes" %}
-                    <div class="btn-group">
-                        <a id="btn-suppr" data-original-title="Supprimer" data-placement="top" data-toggle="tooltip"
-                        href="#" class="btn btn-default btn-sm tooltips">
-                            <i class="icon-trash"></i>
-                        </a>
-                    </div>
-                 {% endif %}
-                 <ul class="inbox-pag pull-right" style="list-style-type: none;">
-                    <li style="margin-top:6px;">
-                        {% if (messagesCount >0) %}
-                            {% if (pagination.page * maxItemParPage) <= messagesCount %}
-                                <span>{{ ((pagination.page -1) * maxItemParPage)+1 }}-{{ pagination.page * maxItemParPage }} sur {{ messagesCount}}</span>
-                            {% else %}
-                                <span>{{ ((pagination.page -1) * maxItemParPage)+1 }}-{{ messagesCount }} sur {{ messagesCount}}</span>
+                <div class="col-lg-3" style="padding:0;">
+                     <ul class="inbox-pag pull-right" style="list-style-type: none;">
+                        <li style="margin-top:6px;">
+                            {% if (messagesCount >0) %}
+                                {% if (pagination.page * maxItemParPage) <= messagesCount %}
+                                    <span>{{ ((pagination.page -1) * maxItemParPage)+1 }}-{{ pagination.page * maxItemParPage }} sur {{ messagesCount}}</span>
+                                {% else %}
+                                    <span>{{ ((pagination.page -1) * maxItemParPage)+1 }}-{{ messagesCount }} sur {{ messagesCount}}</span>
+                                {% endif %}
                             {% endif %}
+                        </li>
+                        {% if pagination.page > 1 %}
+                            <li>
+                                <a class="btn btn-default btn-sm"
+                                    href="{{ path(pagination.route, pagination.route_params|merge({'page': pagination.page-1})) }}"><i class=" icon-chevron-left"></i></a>
+                            </li>
                         {% endif %}
-                    </li>
-                    {% if pagination.page > 1 %}
-                        <li>
-                            <a class="btn btn-default btn-sm"
-                                href="{{ path(pagination.route, pagination.route_params|merge({'page': pagination.page-1})) }}"><i class=" icon-chevron-left"></i></a>
-                        </li>
-                    {% endif %}
-                    {% if pagination.page<pagination.pages_count %}
-                        <li>
-                            <a class="btn btn-default btn-sm"
-                                href="{{ path(pagination.route,pagination.route_params|merge({'page': pagination.page+1})) }}"><i class=" icon-chevron-right"></i></a>
-                        </li>
-                    {% endif %}
-                </ul>
-
+                        {% if pagination.page<pagination.pages_count %}
+                            <li>
+                                <a class="btn btn-default btn-sm"
+                                    href="{{ path(pagination.route,pagination.route_params|merge({'page': pagination.page+1})) }}"><i class=" icon-chevron-right"></i></a>
+                            </li>
+                        {% endif %}
+                    </ul>
+                </div>
             </div>
             <div class="table-responsive">
                 <table class="table table-inbox table-hover">
                     <tbody>
                         {% if messagesCount == 0 %}
-                                <span><h4>Aucun Message ne correspond à votre critère de recherche.</h4></span>
+                                <div style="float:left; margin-top:30px"><h4>Aucun Message ne correspond à votre critère de recherche.</h4></div>
                         {% else %}
                             {% for message in messages %}
                                 <tr {% if message.lu == 1 %} class="row read" {% else %} class="row unread"{% endif %}>
@@ -94,7 +101,7 @@
                                 <td class="message" style="width:88%">
                                     <strong>
                                         {% if (message.medecins.count > 0) %}
-                                            <span class="title">{{ message.medecins[0].nom|upper}}
+                                            <span class="title">{{ message.medecins[0].nom|upper}} {{ message.medecins[0].prenom|capitalize}}
                                                 {% if message.medecins.count > 1 %}
                                                     et {{ message.medecins.count -1 }} de plus
                                                 {% endif %}

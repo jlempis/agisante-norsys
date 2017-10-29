@@ -16,6 +16,8 @@ namespace Gestime\CoreBundle\Entity;
  */
 class MessageListSearch
 {
+
+    public $medecin;
     public $texte;
     public $action;
 

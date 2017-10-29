@@ -12,13 +12,14 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\OptionsResolver\Options;
-use Gestime\CoreBundle\Entity\Personne;
 use Gestime\CoreBundle\Entity\PersonneRepository;
-use Gestime\CoreBundle\Entity\ParametreRepository;
 
 use Ivory\GoogleMap\Places\AutocompleteComponentRestriction;
-use Ivory\GoogleMap\Places\AutocompleteType;
+use Ivory\GoogleMap\Helper\Builder\PlaceAutocompleteHelperBuilder;
+
+use Ivory\GoogleMap\Base\Bound;
+use Ivory\GoogleMap\Base\Coordinate;
+
 
 /**
  * Formulaire de saisie d'une personne (Patient)
@@ -30,6 +31,7 @@ use Ivory\GoogleMap\Places\AutocompleteType;
 class PersonneType extends AbstractType
 {
     protected $entityManager;
+    protected $region;
 
     /**
      * [__construct description]
@@ -38,6 +40,11 @@ class PersonneType extends AbstractType
     public function __construct($entityManager)
     {
         $this->entityManager = $entityManager;
+        $this->region = new Bound(
+            new Coordinate(51.08, 1.5936),
+            new Coordinate(49.82, 4.34)
+        );
+
     }
 
     /**
@@ -88,45 +95,21 @@ class PersonneType extends AbstractType
                         },
                     'auto_initialize' => false, ))
             ->add('nom_id', 'hidden')
-            ->add('adresses', 'collection', array(
-                'type'         => new AdresseType($this->entityManager),
-                'allow_add'    => true,
-                'allow_delete' => true,
-                'label'        => false,
-                'by_reference' => false,
-                'prototype'   => true,
-                'prototype_name' => '__adr_prot__',
-                'error_bubbling' => true,
-                'cascade_validation' => true, ));
-           ;/*
+
 
             ->add('adresse', 'places_autocomplete', array(
-
-                // Javascript prefix variable
                 'prefix' => 'js_prefix_',
-                'types'  => array(
-                    AutocompleteType::CITIES,
-                    // ...
-                ),
+                 'bound' => $this->region,
+                 'attr' => array(
+                     'placeholder' => 'Adresse'
+                 ),
                 'component_restrictions' => array(
                     AutocompleteComponentRestriction::COUNTRY => 'fr',
-                    // ...
                 ),
-                // Autocomplete language
                 'language' => 'fr',
-            ))
+            ));
 
 
-                'prefix' => 'js_prefix_',
-                'types'  => array(AutocompleteType::CITIES),
-                'async' => false,
-                'language' => 'fr',
-                'component_restrictions' => array(
-                    AutocompleteComponentRestriction::COUNTRY => 'FR')
-
-
-
-*/
     }
 
     /**

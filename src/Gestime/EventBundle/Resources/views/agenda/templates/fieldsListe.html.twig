@@ -36,7 +36,7 @@
 </div>
 
 <div class="form-group">
-      {{ form_label(form.type, 'Type: ', {'label_attr': {'class': 'control-label col-lg-2 col-md-2 col-sm-2'}}) }}
+      {{ form_label(form.type, 'Motif: ', {'label_attr': {'class': 'control-label col-lg-2 col-md-2 col-sm-2'}}) }}
       <div class="col-lg-10 col-md-10  col-sm-10">
         {{ form_widget(form.type, { 'attr': { 'placeholder': "Objet" } }) }}
         <div id="error_type" class="invisible" data-element="evenement_type"></div>
@@ -59,7 +59,7 @@
 </div>
 
 <div class="form-group">
-  {{ form_label(form.patient.civilite, 'Civilité: ', {'label_attr': {'class': 'control-label col-lg-2 col-md-2 col-sm-2 '}}) }}
+  {{ form_label(form.patient.civilite, 'Patient: ', {'label_attr': {'class': 'control-label col-lg-2 col-md-2 col-sm-2 '}}) }}
     <div class="col-lg-3 col-md-3 col-sm-3 ">
     {{ form_widget(form.patient.civilite, { 'attr': { 'class':"chzn-select select2-offscreen", 'placeholder': "Civilité" } }) }}
      <div id="error_civilite" class="invisible" data-element="evenement_patient_civilite" ></div>
@@ -67,7 +67,7 @@
 </div>
 
 <div class="form-group">
-  {{ form_label(form.patient.nom, 'Patient: ', {'label_attr': {'class': 'control-label col-lg-2 col-md-2 col-sm-2'}}) }}
+  {{ form_label(form.patient.nom, ' ', {'label_attr': {'class': 'control-label col-lg-2 col-md-2 col-sm-2'}}) }}
     <div class="col-lg-10 col-md-10 col-sm-10 ">
     {{ form_widget(form.patient.nom, { 'attr': { 'class':"autocomplete_patient", 'placeholder': "Nom" } }) }}
     {{ form_widget(form.patient.nom_id) }}
@@ -78,32 +78,26 @@
 </div>
 
 <div class="form-group">
-  {{ form_label(form.patient.prenom, 'Prénom: ', {'label_attr': {'class': 'control-label col-lg-2 col-md-2 col-sm-2'}}) }}
+  {{ form_label(form.patient.prenom, ' ', {'label_attr': {'class': 'control-label col-lg-2 col-md-2 col-sm-2'}}) }}
     <div class="col-lg-4 col-md-4 col-sm-4">
     {{ form_widget(form.patient.prenom, { 'attr': { 'class':"autocomplete_patient", 'placeholder': "Prénom" } }) }}
      <div id="error_prenom" class="invisible" data-element="evenement_patient_prenom"></div>
     </div>
 
-    {{ form_label(form.patient.nomJF, 'Nom de jeune fille: ', {'label_attr': {'class': 'control-label col-lg-2 col-md-2 col-sm-2 '}}) }}
+    {{ form_label(form.patient.nomJF, ' ', {'label_attr': {'class': 'control-label col-lg-2 col-md-2 col-sm-2 '}}) }}
     <div class="col-lg-4 col-md-4 col-sm-4">
-    {{ form_widget(form.patient.nomJF, { 'attr': { 'class':"autocomplete_patient", 'placeholder': "Nom de jeune fille" } }) }}
+    {{ form_widget(form.patient.nomJF, { 'attr': { 'class':"autocomplete_patient", 'placeholder': "Nom de naissance" } }) }}
      <div id="error_nomJF" class="invisible" data-element="evenement_patient_nomJF"></div>
     </div>
 </div>
 
 <div class="form-group">
-  {{ form_label(form.patient.telephone, 'Téléphone: ', {'label_attr': {'class': 'control-label col-lg-2 col-md-2 col-sm-2 '}}) }}
+  {{ form_label(form.patient.telephone, ' ', {'label_attr': {'class': 'control-label col-lg-2 col-md-2 col-sm-2 '}}) }}
     <div class="col-lg-4 col-md-4 col-sm-4">
     {{ form_widget(form.patient.telephone, { 'attr': { 'class':"autocomplete_patient", 'placeholder': "Téléphone" } }) }}
     <div id="error_telephone" class="invisible" data-element="evenement_patient_telephone"></div>
     </div>
 
-    <div class="col-lg-4">
-      {% if action != "supprimer" %}
-            <div id="btnSupp" class="col-lg-1" ></div>
-        <button class="btn btn-green btn-adresse">Ajouter une adresse</button>
-      {% endif %}
-    </div>
 </div>
 
 <div class="form-group">
@@ -125,12 +119,19 @@
     </div>
 </div>
 
-
+<div class="form-group">
+    {{ form_label(form.objet, 'Adresse: ', {'label_attr': {'class': 'control-label col-lg-2 col-md-2 col-sm-2'}}) }}
+    <div class="col-lg-10  col-md-10  col-sm-10">
+        {{ form_widget(form.patient.adresse, { 'attr': { 'placeholder': "Adresse" } }) }}
+        <div id="error_adresse" class="invisible" data-element="evenement_patient_adresse"></div>
+    </div>
+</div>
 
 <div class="form-group">
   <div class="col-lg-12 col-md-12 col-sm-12">
 
-    <div id="infos"></div>
+    <div id="infos">
+    </div>
   </div>
 </div>
 

@@ -426,7 +426,9 @@ class EventManager
 
         //SynchroV1
         if ($synchro) {
-            $this->synchroEventMgr->delete_evenement($event);
+            if (!is_null($event->getMedecin()->getIdAgenda())) {
+                $this->synchroEventMgr->delete_evenement($event);
+            }
         }
 
         return true;
@@ -469,27 +471,35 @@ class EventManager
     }
 
     /**
-     * @param Adresse $adresse
-     * @return array
+     * getGeoloc
+     * @param Personne $patient
+     * @return Personne
      */
-    public function getCoordonnees(Adresse $adresse) {
+    private function getGeoloc(Personne $patient) {
         $utils = $this->container->get('gestime_core.utilities');
-        $flatAdress = $utils->str_to_noaccent($adresse->getVoie().', '.$adresse->getCodePostal().' '.$adresse->getVille());
+        $latitude = $utils->getGeoLoc($patient->getAdresse())['lat'];
+        $longitude = $utils->getGeoLoc($patient->getAdresse())['lng'];
 
-        $coordonnees = $utils->getGeoLoc($flatAdress);
-        if (count($coordonnees) > 0) {
-            if ($coordonnees['lng'] != 0 && $coordonnees['lat'] != 0) {
-                return array("lat" => $coordonnees['lat'], "lng"=>$coordonnees['lng']);
-            }
+        if (!is_null($longitude)) {
+            $patient->setLongitude($longitude);
         } else {
-            return array("lat" => 0, "lng"=> 0);
+            $patient->setLongitude(0);
         }
+
+        if (!is_null($latitude)) {
+            $patient->setLatitude($latitude);
+        } else {
+            $patient->setLatitude(0);
+        }
+
+        return $patient;
     }
+
     /**
-     * [saveEvent description]
-     * @param Evenement $event
-     * @return integer   Id evenement crée
-     */
+    * [saveEvent description]
+    * @param Evenement $event
+    * @return integer   Id evenement crée
+    */
     public function saveEvent(Evenement $event)
     {
         $utils = $this->container->get('gestime_core.utilities');
@@ -504,7 +514,7 @@ class EventManager
                 ->getRepository('GestimeCoreBundle:Personne')
                 ->findByAllFields($event->getPatient()->getCivilite(),
                     $event->getPatient()->getEntreprise(),
-                    $event->getPatient()->getAdresses(),
+                    $event->getPatient()->getAdresse(),
                     $event->getPatient()->getNom(),
                     $event->getPatient()->getPrenom(),
                     $event->getPatient()->getNomJF(),
@@ -516,35 +526,18 @@ class EventManager
 
             if (count($arrayExistedPatients) > 0) {
                 $patientExistant = $arrayExistedPatients[0];
-                $adresseExistante = $arrayExistedPatients[0]->getAdresses()[0];
 
-                // Si le patient existait avec une adresse, on la supprime
-                if ($patientExistant->getAdresses()->count() > 0) {
-                    $this->entityManager->remove($adresseExistante);
-                    $patientExistant->removeAdress($adresseExistante);
+                //Si une adresse est saisie et que le patient existe, on lui affecte la nouvelle adresse
+                if ($event->getPatient()->getAdresse() !=null) {
+                    $patientExistant->setAdresse($event->getPatient()->getAdresse());
+                    $patientExistant = $this->getGeoloc($patientExistant);
                     $this->entityManager->persist($patientExistant);
-                }
-
-                //Si on a saisi une adresse, on l'ajoute
-                if (count($event->getPatient()->getAdresses()) > 0) {
-
-                    $coordonnees = $this->getCoordonnees($event->getPatient()->getAdresses()[0]);
-                    $event->getPatient()->getAdresses()[0]->setLatitude($coordonnees['lat']);
-                    $event->getPatient()->getAdresses()[0]->setLongitude($coordonnees['lng']);
-
-                    $patientExistant->addAdress($event->getPatient()->getAdresses()[0]);
-                    $this->entityManager->persist($patientExistant);
+                    $this->entityManager->flush();
                 }
                 $event->setPatient($patientExistant);
             } else {
                 //Le patient n'existe pas, on le crée
                 //On l'ajoute dans la patientele : On lie le medecin
-                if (count($event->getPatient()->getAdresses()) > 0) {
-                    $coordonnees = $this->getCoordonnees($event->getPatient()->getAdresses()[0]);
-                    $event->getPatient()->getAdresses()[0]->setLatitude($coordonnees['lat']);
-                    $event->getPatient()->getAdresses()[0]->setLongitude($coordonnees['lng']);
-                }
-
                 $event->getPatient()->addMedecin($event->getMedecin());
             }
         } else {
@@ -561,8 +554,9 @@ class EventManager
             $this->entityManager->flush();
 
             //Synchro avec la base V1
-
-            $this->synchroEventMgr->create_evenement($event);
+            if (!is_null($event->getMedecin()->getIdAgenda())){
+                $this->synchroEventMgr->create_evenement($event);
+            }
         }
 
         return $event->getIdEvenement();
@@ -610,7 +604,9 @@ class EventManager
 
         //Synchro avec la base V1
         if ($synchro) {
-            $this->synchroEventMgr->create_evenement($event);
+            if (!is_null($event->getMedecin()->getIdAgenda())) {
+                $this->synchroEventMgr->create_evenement($event);
+            }
         }
 
 

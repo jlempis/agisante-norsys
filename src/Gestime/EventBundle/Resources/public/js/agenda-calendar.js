@@ -52,6 +52,7 @@ var optionsCalendar = {
             //Drop d'un rdv rapide
             copiedEventObject.end = moment(date).add(parseInt(optionsCalendar.slotDuration.substring(3, 5)), 'minutes');
             if (copiedEventObject.type != 'P') { //P=Temps Réservé
+                copiedEventObject.idType = $(this).data("id");
                 $('#btn-priseRdv').click();
                 bindFormRdv(copiedEventObject);
             } else {
@@ -112,12 +113,15 @@ var optionsCalendar = {
     eventClick: function(event, jsEvent, view ) {
         editEvent_(event.id);
     },
-    eventMouseout: function(event, jsEvent, view ) {
-        var html =  '';
 
-        $( '#detailRdv' ).html(html);
+    eventMouseout: function(event, jsEvent, view ) {
+        setTimeout(function() {
+            var html =  '';
+            $( '#detailRdv' ).html(html);
+        }, 50);
     },
     eventMouseover: function(event, jsEvent, view ) {
+        setTimeout(function() {
             var html =  '';
             if (event.type != 'P') {
                 html += '<div><i class="icon-user"></i> ' + event.title + '</div>';
@@ -125,7 +129,9 @@ var optionsCalendar = {
             }
             html +=     '<div><i class="icon-info-sign"></i> ' + event.objet + '</div>';
             html +=     '<div><i class="icon-time"></i> de :' + event.start.format('HH:mm') + ' à ' + event.end.format('HH:mm') + '</div>';
-        $( '#detailRdv' ).html(html);
+            $( '#detailRdv' ).html(html);
+        }, 50);
+
     },
     eventRender: function(event, element, view) {
         element.attr('data-id', event.id);

@@ -260,7 +260,12 @@ function afficheConsignes($idPatient) {
         $.each(consignes, function() {
             $txtHtml += this.description + '<br>';
         });
-        $txtHtml += '" class="tooltips tooltip-warning" title=""><i style="vertical-align: middle;" class="icon-warning-sign"></i></span>';
+
+        $txtHtml += '<div class="alert alert-info" style="margin:10px;"><button type="button" class="close" data-dismiss="alert">×</button>';
+        $txtHtml += 'Consigne';
+        $txtHtml += '</div>';
+
+        //$txtHtml += '" class="tooltips tooltip-warning" title=""><i style="vertical-align: middle;" class="icon-warning-sign"></i></span>';
         $('#consignes').html($txtHtml);
         $('.tooltips').tooltip('destroy').tooltip({
             placement: 'right',

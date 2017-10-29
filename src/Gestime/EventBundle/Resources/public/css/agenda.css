@@ -49,7 +49,6 @@
 }
 
 .alert {
-  padding-bottom: 800px;
   font-size: 1.2em;
   margin-top: -10px;
   padding-left: 0px;
@@ -244,12 +243,9 @@ body.modal-open {
 }
 
 .tooltip-wrapper {
-    position: absolute;
     left: 0px;
     right: 0px;
-    float: left;
     z-index: 1000;
-    width: 50px;
 }
 
 .tooltips {

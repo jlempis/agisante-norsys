@@ -47,7 +47,8 @@ class AbsenceController extends Controller
         $datatable = $this->get('datatable')
                 ->setFields(
                     array(
-                        'Médecin'       => 'm.nom',
+                        'Nom'           => 'm.nom',
+                        'Prénom'        => 'm.prenom',
                         'Début'         => 'a.debut',
                         'Fin'           => 'a.fin',
                         'Commentaire'   => 'a.commentaire',
@@ -56,7 +57,7 @@ class AbsenceController extends Controller
                 ->setRenderer(
                     function (&$data) use ($controllerInstance) {
                         foreach ($data as $key => $value) {
-                            if ($key == 1 || $key == 2) {
+                            if ($key == 2 || $key == 3) {
                                 $data[$key] = $controllerInstance
                                         ->get('templating')
                                         ->render(

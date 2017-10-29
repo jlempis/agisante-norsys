@@ -41,17 +41,25 @@ class RapportFilterType extends AbstractType
                                     $options['attr']['user']->getId()
                                 );
                             },
+
                         );
-        $emptyOptions = array('empty_value' => 'Tous les médecins');
+
+        $emptyOptions = array('required'    => false,
+                              'empty_value' => 'Tous les médecins');
+
+        $defaultMedecin = $options['attr']['user']->getMedecindefault()->getIdMedecin();
 
         if ($options['attr']['user']->hasRole('ROLE_VISU_AGENDA_TOUS')) {
-            $medecinOptions = array_merge($medecinOptions, $emptyOptions);
+            $medecinOptions = array_merge($medecinOptions, $emptyOptions, array('data' => 0));
+        } else {
+            $medecinOptions = array_merge($medecinOptions, array('data' => $defaultMedecin ));
         }
         $builder
             ->add('medecin', 'entity', $medecinOptions)
             ->add('debut', 'datePicker', array('data' => new \DateTime('now')))
             ->add('fin', 'datePicker', array('data' => new \DateTime('now')));
     }
+
 
     /**
      * @return string

@@ -64,8 +64,20 @@ class AbonneManager
     public function save_abonne(Abonne $abonne)
     {
         $utils = $this->container->get('gestime_core.utilities');
-        $abonne->setLongitude($utils->getGeoLoc($abonne->getAdresse())['lat']);
-        $abonne->setLatitude($utils->getGeoLoc($abonne->getAdresse())['lng']);
+
+        // Si l'adresse exacte n'est pas trouvée par l'API google Geoloc renvoie null
+
+        if (!is_null($utils->getGeoLoc($abonne->getAdresse())['lng'])) {
+            $abonne->setLongitude($utils->getGeoLoc($abonne->getAdresse())['lng']);
+        } else {
+            $abonne->setLongitude(0);
+        }
+
+        if (!is_null($utils->getGeoLoc($abonne->getAdresse())['lat'])) {
+            $abonne->setLatitude($utils->getGeoLoc($abonne->getAdresse())['lat']);
+        } else {
+            $abonne->setLatitude(0);
+        }
 
         $this->entityManager->persist($abonne);
         $this->entityManager->flush();

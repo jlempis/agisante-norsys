@@ -38,12 +38,13 @@ class AgendaController extends Controller
     * @Template("GestimeEventBundle:agenda:page.html.twig")
     *
     * @param Request $request
-    * @return Template
+    * @return array
     */
     public function viewAction(Request $request)
     {
         $eventMgr = $this->get('gestime.event.manager');
         $event = new Evenement();
+
         $formListeMedecin = $this->createForm(new MedecinAgendaListType(),
             $event,
             array('attr' => array('user' => $this->getUser()))

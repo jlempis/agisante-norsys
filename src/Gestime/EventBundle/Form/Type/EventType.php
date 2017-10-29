@@ -45,6 +45,7 @@ class EventType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder,  array $options)
     {
+
         $builder
             ->add('idEvenement', 'hidden')
             ->add('medecin', 'entity', array(
@@ -59,6 +60,7 @@ class EventType extends AbstractType
                                 $options['attr']['user']->getId()
                             );
                         },
+                    'preferred_choices' => array($options['attr']['user']->getMedecindefault()),
                     'auto_initialize' => false, ))
             ->add('debutRdv', 'datePicker')
             ->add('heureDebut', 'timePicker')
