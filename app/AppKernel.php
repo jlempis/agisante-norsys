@@ -57,6 +57,7 @@ class AppKernel extends Kernel
             new Symfony\Bundle\MonologBundle\MonologBundle(),
             new Snc\RedisBundle\SncRedisBundle(),
             new Misteio\CloudinaryBundle\MisteioCloudinaryBundle(),
+
             new Ivory\GoogleMapBundle\IvoryGoogleMapBundle(),
 
 
